@@ -22,14 +22,21 @@
                                 <color key="backgroundColor" name="YP Black"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImagesListCell" id="4s0-Ci-SNG" userLabel="Images List Cell" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="361" height="132.33332824707031"/>
+                                        <rect key="frame" x="0.0" y="50" width="361" height="140.33332824707031"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4s0-Ci-SNG" id="LIs-Os-L9a">
-                                            <rect key="frame" x="0.0" y="0.0" width="361" height="132.33332824707031"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="361" height="140.33332824707031"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="vfk-Uv-V49" userLabel="Cell Image">
-                                                    <rect key="frame" x="76" y="-43" width="240" height="128"/>
+                                                    <rect key="frame" x="20" y="-43" width="353" height="172"/>
+                                                    <color key="backgroundColor" name="YP Black"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbL-6b-BCg" userLabel="Like Button">
                                                     <rect key="frame" x="163" y="-7" width="68" height="58"/>
@@ -47,9 +54,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" name="YP Black"/>
                                             <constraints>
-                                                <constraint firstItem="vfk-Uv-V49" firstAttribute="top" secondItem="LIs-Os-L9a" secondAttribute="top" id="6rg-TE-lnA"/>
-                                                <constraint firstAttribute="bottom" secondItem="vfk-Uv-V49" secondAttribute="bottom" id="728-VK-utN"/>
+                                                <constraint firstItem="vfk-Uv-V49" firstAttribute="top" secondItem="LIs-Os-L9a" secondAttribute="top" constant="4" id="6rg-TE-lnA"/>
+                                                <constraint firstAttribute="bottom" secondItem="vfk-Uv-V49" secondAttribute="bottom" constant="4" id="728-VK-utN"/>
                                                 <constraint firstItem="3eg-RP-smg" firstAttribute="leading" secondItem="vfk-Uv-V49" secondAttribute="leading" constant="8" id="JvF-Xq-7eS"/>
                                                 <constraint firstItem="NbL-6b-BCg" firstAttribute="top" secondItem="vfk-Uv-V49" secondAttribute="top" id="dzb-TC-y1H"/>
                                                 <constraint firstItem="NbL-6b-BCg" firstAttribute="trailing" secondItem="vfk-Uv-V49" secondAttribute="trailing" id="hh5-W8-Ved"/>
@@ -59,12 +67,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="YP Black"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="16"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="cellImage" destination="vfk-Uv-V49" id="pjr-Ih-0XK"/>
                                             <outlet property="dateLabel" destination="3eg-RP-smg" id="zJI-sp-fRF"/>

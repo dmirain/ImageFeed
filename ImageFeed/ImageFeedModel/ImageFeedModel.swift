@@ -10,11 +10,11 @@ final class ImageFeedModel {
         return image.size.height * containerWidth / image.size.width
     }
 
-    func rowState(byIndex index: Int) -> RowState {
+    func imageCellModel(byIndex index: Int) -> ImageCellModel {
         let image = image(byIndex: index)
-        let rowState = RowState(
+        let rowState = ImageCellModel(
             date: Date(),
-            liked: index % 2 != 0,
+            liked: index % 2 == 0,
             image: image
         )
         return rowState

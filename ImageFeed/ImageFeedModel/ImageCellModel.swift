@@ -1,6 +1,6 @@
 import UIKit
 
-struct RowState {
+struct ImageCellModel {
     let date: Date
     let liked: Bool
     let image: UIImage

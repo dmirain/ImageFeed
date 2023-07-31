@@ -1,13 +1,15 @@
 import UIKit
 
-class ImagesListViewController: UIViewController {
+// MARK: - ImagesListViewController
+
+final class ImagesListViewController: UIViewController {
     private let model: ImageFeedModel
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
 
-    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
 
     required init?(coder: NSCoder) {
         model = ImageFeedModel()
@@ -24,6 +26,8 @@ class ImagesListViewController: UIViewController {
         )
     }
 }
+
+// MARK: - UITableViewDataSource
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,10 +47,12 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        let rowState = model.rowState(byIndex: indexPath.row)
-        cell.setRowState(to: rowState)
+        let cellModel = model.imageCellModel(byIndex: indexPath.row)
+        cell.configureCell(with: cellModel)
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

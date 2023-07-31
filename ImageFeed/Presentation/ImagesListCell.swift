@@ -3,15 +3,15 @@ import UIKit
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
 
-    @IBOutlet private var dateLabel: UILabel!
-    @IBOutlet private var likeButon: UIButton!
-    @IBOutlet private var cellImage: UIImageView!
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var likeButon: UIButton!
+    @IBOutlet private weak var cellImage: UIImageView!
 
-    func setRowState(to rowState: RowState) {
-        let image = rowState.liked ? Const.likeImage : Const.unlikeImage
-        dateLabel.text = rowState.date.dateString
+    func configureCell(with cellModel: ImageCellModel) {
+        let image = cellModel.liked ? Const.likeImage : Const.unlikeImage
+        dateLabel.text = cellModel.date.dateString
         likeButon.setTitle("", for: .normal)
         likeButon.setImage(image, for: .normal)
-        cellImage.image = rowState.image
+        cellImage.image = cellModel.image
     }
 }

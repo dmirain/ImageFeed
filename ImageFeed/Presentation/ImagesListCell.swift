@@ -2,7 +2,7 @@ import UIKit
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
-    
+
     private var gradientInited = false
 
     @IBOutlet private weak var dateLabel: UILabel!
@@ -16,7 +16,7 @@ final class ImagesListCell: UITableViewCell {
         likeButon.setTitle("", for: .normal)
         likeButon.setImage(image, for: .normal)
         cellImage.image = cellModel.image
-        
+
         if !gradientInited {
             let gradient = CAGradientLayer()
             gradient.frame = gradientView.bounds

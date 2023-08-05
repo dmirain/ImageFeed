@@ -38,17 +38,23 @@
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbL-6b-BCg" userLabel="Like Button">
-                                                    <rect key="frame" x="163" y="-7" width="68" height="58"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ug-bd-nQ1" userLabel="Gradient">
+                                                    <rect key="frame" x="0.0" y="110.33333333333333" width="361" height="29.999999999999986"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="Hiw-yI-TY3"/>
-                                                        <constraint firstAttribute="width" constant="44" id="wbu-D3-wXX"/>
+                                                        <constraint firstAttribute="height" constant="30" id="2Ye-83-jm3"/>
+                                                    </constraints>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbL-6b-BCg" userLabel="Like Button">
+                                                    <rect key="frame" x="293" y="0.0" width="68" height="58"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="CVb-jV-9VO"/>
+                                                        <constraint firstAttribute="width" constant="44" id="WTv-X4-JaF"/>
                                                     </constraints>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="RedHeart"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eg-RP-smg" userLabel="Date Label">
-                                                    <rect key="frame" x="175" y="11" width="128" height="21"/>
+                                                    <rect key="frame" x="0.0" y="77" width="128" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" name="YP White"/>
                                                     <nil key="highlightedColor"/>
@@ -58,10 +64,13 @@
                                             <constraints>
                                                 <constraint firstItem="vfk-Uv-V49" firstAttribute="top" secondItem="LIs-Os-L9a" secondAttribute="top" constant="4" id="6rg-TE-lnA"/>
                                                 <constraint firstAttribute="bottom" secondItem="vfk-Uv-V49" secondAttribute="bottom" constant="4" id="728-VK-utN"/>
-                                                <constraint firstItem="3eg-RP-smg" firstAttribute="leading" secondItem="vfk-Uv-V49" secondAttribute="leading" constant="8" id="JvF-Xq-7eS"/>
-                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="top" secondItem="vfk-Uv-V49" secondAttribute="top" id="dzb-TC-y1H"/>
-                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="trailing" secondItem="vfk-Uv-V49" secondAttribute="trailing" id="hh5-W8-Ved"/>
-                                                <constraint firstItem="3eg-RP-smg" firstAttribute="bottom" secondItem="vfk-Uv-V49" secondAttribute="bottom" constant="-8" id="nSX-VH-JPq"/>
+                                                <constraint firstItem="3eg-RP-smg" firstAttribute="leading" secondItem="LIs-Os-L9a" secondAttribute="leading" constant="8" id="JvF-Xq-7eS"/>
+                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="top" secondItem="LIs-Os-L9a" secondAttribute="top" id="dzb-TC-y1H"/>
+                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="trailing" secondItem="LIs-Os-L9a" secondAttribute="trailing" id="hZd-Bl-fqI"/>
+                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="trailing" secondItem="LIs-Os-L9a" secondAttribute="trailing" id="hh5-W8-Ved"/>
+                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="bottom" secondItem="LIs-Os-L9a" secondAttribute="bottom" id="jev-hs-8LB"/>
+                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="leading" secondItem="LIs-Os-L9a" secondAttribute="leading" id="maI-iD-BH0"/>
+                                                <constraint firstItem="3eg-RP-smg" firstAttribute="bottom" secondItem="LIs-Os-L9a" secondAttribute="bottom" constant="-8" id="nSX-VH-JPq"/>
                                                 <constraint firstAttribute="trailing" secondItem="vfk-Uv-V49" secondAttribute="trailing" id="pxx-3g-Nw7"/>
                                                 <constraint firstItem="vfk-Uv-V49" firstAttribute="leading" secondItem="LIs-Os-L9a" secondAttribute="leading" id="y65-Ld-aca"/>
                                             </constraints>
@@ -70,6 +79,7 @@
                                         <connections>
                                             <outlet property="cellImage" destination="vfk-Uv-V49" id="pjr-Ih-0XK"/>
                                             <outlet property="dateLabel" destination="3eg-RP-smg" id="zJI-sp-fRF"/>
+                                            <outlet property="gradientView" destination="0Ug-bd-nQ1" id="YcJ-j9-XKA"/>
                                             <outlet property="likeButon" destination="NbL-6b-BCg" id="YiP-Uv-Mjd"/>
                                         </connections>
                                     </tableViewCell>

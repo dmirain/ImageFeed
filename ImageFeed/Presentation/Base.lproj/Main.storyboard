@@ -28,8 +28,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="361" height="140.33332824707031"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="vfk-Uv-V49" userLabel="Cell Image">
-                                                    <rect key="frame" x="20" y="-43" width="353" height="172"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="vfk-Uv-V49" userLabel="Cell Image">
+                                                    <rect key="frame" x="0.0" y="4" width="361" height="132.33333333333334"/>
                                                     <color key="backgroundColor" name="YP Black"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -39,22 +39,27 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ug-bd-nQ1" userLabel="Gradient">
-                                                    <rect key="frame" x="0.0" y="110.33333333333333" width="361" height="29.999999999999986"/>
+                                                    <rect key="frame" x="0.0" y="106.33333333333333" width="361" height="29.999999999999986"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="2Ye-83-jm3"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbL-6b-BCg" userLabel="Like Button">
-                                                    <rect key="frame" x="293" y="0.0" width="68" height="58"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbL-6b-BCg" userLabel="Like Button">
+                                                    <rect key="frame" x="317" y="4" width="44" height="44"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="CVb-jV-9VO"/>
-                                                        <constraint firstAttribute="width" constant="44" id="WTv-X4-JaF"/>
+                                                        <constraint firstAttribute="height" constant="44" id="cFE-bU-Akz"/>
+                                                        <constraint firstAttribute="width" constant="44" id="iG9-Zz-JyB"/>
                                                     </constraints>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" image="RedHeart"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="RedHeart">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <buttonConfiguration key="configuration" style="plain" image="RedHeart">
+                                                        <color key="baseForegroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </buttonConfiguration>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eg-RP-smg" userLabel="Date Label">
-                                                    <rect key="frame" x="0.0" y="77" width="128" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eg-RP-smg" userLabel="Date Label">
+                                                    <rect key="frame" x="8" y="112.66666666666667" width="101.66666666666667" height="15.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" name="YP White"/>
                                                     <nil key="highlightedColor"/>
@@ -64,13 +69,15 @@
                                             <constraints>
                                                 <constraint firstItem="vfk-Uv-V49" firstAttribute="top" secondItem="LIs-Os-L9a" secondAttribute="top" constant="4" id="6rg-TE-lnA"/>
                                                 <constraint firstAttribute="bottom" secondItem="vfk-Uv-V49" secondAttribute="bottom" constant="4" id="728-VK-utN"/>
-                                                <constraint firstItem="3eg-RP-smg" firstAttribute="leading" secondItem="LIs-Os-L9a" secondAttribute="leading" constant="8" id="JvF-Xq-7eS"/>
-                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="top" secondItem="LIs-Os-L9a" secondAttribute="top" id="dzb-TC-y1H"/>
-                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="trailing" secondItem="LIs-Os-L9a" secondAttribute="trailing" id="hZd-Bl-fqI"/>
-                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="trailing" secondItem="LIs-Os-L9a" secondAttribute="trailing" id="hh5-W8-Ved"/>
-                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="bottom" secondItem="LIs-Os-L9a" secondAttribute="bottom" id="jev-hs-8LB"/>
-                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="leading" secondItem="LIs-Os-L9a" secondAttribute="leading" id="maI-iD-BH0"/>
-                                                <constraint firstItem="3eg-RP-smg" firstAttribute="bottom" secondItem="LIs-Os-L9a" secondAttribute="bottom" constant="-8" id="nSX-VH-JPq"/>
+                                                <constraint firstItem="3eg-RP-smg" firstAttribute="leading" secondItem="vfk-Uv-V49" secondAttribute="leading" constant="8" id="JvF-Xq-7eS"/>
+                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vfk-Uv-V49" secondAttribute="leading" id="Vi2-FC-saZ"/>
+                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="top" secondItem="vfk-Uv-V49" secondAttribute="top" id="dzb-TC-y1H"/>
+                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="trailing" secondItem="vfk-Uv-V49" secondAttribute="trailing" id="hZd-Bl-fqI"/>
+                                                <constraint firstItem="NbL-6b-BCg" firstAttribute="trailing" secondItem="vfk-Uv-V49" secondAttribute="trailing" id="hh5-W8-Ved"/>
+                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="bottom" secondItem="vfk-Uv-V49" secondAttribute="bottom" id="jev-hs-8LB"/>
+                                                <constraint firstItem="vfk-Uv-V49" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3eg-RP-smg" secondAttribute="trailing" id="mEL-nI-yP0"/>
+                                                <constraint firstItem="0Ug-bd-nQ1" firstAttribute="leading" secondItem="vfk-Uv-V49" secondAttribute="leading" id="maI-iD-BH0"/>
+                                                <constraint firstItem="3eg-RP-smg" firstAttribute="bottom" secondItem="vfk-Uv-V49" secondAttribute="bottom" constant="-8" id="nSX-VH-JPq"/>
                                                 <constraint firstAttribute="trailing" secondItem="vfk-Uv-V49" secondAttribute="trailing" id="pxx-3g-Nw7"/>
                                                 <constraint firstItem="vfk-Uv-V49" firstAttribute="leading" secondItem="LIs-Os-L9a" secondAttribute="leading" id="y65-Ld-aca"/>
                                             </constraints>

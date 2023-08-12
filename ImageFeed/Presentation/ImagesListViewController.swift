@@ -2,12 +2,8 @@ import UIKit
 
 // MARK: - ImagesListViewController
 
-final class ImagesListViewController: UIViewController {
+final class ImagesListViewController: BaseUIViewController {
     private let model: ImageFeedModel
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
 
     @IBOutlet private weak var tableView: UITableView!
 

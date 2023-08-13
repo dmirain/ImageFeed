@@ -212,7 +212,7 @@
                     <navigationItem key="navigationItem" id="8Cv-bG-hRa"/>
                     <connections>
                         <outlet property="tableView" destination="uIc-rc-lPz" id="qgm-ro-rZU"/>
-                        <segue destination="xgf-xr-mAD" kind="show" identifier="ShowSingleImage" id="qjK-Y8-SCl"/>
+                        <segue destination="xgf-xr-mAD" kind="presentation" identifier="ShowSingleImage" id="qjK-Y8-SCl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -222,22 +222,34 @@
         <!--Single Image View Controller-->
         <scene sceneID="Qyd-6s-GIJ">
             <objects>
-                <viewController id="xgf-xr-mAD" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="xgf-xr-mAD" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lID-db-tlg">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3" translatesAutoresizingMaskIntoConstraints="NO" id="2UE-I7-dzy">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQe-t7-FO8" userLabel="Back">
+                                <rect key="frame" x="8" y="9" width="48" height="38"/>
+                                <color key="tintColor" name="YP White"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="Back" title=""/>
+                                <connections>
+                                    <action selector="tapBack" destination="xgf-xr-mAD" eventType="touchUpInside" id="LIo-7d-aj5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sQM-Xi-Y7Y"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="2UE-I7-dzy" firstAttribute="leading" secondItem="sQM-Xi-Y7Y" secondAttribute="leading" id="3ux-NS-bWb"/>
-                            <constraint firstItem="sQM-Xi-Y7Y" firstAttribute="bottom" secondItem="2UE-I7-dzy" secondAttribute="bottom" id="48E-gj-mzl"/>
-                            <constraint firstItem="2UE-I7-dzy" firstAttribute="top" secondItem="sQM-Xi-Y7Y" secondAttribute="top" id="kzt-lQ-rZo"/>
-                            <constraint firstItem="sQM-Xi-Y7Y" firstAttribute="trailing" secondItem="2UE-I7-dzy" secondAttribute="trailing" id="rwV-UG-BGE"/>
+                            <constraint firstItem="2UE-I7-dzy" firstAttribute="leading" secondItem="lID-db-tlg" secondAttribute="leading" id="3ux-NS-bWb"/>
+                            <constraint firstAttribute="bottom" secondItem="2UE-I7-dzy" secondAttribute="bottom" id="48E-gj-mzl"/>
+                            <constraint firstItem="sQe-t7-FO8" firstAttribute="leading" secondItem="sQM-Xi-Y7Y" secondAttribute="leading" constant="8" id="4fY-Hh-HUy"/>
+                            <constraint firstItem="sQM-Xi-Y7Y" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sQe-t7-FO8" secondAttribute="trailing" symbolic="YES" id="61B-Wq-Ufe"/>
+                            <constraint firstItem="2UE-I7-dzy" firstAttribute="top" secondItem="lID-db-tlg" secondAttribute="top" id="kzt-lQ-rZo"/>
+                            <constraint firstAttribute="trailing" secondItem="2UE-I7-dzy" secondAttribute="trailing" id="rwV-UG-BGE"/>
+                            <constraint firstItem="sQe-t7-FO8" firstAttribute="top" secondItem="sQM-Xi-Y7Y" secondAttribute="top" constant="9" id="yKn-bq-ZIA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PkU-X1-PSp"/>
@@ -252,11 +264,10 @@
         <!--Navigation Controller-->
         <scene sceneID="eBQ-xq-TsS">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pdf-K4-CJq" customClass="NavigationController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Pdf-K4-CJq" customClass="NavigationController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="Main Tab" id="2Zs-v1-iVp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nUc-oT-Q89">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="YP White"/>
                         <color key="barTintColor" name="YP White"/>
@@ -277,6 +288,7 @@
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="3" width="200" height="300"/>
+        <image name="Back" width="24" height="24"/>
         <image name="Exit" width="44" height="44"/>
         <image name="Main Tab" width="30" height="30"/>
         <image name="Profile Tab" width="30" height="30"/>

@@ -9,4 +9,8 @@ final class SingleImageViewController: BaseUIViewController {
         imageView.image = imageModel.image
         super.viewDidLoad()
     }
+
+    @IBAction private func tapBack() {
+        dismiss(animated: true, completion: nil)
+    }
 }

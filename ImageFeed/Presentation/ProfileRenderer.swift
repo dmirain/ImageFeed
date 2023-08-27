@@ -60,7 +60,7 @@ final class ProfileRenderer {
     }
 
     private func renderUserpic() {
-        userpickImageView.image = UIImage(named: "Userpick Stub")
+        userpickImageView.image = UIImage.userpicImage
         NSLayoutConstraint.activate([
             userpickImageView.widthAnchor.constraint(equalToConstant: 70),
             userpickImageView.heightAnchor.constraint(equalToConstant: 70)
@@ -68,7 +68,7 @@ final class ProfileRenderer {
     }
 
     private func renderExitButton() {
-        exitButton.setImage(UIImage(named: "Exit"), for: .normal)
+        exitButton.setImage(UIImage.exitImage, for: .normal)
         exitButton.setTitle("", for: .normal)
         NSLayoutConstraint.activate([
             exitButton.widthAnchor.constraint(equalToConstant: 44),

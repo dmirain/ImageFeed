@@ -1,16 +1,24 @@
 import UIKit
 
 final class SingleImageViewController: BaseUIViewController {
-    var imageModel: ImageCellModel!
+    var imageModel: ImageCellModel? {
+        didSet {
+            onModelSet()
+        }
+    }
 
-    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView?
 
     override func viewDidLoad() {
-        imageView.image = imageModel.image
+        onModelSet()
         super.viewDidLoad()
     }
 
     @IBAction private func tapBack() {
         dismiss(animated: true, completion: nil)
+    }
+
+    private func onModelSet() {
+        imageView?.image = imageModel?.image
     }
 }

@@ -32,7 +32,7 @@ final class ImagesListViewController: BaseUIViewController {
             let imageModel = model.imageCellModel(byIndex: indexPath.row)
             viewController.imageModel = imageModel
         } else {
-            super.prepare(for: segue, sender: sender)
+            assertionFailure("unknown segue identifier \(segue.identifier ?? "")")
         }
     }
 }

@@ -47,15 +47,9 @@ final class ProfileRenderer {
         }
 
         NSLayoutConstraint.activate([
-            vStack.topAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: 32
-            ),
-            vStack.leadingAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: 16
-            ),
-            vStack.trailingAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -16
-            )
+            vStack.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: 32),
+            vStack.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            vStack.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
 

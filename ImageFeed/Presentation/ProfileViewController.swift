@@ -1,16 +1,9 @@
 import UIKit
 
 final class ProfileViewController: BaseUIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        ProfileRenderer(delegate: self).render()
-    }
-}
+    private lazy var contentView = ProfileUIView()
 
-// MARK: - ProfileRendererProtocol
-
-extension ProfileViewController: ProfileRendererProtocol {
-    func addToSuperview(subview: UIView) {
-        view.addSubview(subview)
+    override func loadView() {
+       self.view = contentView
     }
 }

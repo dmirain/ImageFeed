@@ -2,12 +2,9 @@ import UIKit
 
 // MARK: - ImagesListViewController
 
-final class ImagesListViewController: UIViewController {
+final class ImagesListViewController: BaseUIViewController {
+    private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private let model: ImageFeedModel
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
 
     @IBOutlet private weak var tableView: UITableView!
 
@@ -24,6 +21,19 @@ final class ImagesListViewController: UIViewController {
             bottom: Const.firsCellTopIndent,
             right: 0
         )
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == showSingleImageSegueIdentifier {
+            guard let viewController = segue.destination as? SingleImageViewController,
+                    let indexPath = sender as? IndexPath else {
+                return
+            }
+            let imageModel = model.imageCellModel(byIndex: indexPath.row)
+            viewController.imageModel = imageModel
+        } else {
+            assertionFailure("unknown segue identifier \(segue.identifier ?? "")")
+        }
     }
 }
 
@@ -56,6 +66,7 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

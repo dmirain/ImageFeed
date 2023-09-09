@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7922CC672AA4C8C100627D98 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7922CC662AA4C8C100627D98 /* AuthViewController.swift */; };
+		7922CC692AA4C93000627D98 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7922CC682AA4C93000627D98 /* WebViewViewController.swift */; };
 		792B7B2A2A88065E000AF75A /* BaseUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B292A88065E000AF75A /* BaseUIViewController.swift */; };
 		792B7B2C2A880730000AF75A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2B2A880730000AF75A /* ProfileViewController.swift */; };
 		792B7B2E2A88EE25000AF75A /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7922CC662AA4C8C100627D98 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		7922CC682AA4C93000627D98 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		792B7B292A88065E000AF75A /* BaseUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
 		792B7B2B2A880730000AF75A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +128,8 @@
 				792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */,
 				792B7B2F2A88FE7F000AF75A /* NavigationController.swift */,
 				798A49DD2A9BCD5400725D9C /* ProfileUIView.swift */,
+				7922CC662AA4C8C100627D98 /* AuthViewController.swift */,
+				7922CC682AA4C93000627D98 /* WebViewViewController.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -360,12 +366,14 @@
 				79F745B02A7EE9E000AED431 /* UIView+Extensions.swift in Sources */,
 				792B7B2E2A88EE25000AF75A /* SingleImageViewController.swift in Sources */,
 				792B7B2C2A880730000AF75A /* ProfileViewController.swift in Sources */,
+				7922CC672AA4C8C100627D98 /* AuthViewController.swift in Sources */,
 				798A49DE2A9BCD5400725D9C /* ProfileUIView.swift in Sources */,
 				79F5DD4D2A750172000224F2 /* AppDelegate.swift in Sources */,
 				798681752A769B1400EB471C /* Date+Extensions.swift in Sources */,
 				7986817C2A76B79D00EB471C /* ImageCellModel.swift in Sources */,
 				79F5DD4F2A750172000224F2 /* SceneDelegate.swift in Sources */,
 				7986817E2A76B7E500EB471C /* Constants.swift in Sources */,
+				7922CC692AA4C93000627D98 /* WebViewViewController.swift in Sources */,
 				798A49E02A9BD0AD00725D9C /* UIImage+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,11 +17,11 @@ final class AuthViewController: BaseUIViewController {
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        
+    func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
+
     }
-    
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
-        vc.dismiss(animated: true)
+
+    func webViewViewControllerDidCancel(_ viewController: WebViewViewController) {
+        viewController.dismiss(animated: true)
     }
 }

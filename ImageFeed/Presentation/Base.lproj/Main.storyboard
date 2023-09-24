@@ -258,7 +258,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="x5x-8b-PKc" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="kYm-BL-TtQ"/>
+                                    <segue destination="x5x-8b-PKc" kind="presentation" identifier="ShowAuthWebView" modalPresentationStyle="overFullScreen" id="kYm-BL-TtQ"/>
                                 </connections>
                             </button>
                         </subviews>

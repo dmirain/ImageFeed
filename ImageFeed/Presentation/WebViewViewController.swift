@@ -1,8 +1,15 @@
 import WebKit
 import UIKit
 
+protocol WebViewViewControllerDelegate: AnyObject {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+}
+
 class WebViewViewController: BaseUIViewController {
 
+    weak var delegate: WebViewViewControllerDelegate?
+    
     private var authorizeRequest: URLRequest {
         var urlComponents = URLComponents(string: Const.authorizeURLString)!
         urlComponents.queryItems = [
@@ -24,6 +31,11 @@ class WebViewViewController: BaseUIViewController {
     }
 
     @IBAction private func didTapBackButton(_ sender: UIButton) {
+        guard let delegate else {
+            assertionFailure("Missed delegate in WebView")
+            return
+        }
+        delegate.webViewViewControllerDidCancel(self)
     }
 }
 
@@ -33,13 +45,17 @@ extension WebViewViewController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
+        guard let delegate else {
+            assertionFailure("Missed delegate in WebView")
+            return
+        }
         guard let code = code(from: navigationAction) else {
             decisionHandler(.allow)
             return
         }
+        
         decisionHandler(.cancel)
-
-        print(code)
+        delegate.webViewViewController(self, didAuthenticateWithCode: code)
     }
     
     private func code(from navigationAction: WKNavigationAction) -> String? {

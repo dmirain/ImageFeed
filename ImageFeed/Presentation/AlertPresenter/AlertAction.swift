@@ -1,0 +1,3 @@
+enum AlertAction {
+    case reset
+}

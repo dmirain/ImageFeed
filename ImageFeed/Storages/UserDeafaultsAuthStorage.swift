@@ -18,4 +18,8 @@ struct UserDeafaultsAuthStorage: AuthStorage {
         guard let jsonData = Data.toJson(from: newValue) else { return }
         userDefaults.set(jsonData, forKey: storageKey)
     }
+
+    func reset() {
+        userDefaults.removeObject(forKey: storageKey)
+    }
 }

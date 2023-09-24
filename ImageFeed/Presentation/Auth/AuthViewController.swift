@@ -1,6 +1,12 @@
 import UIKit
 
+protocol AuthViewControllerDelegate: AnyObject {
+    func authComplite()
+}
+
 final class AuthViewController: BaseUIViewController {
+    weak var delegate: AuthViewControllerDelegate?
+
     private let showAuthWebViewIdentifier = "ShowAuthWebView"
     private let authGateway: AuthGateway
     private let authStorage: AuthStorage
@@ -46,11 +52,14 @@ extension AuthViewController: WebViewViewControllerDelegate {
             }
 
             Task { @MainActor [weak self] in
-                guard let self else { return }
+                guard let self, let delegate = self.delegate else {
+                    assertionFailure("Missed self=\(self.debugDescription) and delegat=\(delegate.debugDescription)")
+                    return
+                }
                 if let error = requestError {
                     self.alertPresenter.show(with: ErrorAlertDto(error: error))
                 } else {
-                    // TODO передавать управление галереи
+                    delegate.authComplite()
                 }
             }
         }

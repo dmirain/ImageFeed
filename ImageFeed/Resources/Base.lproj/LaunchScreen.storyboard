@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vector" translatesAutoresizingMaskIntoConstraints="NO" id="4Zl-yd-8Ra">
-                                <rect key="frame" x="159" y="399.66666666666669" width="75" height="78"/>
+                                <rect key="frame" x="159" y="387" width="75" height="78"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
                             <constraint firstItem="4Zl-yd-8Ra" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="l7Y-Jl-5ne"/>
-                            <constraint firstItem="4Zl-yd-8Ra" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="12.666666666666686" id="rve-tg-EQv"/>
+                            <constraint firstItem="4Zl-yd-8Ra" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="rve-tg-EQv"/>
                         </constraints>
                     </view>
                 </viewController>

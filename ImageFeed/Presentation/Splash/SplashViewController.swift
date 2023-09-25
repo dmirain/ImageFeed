@@ -12,7 +12,6 @@ final class SplashViewController: BaseUIViewController {
         tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarViewController")
 
         super.init(coder: coder)
-        authStorage.reset()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -26,7 +25,9 @@ extension SplashViewController {
     private func routeToController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
 
-        if authStorage.get()?.token == nil {
+        let token = authStorage.get()?.token
+        
+        if token == nil {
             performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
         } else {
             window.rootViewController = tabBarViewController

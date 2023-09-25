@@ -26,7 +26,7 @@ extension SplashViewController {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
 
         let token = authStorage.get()?.token
-        
+
         if token == nil {
             performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
         } else {

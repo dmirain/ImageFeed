@@ -1,7 +1,7 @@
 import Foundation
 
 protocol NetworkClient {
-    func fetch(request: URLRequest) async throws -> Data
+    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void)
 }
 
 enum NetworkError: Error {
@@ -28,18 +28,34 @@ enum NetworkError: Error {
 }
 
 struct NetworkClientImpl: NetworkClient {
-    func fetch(request: URLRequest) async throws -> Data {
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-
-            if let response = response as? HTTPURLResponse,
-                response.statusCode < 200 || response.statusCode >= 300 {
-                throw NetworkError.codeError(code: response.statusCode)
+    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void) {
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            // Проверяем, пришла ли ошибка
+            if let error {
+                if let error = error as? URLError {
+                    handler(.failure(.connectError(error: error)))
+                } else {
+                    handler(.failure(.unknownError(error: error)))
+                }
+                return
             }
 
-            return data
-        } catch let error as URLError {
-            throw NetworkError.connectError(error: error)
+            // Проверяем, что нам пришёл успешный код ответа
+            if let response = response as? HTTPURLResponse,
+                response.statusCode < 200 || response.statusCode >= 300 {
+                handler(.failure(.codeError(code: response.statusCode)))
+                return
+            }
+
+            // Возвращаем данные
+            guard let data else {
+                handler(.failure(.emptyData))
+                return
+            }
+
+            handler(.success(data))
         }
+
+        task.resume()
     }
 }

@@ -39,29 +39,43 @@ final class AuthViewController: BaseUIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
         // TODO вытащить всё это из контроллера, как будет минутка
-        Task { [weak self] in
-            guard let self else { return }
-            var requestError: NetworkError?
-            do {
-                let authData = try await self.authGateway.authenticate(with: code)
-                self.authStorage.set(authData)
-            } catch let error as NetworkError {
-                requestError = error
-            } catch let error {
-                requestError = .unknownError(error: error)
+        authGateway.fetchAuthToken(with: code) { [weak self] result in
+            guard let self else {
+                assertionFailure("Missed self")
+                return
             }
 
-            Task { @MainActor [weak self] in
-                guard let self, let delegate = self.delegate else {
-                    assertionFailure("Missed self=\(self.debugDescription) and delegat=\(delegate.debugDescription)")
-                    return
-                }
-                if let error = requestError {
-                    self.alertPresenter.show(with: ErrorAlertDto(error: error))
-                } else {
-                    delegate.authComplite()
-                }
+            switch result {
+            case let .success(authData):
+                self.handleSuccessAuth(authData: authData)
+            case let .failure(error):
+                self.handleErrorAuth(error: error)
             }
+        }
+    }
+
+    private func handleErrorAuth(error: NetworkError) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {
+                assertionFailure("Missed self")
+                return
+            }
+            self.alertPresenter.show(with: ErrorAlertDto(error: error))
+        }
+    }
+
+    private func handleSuccessAuth(authData: AuthData) {
+        authStorage.set(authData)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {
+                assertionFailure("Missed self")
+                return
+            }
+            guard let delegate = self.delegate else {
+                assertionFailure("Missed delegat")
+                return
+            }
+            delegate.authComplite()
         }
     }
 

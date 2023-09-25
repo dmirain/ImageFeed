@@ -1,3 +1,3 @@
 protocol AuthGateway {
-    func authenticate(with code: String) async throws -> AuthData
+    func fetchAuthToken(with code: String, handler: @escaping (Result<AuthData, NetworkError>) -> Void)
 }

@@ -7,17 +7,24 @@ final class UnsplashAuthGateway: AuthGateway {
         self.httpClient = httpClient
     }
 
-    func authenticate(with code: String) async throws -> AuthData {
-        let authRawData = try await httpClient.fetch(request: request(code))
-        return try convertData(data: authRawData)
+    func fetchAuthToken(with code: String, handler: @escaping (Result<AuthData, NetworkError>) -> Void) {
+        httpClient.fetch(request: request(code)) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case let .success(authRawData):
+                handler(self.convertData(data: authRawData))
+            case let .failure(error):
+                handler(.failure(error))
+            }
+        }
     }
 
-    private func convertData(data: Data) throws -> AuthData {
+    private func convertData(data: Data) -> Result<AuthData, NetworkError> {
         guard let oauthData = data.fromJson(to: UnsplashOAuthData.self) else {
-            throw NetworkError.parseError
+            return .failure(NetworkError.parseError)
         }
-        guard !oauthData.token.isEmpty else { throw NetworkError.emptyData }
-        return AuthData(token: oauthData.token)
+        guard !oauthData.token.isEmpty else { return .failure(NetworkError.emptyData) }
+        return .success(AuthData(token: oauthData.token))
     }
 
     private func request(_ code: String) -> URLRequest {

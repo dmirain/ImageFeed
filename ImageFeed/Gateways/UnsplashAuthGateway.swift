@@ -23,8 +23,8 @@ final class UnsplashAuthGateway: AuthGateway {
         guard let oauthData = data.fromJson(to: UnsplashOAuthData.self) else {
             return .failure(NetworkError.parseError)
         }
-        guard !oauthData.token.isEmpty else { return .failure(NetworkError.emptyData) }
-        return .success(AuthData(token: oauthData.token))
+        guard !oauthData.accessToken.isEmpty else { return .failure(NetworkError.emptyData) }
+        return .success(AuthData(token: oauthData.accessToken))
     }
 
     private func request(_ code: String) -> URLRequest {

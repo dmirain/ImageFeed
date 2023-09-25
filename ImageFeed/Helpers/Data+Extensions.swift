@@ -1,6 +1,13 @@
 import Foundation
 
-private let decoder = JSONDecoder()
+class SnakeCaseJSONDecoder: JSONDecoder {
+    override init() {
+        super.init()
+        keyDecodingStrategy = .convertFromSnakeCase
+    }
+}
+
+private let decoder = SnakeCaseJSONDecoder()
 private let encoder = JSONEncoder()
 
 extension Data {

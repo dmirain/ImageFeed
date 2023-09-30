@@ -1,7 +1,7 @@
 import Foundation
 
 protocol NetworkClient {
-    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void)
+    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void) -> URLSessionTask
 }
 
 enum NetworkError: Error {
@@ -28,7 +28,7 @@ enum NetworkError: Error {
 }
 
 struct NetworkClientImpl: NetworkClient {
-    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void) {
+    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void) -> URLSessionTask {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             // Проверяем, пришла ли ошибка
             if let error {
@@ -57,5 +57,6 @@ struct NetworkClientImpl: NetworkClient {
         }
 
         task.resume()
+        return task
     }
 }

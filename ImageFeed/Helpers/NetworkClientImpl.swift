@@ -1,7 +1,11 @@
 import Foundation
 
 protocol NetworkClient {
-    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void) -> URLSessionTask
+    func fetchObject<T: Decodable>(
+        from request: URLRequest,
+        as dtoType: T.Type,
+        handler: @escaping (Result<T, NetworkError>) -> Void
+    ) -> URLSessionTask
 }
 
 enum NetworkError: Error {
@@ -28,7 +32,29 @@ enum NetworkError: Error {
 }
 
 struct NetworkClientImpl: NetworkClient {
-    func fetch(request: URLRequest, handler: @escaping (Result<Data, NetworkError>) -> Void) -> URLSessionTask {
+    func fetchObject<T: Decodable>(
+        from request: URLRequest,
+        as dtoType: T.Type,
+        handler: @escaping (Result<T, NetworkError>) -> Void
+    ) -> URLSessionTask {
+        fetch(from: request) { result in
+            switch result {
+            case let .success(data):
+                if let object = data.fromJson(to: dtoType) {
+                    handler(.success(object))
+                } else {
+                    handler(.failure(NetworkError.parseError))
+                }
+            case let .failure(error):
+                handler(.failure(error))
+            }
+        }
+    }
+
+    private func fetch(
+        from request: URLRequest,
+        handler: @escaping (Result<Data, NetworkError>) -> Void
+    ) -> URLSessionTask {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             // Проверяем, пришла ли ошибка
             if let error {

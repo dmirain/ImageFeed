@@ -66,7 +66,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
         }
     }
 
-    private func handleSuccessAuth(authData: AuthData) {
+    private func handleSuccessAuth(authData: AuthDto) {
         authStorage.set(authData)
         DispatchQueue.main.async { [weak self] in
             guard let self else {

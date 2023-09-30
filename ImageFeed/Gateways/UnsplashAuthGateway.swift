@@ -9,15 +9,15 @@ final class UnsplashAuthGateway: AuthGateway {
         self.httpClient = httpClient
     }
 
-    func fetchAuthToken(with code: String, handler: @escaping (Result<AuthData, NetworkError>) -> Void) {
+    func fetchAuthToken(with code: String, handler: @escaping (Result<AuthDto, NetworkError>) -> Void) {
         guard isLockedForNext(with: code) else { return }
 
-        task = httpClient.fetch(request: request(code)) { [weak self] result in
+        task = httpClient.fetchObject(from: request(code), as: UnsplashOAuthData.self) { [weak self] result in
             guard let self else { return }
 
             switch result {
-            case let .success(authRawData):
-                handler(self.convertData(data: authRawData))
+            case let .success(oauthData):
+                handler(self.convertData(oauthData: oauthData))
             case let .failure(error):
                 handler(.failure(error))
             }
@@ -42,12 +42,9 @@ private extension UnsplashAuthGateway {
         lastCode = nil
     }
 
-    func convertData(data: Data) -> Result<AuthData, NetworkError> {
-        guard let oauthData = data.fromJson(to: UnsplashOAuthData.self) else {
-            return .failure(NetworkError.parseError)
-        }
+    func convertData(oauthData: UnsplashOAuthData) -> Result<AuthDto, NetworkError> {
         guard !oauthData.accessToken.isEmpty else { return .failure(NetworkError.emptyData) }
-        return .success(AuthData(token: oauthData.accessToken))
+        return .success(AuthDto(token: oauthData.accessToken))
     }
 
     func request(_ code: String) -> URLRequest {

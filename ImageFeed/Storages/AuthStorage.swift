@@ -1,6 +1,6 @@
 protocol AuthStorage {
     static var shared: AuthStorage { get }
-    func get() -> AuthData?
-    func set(_ newValue: AuthData)
+    func get() -> AuthDto?
+    func set(_ newValue: AuthDto)
     func reset()
 }

@@ -4,7 +4,7 @@ final class UnsplashAuthGateway: AuthGateway {
     private let httpClient: NetworkClient
     private var task: URLSessionTask?
     private var lastCode: String?
-    
+
     init(httpClient: NetworkClient) {
         self.httpClient = httpClient
     }
@@ -14,7 +14,7 @@ final class UnsplashAuthGateway: AuthGateway {
 
         task = httpClient.fetch(request: request(code)) { [weak self] result in
             guard let self else { return }
-                        
+
             switch result {
             case let .success(authRawData):
                 handler(self.convertData(data: authRawData))
@@ -36,12 +36,12 @@ private extension UnsplashAuthGateway {
         lastCode = code
         return true
     }
-    
+
     func unlockForNext() {
         task = nil
         lastCode = nil
     }
-    
+
     func convertData(data: Data) -> Result<AuthData, NetworkError> {
         guard let oauthData = data.fromJson(to: UnsplashOAuthData.self) else {
             return .failure(NetworkError.parseError)

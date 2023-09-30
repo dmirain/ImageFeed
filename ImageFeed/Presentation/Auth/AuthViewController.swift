@@ -1,5 +1,4 @@
 import UIKit
-import ProgressHUD
 
 protocol AuthViewControllerDelegate: AnyObject {
     func authComplite()
@@ -40,14 +39,14 @@ final class AuthViewController: BaseUIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
         // TODO вытащить всё это из контроллера, как будет минутка
-        ProgressHUD.show()
+        UIBlockingProgressHUD.show()
         authGateway.fetchAuthToken(with: code) { [weak self] result in
             guard let self else {
                 assertionFailure("Missed self")
                 return
             }
 
-            ProgressHUD.dismiss()
+            UIBlockingProgressHUD.dismiss()
             switch result {
             case let .success(authData):
                 self.handleSuccessAuth(authData: authData)

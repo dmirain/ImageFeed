@@ -12,6 +12,7 @@ final class SplashViewController: BaseUIViewController {
         tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarViewController")
 
         super.init(coder: coder)
+//        authStorage.reset()
     }
 
     override func viewDidAppear(_ animated: Bool) {

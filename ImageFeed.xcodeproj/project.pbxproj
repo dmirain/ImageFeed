@@ -12,7 +12,7 @@
 		792B7B2A2A88065E000AF75A /* BaseUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B292A88065E000AF75A /* BaseUIViewController.swift */; };
 		792B7B2C2A880730000AF75A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2B2A880730000AF75A /* ProfileViewController.swift */; };
 		792B7B2E2A88EE25000AF75A /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */; };
-		792B7B302A88FE7F000AF75A /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2F2A88FE7F000AF75A /* NavigationController.swift */; };
+		792B7B302A88FE7F000AF75A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2F2A88FE7F000AF75A /* TabBarController.swift */; };
 		79797FB92AC0BE0100666573 /* NetworkClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */; };
 		79797FC32AC0C00700666573 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC22AC0C00700666573 /* AuthDto.swift */; };
 		79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC42AC0C0AC00666573 /* AuthStorage.swift */; };
@@ -76,7 +76,7 @@
 		792B7B292A88065E000AF75A /* BaseUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIViewController.swift; sourceTree = "<group>"; };
 		792B7B2B2A880730000AF75A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
-		792B7B2F2A88FE7F000AF75A /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		792B7B2F2A88FE7F000AF75A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientImpl.swift; sourceTree = "<group>"; };
 		79797FC22AC0C00700666573 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		79797FC42AC0C0AC00666573 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 				79797FBB2AC0BEA000666573 /* Profile */,
 				79797FBA2AC0BE5800666573 /* Auth */,
 				79F5DD522A750172000224F2 /* Main.storyboard */,
-				792B7B2F2A88FE7F000AF75A /* NavigationController.swift */,
+				792B7B2F2A88FE7F000AF75A /* TabBarController.swift */,
 				79AECB072AC8AC13009AA84B /* UIBlockingProgressHUD.swift */,
 			);
 			path = Presentation;
@@ -495,7 +495,7 @@
 				792B7B2A2A88065E000AF75A /* BaseUIViewController.swift in Sources */,
 				797E19332A75A56700A3E18F /* ImagesListCell.swift in Sources */,
 				79797FB92AC0BE0100666573 /* NetworkClientImpl.swift in Sources */,
-				792B7B302A88FE7F000AF75A /* NavigationController.swift in Sources */,
+				792B7B302A88FE7F000AF75A /* TabBarController.swift in Sources */,
 				79F745B02A7EE9E000AED431 /* UIView+Extensions.swift in Sources */,
 				792B7B2E2A88EE25000AF75A /* SingleImageViewController.swift in Sources */,
 				79797FCD2AC0C39900666573 /* UnsplashAuthGateway.swift in Sources */,

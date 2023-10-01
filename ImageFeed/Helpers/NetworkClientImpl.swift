@@ -13,6 +13,7 @@ enum NetworkError: Error {
     case codeError(code: Int)
     case emptyData
     case parseError
+    case authFaild
     case unknownError(error: Error)
 
     func asText() -> String {
@@ -27,6 +28,8 @@ enum NetworkError: Error {
             return "Ошибка разбора данных"
         case let .unknownError(error):
             return "Неизвестная ошибка: \(error.localizedDescription)"
+        case .authFaild:
+            return "Ошибка авторизации"
         }
     }
 }
@@ -69,7 +72,11 @@ struct NetworkClientImpl: NetworkClient {
             // Проверяем, что нам пришёл успешный код ответа
             if let response = response as? HTTPURLResponse,
                 response.statusCode < 200 || response.statusCode >= 300 {
-                handler(.failure(.codeError(code: response.statusCode)))
+                if response.statusCode == 401 {
+                    handler(.failure(.authFaild))
+                } else {
+                    handler(.failure(.codeError(code: response.statusCode)))
+                }
                 return
             }
 

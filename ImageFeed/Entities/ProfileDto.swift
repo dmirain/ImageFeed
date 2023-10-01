@@ -10,7 +10,7 @@ struct ProfileDto {
             username: data.username,
             name: "\(data.firstName) \(data.lastName)",
             loginName: "@\(data.username)",
-            bio: data.bio,
+            bio: data.bio ?? "",
             smallPhotoUrl: photoData.profileImage.small
         )
     }

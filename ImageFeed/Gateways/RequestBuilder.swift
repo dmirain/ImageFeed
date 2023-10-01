@@ -5,7 +5,11 @@ protocol RequestBuilder {
 }
 
 struct RequestBuilderImpl: RequestBuilder {
-    let token: String
+    private let token: String
+
+    init(token: String) {
+        self.token = token
+    }
 
     func makeRequest(path: String) -> URLRequest {
         var components = URLComponents(url: Const.defaultBaseURL, resolvingAgainstBaseURL: true)!

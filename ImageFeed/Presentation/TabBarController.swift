@@ -1,8 +1,18 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    init(imagesListViewController: ImagesListViewController, profileViewController: ProfileViewController) {
+    private let imagesListViewController: ImagesListViewController
+    private let profileViewController: ProfileViewController
+
+    init(
+        imagesListViewController: ImagesListViewController,
+        profileViewController: ProfileViewController
+    ) {
+        self.imagesListViewController = imagesListViewController
+        self.profileViewController = profileViewController
+
         super.init(nibName: nil, bundle: nil)
+
         viewControllers = [imagesListViewController, profileViewController]
         tabBar.tintColor = UIColor.ypWhite
         tabBar.barTintColor = UIColor.ypBlack
@@ -10,5 +20,9 @@ final class TabBarController: UITabBarController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
+        profileViewController.initData(token: token, handler: handler)
     }
 }

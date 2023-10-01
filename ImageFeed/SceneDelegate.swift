@@ -5,6 +5,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private let storyboard = UIStoryboard(name: "Main", bundle: .main)
     private let authStorage = AuthStorageImpl.shared
+    private let httpClient = NetworkClientImpl()
     private var authViewController: AuthViewController? {
         storyboard.instantiateViewController(
             withIdentifier: "AuthViewController"
@@ -18,7 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         imagesListViewController?.tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
         return imagesListViewController
     }
-    private var profileViewController: ProfileViewController { ProfileViewController() }
+    private var profileViewController: ProfileViewController {
+        let profileGateway = ProfileGateway(httpClient: httpClient)
+        return ProfileViewController(profileGateway: profileGateway)
+    }
     private var tabBarViewController: TabBarController {
         TabBarController(
             imagesListViewController: imagesListViewController!,
@@ -27,9 +31,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     private var splashViewController: SplashViewController {
         SplashViewController(
+            window: window!,
             authStorage: authStorage,
             authViewController: authViewController!,
-            tabBarViewController: tabBarViewController
+            tabBarViewController: tabBarViewController,
+            alertPresenter: AlertPresenterImpl()
         )
     }
 
@@ -40,8 +46,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-
-        authStorage.reset()
 
         window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()

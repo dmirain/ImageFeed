@@ -2,16 +2,20 @@ import Foundation
 
 final class ProfileGateway {
     private let httpClient: NetworkClient
-    private let requestBuilder: RequestBuilder
+    var requestBuilder: RequestBuilder?
     private var task: URLSessionTask?
     private var photoTask: URLSessionTask?
 
-    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
+    init(httpClient: NetworkClient) {
         self.httpClient = httpClient
-        self.requestBuilder = requestBuilder
     }
 
     func fetchProfile(handler: @escaping (Result<ProfileDto, NetworkError>) -> Void) {
+        guard requestBuilder != nil else {
+            handler(.failure(.authFaild))
+            return
+        }
+
         guard isLockedForNext() else { return }
 
         task = httpClient.fetchObject(from: profileRequest(), as: ProfileResponse.self) { [weak self] result in
@@ -55,10 +59,10 @@ private extension ProfileGateway {
     }
 
     func profilePhotoRequest(username: String) -> URLRequest {
-        requestBuilder.makeRequest(path: "/users/\(username)")
+        requestBuilder!.makeRequest(path: "/users/\(username)")
     }
 
     func profileRequest() -> URLRequest {
-        requestBuilder.makeRequest(path: "/me")
+        requestBuilder!.makeRequest(path: "/me")
     }
 }

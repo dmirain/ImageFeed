@@ -41,7 +41,7 @@ final class SplashViewController: BaseUIViewController {
 }
 
 private extension SplashViewController {
-     func routeToController() {
+    func routeToController() {
         guard let token = authStorage.get()?.token else {
             authViewController.delegate = self
             present(authViewController, animated: true)

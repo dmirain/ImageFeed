@@ -40,14 +40,17 @@ final class SplashViewController: BaseUIViewController {
     }
 }
 
-extension SplashViewController {
-    private func routeToController() {
+private extension SplashViewController {
+     func routeToController() {
         guard let token = authStorage.get()?.token else {
             authViewController.delegate = self
             present(authViewController, animated: true)
             return
         }
-        
+        showTabBarViewController(token: token)
+    }
+
+    func showTabBarViewController(token: String) {
         UIBlockingProgressHUD.show()
 
         tabBarViewController.initData(token: token) { [weak self] error in

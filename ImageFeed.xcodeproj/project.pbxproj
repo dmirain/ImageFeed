@@ -39,6 +39,7 @@
 		79AECB0A2AC8AEE9009AA84B /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB092AC8AEE9009AA84B /* ProfileResponse.swift */; };
 		79AECB0C2AC8B247009AA84B /* ProfileGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB0B2AC8B247009AA84B /* ProfileGateway.swift */; };
 		79AECB0E2AC8B28B009AA84B /* ProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB0D2AC8B28B009AA84B /* ProfileDto.swift */; };
+		79AECB122AC942C8009AA84B /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB112AC942C8009AA84B /* RequestBuilder.swift */; };
 		79F5DD4D2A750172000224F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F5DD4C2A750172000224F2 /* AppDelegate.swift */; };
 		79F5DD4F2A750172000224F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F5DD4E2A750172000224F2 /* SceneDelegate.swift */; };
 		79F5DD512A750172000224F2 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F5DD502A750172000224F2 /* ImagesListViewController.swift */; };
@@ -101,6 +102,7 @@
 		79AECB092AC8AEE9009AA84B /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		79AECB0B2AC8B247009AA84B /* ProfileGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGateway.swift; sourceTree = "<group>"; };
 		79AECB0D2AC8B28B009AA84B /* ProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDto.swift; sourceTree = "<group>"; };
+		79AECB112AC942C8009AA84B /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		79F5DD492A750172000224F2 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F5DD4C2A750172000224F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79F5DD4E2A750172000224F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				79797FCA2AC0C32200666573 /* AuthGateway.swift */,
 				79797FCC2AC0C39900666573 /* UnsplashAuthGateway.swift */,
 				79AECB0B2AC8B247009AA84B /* ProfileGateway.swift */,
+				79AECB112AC942C8009AA84B /* RequestBuilder.swift */,
 			);
 			path = Gateways;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				792B7B2C2A880730000AF75A /* ProfileViewController.swift in Sources */,
 				79797FC72AC0C11200666573 /* Data+Extensions.swift in Sources */,
 				7922CC672AA4C8C100627D98 /* AuthViewController.swift in Sources */,
+				79AECB122AC942C8009AA84B /* RequestBuilder.swift in Sources */,
 				798A49DE2A9BCD5400725D9C /* ProfileUIView.swift in Sources */,
 				79797FE32AC0C9EC00666573 /* ErrorAlertDto.swift in Sources */,
 				79AECB082AC8AC13009AA84B /* UIBlockingProgressHUD.swift in Sources */,

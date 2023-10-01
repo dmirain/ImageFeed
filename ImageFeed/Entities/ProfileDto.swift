@@ -3,13 +3,15 @@ struct ProfileDto {
     let name: String
     let loginName: String
     let bio: String
-    
-    static func fromProfileResponse(_ data: ProfileResponse) -> ProfileDto {
-        return ProfileDto(
+    let smallPhotoUrl: String
+
+    static func fromProfileResponse(_ data: ProfileResponse, photoData: ProfileImageResponse) -> Self {
+        Self(
             username: data.username,
             name: "\(data.firstName) \(data.lastName)",
             loginName: "@\(data.username)",
-            bio: data.bio
+            bio: data.bio,
+            smallPhotoUrl: photoData.profileImage.small
         )
     }
 }

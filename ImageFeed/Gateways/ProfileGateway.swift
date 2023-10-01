@@ -2,26 +2,40 @@ import Foundation
 
 final class ProfileGateway {
     private let httpClient: NetworkClient
+    private let requestBuilder: RequestBuilder
     private var task: URLSessionTask?
+    private var photoTask: URLSessionTask?
 
-    init(httpClient: NetworkClient) {
+    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
         self.httpClient = httpClient
+        self.requestBuilder = requestBuilder
     }
 
-    func fetchProfile(with token: String, handler: @escaping (Result<ProfileDto, NetworkError>) -> Void) {
+    func fetchProfile(handler: @escaping (Result<ProfileDto, NetworkError>) -> Void) {
         guard isLockedForNext() else { return }
 
-        task = httpClient.fetchObject(from: profileRequest(token), as: ProfileResponse.self) { [weak self] result in
+        task = httpClient.fetchObject(from: profileRequest(), as: ProfileResponse.self) { [weak self] result in
             guard let self else { return }
 
             switch result {
             case let .success(response):
-                handler(.success(ProfileDto.fromProfileResponse(response)))
+                photoTask = httpClient.fetchObject(
+                    from: profilePhotoRequest(username: response.username),
+                    as: ProfileImageResponse.self
+                ) { [weak self] result in
+                    guard let self else { return }
+
+                    switch result {
+                    case let .success(photoResponse):
+                        handler(.success(ProfileDto.fromProfileResponse(response, photoData: photoResponse)))
+                    case let .failure(error):
+                        handler(.failure(error))
+                    }
+                    self.unlockForNext()
+                }
             case let .failure(error):
                 handler(.failure(error))
             }
-
-            self.unlockForNext()
         }
     }
 
@@ -31,20 +45,20 @@ private extension ProfileGateway {
     func isLockedForNext() -> Bool {
         assert(Thread.isMainThread)
         task?.cancel()
+        photoTask?.cancel()
         return true
     }
 
     func unlockForNext() {
         task = nil
+        photoTask = nil
     }
 
-    func profileRequest(_ token: String) -> URLRequest {
-        var components = URLComponents(url: Const.defaultBaseURL, resolvingAgainstBaseURL: true)!
-        components.path = "me"
-        var request = URLRequest(url: components.url!)
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.timeoutInterval = 2 // seconds
-        request.httpMethod = "GET"
-        return request
+    func profilePhotoRequest(username: String) -> URLRequest {
+        return requestBuilder.makeRequest(path: "/users/\(username)")
+    }
+
+    func profileRequest() -> URLRequest {
+        return requestBuilder.makeRequest(path: "/me")
     }
 }

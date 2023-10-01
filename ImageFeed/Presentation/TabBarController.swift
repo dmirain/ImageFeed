@@ -1,17 +1,14 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+    init(imagesListViewController: ImagesListViewController, profileViewController: ProfileViewController) {
+        super.init(nibName: nil, bundle: nil)
+        viewControllers = [imagesListViewController, profileViewController]
+        tabBar.tintColor = UIColor.ypWhite
+        tabBar.barTintColor = UIColor.ypBlack
+    }
 
-        let imagesListViewController = storyboard.instantiateViewController(
-            withIdentifier: "ImagesListViewController"
-        )
-        imagesListViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
-
-        let profileViewController = ProfileViewController()
-
-        self.viewControllers = [imagesListViewController, profileViewController]
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

@@ -3,23 +3,28 @@ import UIKit
 final class SplashViewController: BaseUIViewController {
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
 
+    private let contentView: SplashUIView
+
     private let authStorage: AuthStorage
-    private let tabBarViewController: UIViewController
+    private let tabBarViewController: TabBarController
+    private let authViewController: AuthViewController
+
+    init(authStorage: AuthStorage, authViewController: AuthViewController, tabBarViewController: TabBarController) {
+        self.authStorage = authStorage
+        self.authViewController = authViewController
+        self.tabBarViewController = tabBarViewController
+        self.contentView = SplashUIView()
+        super.init(nibName: nil, bundle: nil)
+    }
 
     required init?(coder: NSCoder) {
-        authStorage = AuthStorageImpl.shared
-        let storyBoard = UIStoryboard(name: "Main", bundle: .main)
-        tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarViewController")
-
-        super.init(coder: coder)
-//        authStorage.reset()
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         routeToController()
     }
-
 }
 
 extension SplashViewController {
@@ -29,22 +34,10 @@ extension SplashViewController {
         let token = authStorage.get()?.token
 
         if token == nil {
-            performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
+            authViewController.delegate = self
+            present(authViewController, animated: true)
         } else {
             window.rootViewController = tabBarViewController
-        }
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegueIdentifier {
-            guard let viewController = segue.destination as? AuthViewController else {
-                assertionFailure("unknown controller \(segue.destination)")
-                return
-            }
-
-            viewController.delegate = self
-        } else {
-            assertionFailure("unknown segue identifier \(segue.identifier ?? "")")
         }
     }
 }

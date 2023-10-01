@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileUIView: UIView {
 
@@ -82,6 +83,8 @@ final class ProfileUIView: UIView {
         return view
     }
 
+    private let photoProcessor = RoundCornerImageProcessor(cornerRadius: 35)
+
     init() {
         super.init(frame: .zero)
 
@@ -102,5 +105,13 @@ final class ProfileUIView: UIView {
         nameLabel.text = data.name
         loginLabel.text = data.loginName
         userInfoLabel.text = data.bio
+    }
+
+    func updateAvatar(_ photoUrl: URL) {
+        userpickImageView.kf.setImage(
+            with: photoUrl,
+            placeholder: UIImage.userpicImage,
+            options: [.processor(photoProcessor)]
+        )
     }
 }

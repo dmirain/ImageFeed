@@ -3,12 +3,14 @@ import UIKit
 final class ProfileViewController: BaseUIViewController {
     private let contentView: ProfileUIView
     private let profileGateway: ProfileGateway
+    private var profileImageServiceObserver: NSObjectProtocol?
 
     init(profileGateway: ProfileGateway) {
         contentView = ProfileUIView()
         self.profileGateway = profileGateway
         super.init(nibName: nil, bundle: nil)
         tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
+        subscribeOnUpdateAvatar()
     }
 
     required init?(coder: NSCoder) {
@@ -31,6 +33,18 @@ final class ProfileViewController: BaseUIViewController {
                 handler(nil)
             case let .failure(error):
                 handler(error)
+            }
+        }
+    }
+
+    private func subscribeOnUpdateAvatar() {
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileGateway.DidChangeNotification, object: nil, queue: .main
+        ) { [weak self] data in
+            guard let self else { return }
+            if let photoUrl = data.userInfo?["URL"] as? String {
+                guard let photoUrl = URL(string: photoUrl) else { return }
+                self.contentView.updateAvatar(photoUrl)
             }
         }
     }

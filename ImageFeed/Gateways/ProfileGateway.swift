@@ -1,10 +1,11 @@
 import Foundation
 
 final class ProfileGateway {
+    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+
     private let httpClient: NetworkClient
-    var requestBuilder: RequestBuilder?
     private var task: URLSessionTask?
-    private var photoTask: URLSessionTask?
+    var requestBuilder: RequestBuilder?
 
     init(httpClient: NetworkClient) {
         self.httpClient = httpClient
@@ -23,39 +24,45 @@ final class ProfileGateway {
 
             switch result {
             case let .success(response):
-                photoTask = httpClient.fetchObject(
-                    from: profilePhotoRequest(username: response.username),
-                    as: ProfileImageResponse.self
-                ) { [weak self] result in
-                    guard let self else { return }
-
-                    switch result {
-                    case let .success(photoResponse):
-                        handler(.success(ProfileDto.fromProfileResponse(response, photoData: photoResponse)))
-                    case let .failure(error):
-                        handler(.failure(error))
-                    }
-                    self.unlockForNext()
-                }
+                handler(.success(ProfileDto.fromProfileResponse(response)))
+                fetchProfilePhoto(username: response.username)
+                self.unlockForNext()
             case let .failure(error):
                 handler(.failure(error))
             }
         }
     }
 
+    private func fetchProfilePhoto(username: String) {
+        _ = httpClient.fetchObject(
+            from: profilePhotoRequest(username: username),
+            as: ProfileImageResponse.self
+        ) { [weak self] result in
+            guard let self else { return }
+
+            switch result {
+            case let .success(photoResponse):
+                NotificationCenter.default.post(
+                    name: Self.DidChangeNotification,
+                    object: self,
+                    userInfo: ["URL": photoResponse.profileImage.medium]
+                )
+            case .failure:
+                break
+            }
+        }
+    }
 }
 
 private extension ProfileGateway {
     func isLockedForNext() -> Bool {
         assert(Thread.isMainThread)
         task?.cancel()
-        photoTask?.cancel()
         return true
     }
 
     func unlockForNext() {
         task = nil
-        photoTask = nil
     }
 
     func profilePhotoRequest(username: String) -> URLRequest {

@@ -38,7 +38,6 @@ final class AuthViewController: BaseUIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ viewController: WebViewViewController, didAuthenticateWithCode code: String) {
-        // TODO вытащить всё это из контроллера, как будет минутка
         UIBlockingProgressHUD.show()
         authGateway.fetchAuthToken(with: code) { [weak self] result in
             guard let self else { return }

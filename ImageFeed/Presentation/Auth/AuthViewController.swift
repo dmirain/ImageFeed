@@ -15,7 +15,7 @@ final class AuthViewController: BaseUIViewController {
     required init?(coder: NSCoder) {
         let httpClient = NetworkClientImpl()
         authGateway = UnsplashAuthGateway(httpClient: httpClient)
-        authStorage = UserDeafaultsAuthStorage.shared
+        authStorage = AuthStorageImpl.shared
         alertPresenter = AlertPresenterImpl()
 
         super.init(coder: coder)
@@ -49,7 +49,11 @@ extension AuthViewController: WebViewViewControllerDelegate {
             UIBlockingProgressHUD.dismiss()
             switch result {
             case let .success(authData):
-                self.handleSuccessAuth(authData: authData)
+                if authStorage.set(authData) {
+                    self.handleSuccessAuth(authData: authData)
+                } else {
+                    self.handleErrorAuth(error: .parseError)
+                }
             case let .failure(error):
                 self.handleErrorAuth(error: error)
             }
@@ -67,7 +71,6 @@ extension AuthViewController: WebViewViewControllerDelegate {
     }
 
     private func handleSuccessAuth(authData: AuthDto) {
-        authStorage.set(authData)
         DispatchQueue.main.async { [weak self] in
             guard let self else {
                 assertionFailure("Missed self")

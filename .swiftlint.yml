@@ -36,7 +36,6 @@ opt_in_rules:
   - function_default_parameter_at_end
   - flatmap_over_map_reduce
   - first_where
-  - file_types_order
   - file_name_no_space
   - fatal_error_message
   - explicit_init

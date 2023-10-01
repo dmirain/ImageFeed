@@ -40,11 +40,6 @@ class WebViewViewController: BaseUIViewController {
         super.viewWillAppear(animated)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        observation?.invalidate()
-        super.viewWillDisappear(animated)
-    }
-
     @IBAction private func didTapBackButton(_ sender: UIButton) {
         guard let delegate else {
             assertionFailure("Missed delegate in WebView")

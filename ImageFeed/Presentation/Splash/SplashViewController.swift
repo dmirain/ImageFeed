@@ -7,7 +7,7 @@ final class SplashViewController: BaseUIViewController {
     private let tabBarViewController: UIViewController
 
     required init?(coder: NSCoder) {
-        authStorage = UserDeafaultsAuthStorage.shared
+        authStorage = AuthStorageImpl.shared
         let storyBoard = UIStoryboard(name: "Main", bundle: .main)
         tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarViewController")
 

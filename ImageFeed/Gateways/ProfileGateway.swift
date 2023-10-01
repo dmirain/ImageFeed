@@ -55,10 +55,10 @@ private extension ProfileGateway {
     }
 
     func profilePhotoRequest(username: String) -> URLRequest {
-        return requestBuilder.makeRequest(path: "/users/\(username)")
+        requestBuilder.makeRequest(path: "/users/\(username)")
     }
 
     func profileRequest() -> URLRequest {
-        return requestBuilder.makeRequest(path: "/me")
+        requestBuilder.makeRequest(path: "/me")
     }
 }

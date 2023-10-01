@@ -7,9 +7,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private let authStorage = AuthStorageImpl.shared
     private let httpClient = NetworkClientImpl()
     private var authViewController: AuthViewController? {
-        storyboard.instantiateViewController(
+        let controller = storyboard.instantiateViewController(
             withIdentifier: "AuthViewController"
         ) as? AuthViewController
+        controller?.modalPresentationStyle = .fullScreen
+        return controller
     }
     private var imagesListViewController: ImagesListViewController? {
         let imagesListViewController = storyboard.instantiateViewController(
@@ -45,8 +47,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)
 
+        window = UIWindow(windowScene: scene)
         window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()
     }

@@ -1,7 +1,7 @@
 import UIKit
 
 protocol AuthViewControllerDelegate: AnyObject {
-    func authComplite()
+    func authComplite(_ viewController: AuthViewController)
 }
 
 final class AuthViewController: BaseUIViewController {
@@ -41,18 +41,14 @@ extension AuthViewController: WebViewViewControllerDelegate {
         // TODO вытащить всё это из контроллера, как будет минутка
         UIBlockingProgressHUD.show()
         authGateway.fetchAuthToken(with: code) { [weak self] result in
-            guard let self else {
-                assertionFailure("Missed self")
-                return
-            }
+            guard let self else { return }
 
-            UIBlockingProgressHUD.dismiss()
             switch result {
             case let .success(authData):
                 if authStorage.set(authData) {
-                    self.handleSuccessAuth(authData: authData)
+                    self.handleSuccessAuth(viewController, authData: authData)
                 } else {
-                    self.handleErrorAuth(error: .parseError)
+                    self.handleErrorAuth(error: .authFaild)
                 }
             case let .failure(error):
                 self.handleErrorAuth(error: error)
@@ -62,25 +58,21 @@ extension AuthViewController: WebViewViewControllerDelegate {
 
     private func handleErrorAuth(error: NetworkError) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                assertionFailure("Missed self")
-                return
-            }
+            guard let self else { return }
+            UIBlockingProgressHUD.dismiss()
+
             self.alertPresenter.show(with: ErrorAlertDto(error: error))
         }
     }
 
-    private func handleSuccessAuth(authData: AuthDto) {
+    private func handleSuccessAuth(_ viewController: WebViewViewController, authData: AuthDto) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                assertionFailure("Missed self")
-                return
-            }
-            guard let delegate = self.delegate else {
-                assertionFailure("Missed delegat")
-                return
-            }
-            delegate.authComplite()
+            guard let self else { return }
+            guard let delegate = self.delegate else { return }
+            UIBlockingProgressHUD.dismiss()
+
+            viewController.dismiss(animated: false)
+            delegate.authComplite(self)
         }
     }
 

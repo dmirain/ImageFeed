@@ -38,6 +38,10 @@ final class SplashViewController: BaseUIViewController {
         super.viewDidAppear(animated)
         routeToController()
     }
+
+    override func loadView() {
+       self.view = contentView
+    }
 }
 
 private extension SplashViewController {
@@ -55,7 +59,6 @@ private extension SplashViewController {
 
         tabBarViewController.initData(token: token) { [weak self] error in
             guard let self else { return }
-            UIBlockingProgressHUD.dismiss()
             if let error {
                 switch error {
                 case .authFaild:
@@ -65,10 +68,12 @@ private extension SplashViewController {
                 }
 
                 DispatchQueue.main.async {
+                    UIBlockingProgressHUD.dismiss()
                     self.alertPresenter.show(with: ErrorAlertDto(error: error))
                 }
             } else {
                 DispatchQueue.main.async {
+                    UIBlockingProgressHUD.dismiss()
                     self.window.rootViewController = self.tabBarViewController
                 }
             }
@@ -77,8 +82,8 @@ private extension SplashViewController {
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
-    func authComplite() {
-        routeToController()
+    func authComplite(_ viewController: AuthViewController) {
+        viewController.dismiss(animated: true)
     }
 }
 

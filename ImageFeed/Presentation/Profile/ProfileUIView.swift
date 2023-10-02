@@ -7,6 +7,8 @@ final class ProfileUIView: UIView {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage.userpicImage
+        view.layer.cornerRadius = 35
+        view.layer.masksToBounds = true
         NSLayoutConstraint.activate([
             view.widthAnchor.constraint(equalToConstant: 70),
             view.heightAnchor.constraint(equalToConstant: 70)
@@ -83,8 +85,6 @@ final class ProfileUIView: UIView {
         return view
     }
 
-    private let photoProcessor = RoundCornerImageProcessor(cornerRadius: 35)
-
     init() {
         super.init(frame: .zero)
 
@@ -108,10 +108,6 @@ final class ProfileUIView: UIView {
     }
 
     func updateAvatar(_ photoUrl: URL) {
-        userpickImageView.kf.setImage(
-            with: photoUrl,
-            placeholder: UIImage.userpicImage,
-            options: [.processor(photoProcessor)]
-        )
+        userpickImageView.kf.setImage(with: photoUrl, placeholder: UIImage.userpicImage)
     }
 }

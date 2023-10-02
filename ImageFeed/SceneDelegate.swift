@@ -23,7 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     private var profileViewController: ProfileViewController {
         let profileGateway = ProfileGateway(httpClient: httpClient)
-        return ProfileViewController(profileGateway: profileGateway)
+        let profileImageGateway = ProfileImageGateway(httpClient: httpClient)
+        return ProfileViewController(
+            profileGateway: profileGateway,
+            profileImageGateway: profileImageGateway
+        )
     }
     private var tabBarViewController: TabBarController {
         TabBarController(

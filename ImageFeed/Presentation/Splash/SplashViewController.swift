@@ -1,17 +1,37 @@
 import UIKit
 
 final class SplashViewController: BaseUIViewController {
+    private let window: UIWindow
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
 
+    private let contentView: SplashUIView
+
     private let authStorage: AuthStorage
-    private let tabBarViewController: UIViewController
+    private let tabBarViewController: TabBarController
+    private let authViewController: AuthViewController
+    private var alertPresenter: AlertPresenter
+
+    init(
+        window: UIWindow,
+        authStorage: AuthStorage,
+        authViewController: AuthViewController,
+        tabBarViewController: TabBarController,
+        alertPresenter: AlertPresenter
+    ) {
+        self.window = window
+        self.authStorage = authStorage
+        self.authViewController = authViewController
+        self.tabBarViewController = tabBarViewController
+        self.alertPresenter = alertPresenter
+        self.contentView = SplashUIView()
+
+        super.init(nibName: nil, bundle: nil)
+
+        self.alertPresenter.delegate = self
+    }
 
     required init?(coder: NSCoder) {
-        authStorage = UserDeafaultsAuthStorage.shared
-        let storyBoard = UIStoryboard(name: "Main", bundle: .main)
-        tabBarViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarViewController")
-
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -19,37 +39,60 @@ final class SplashViewController: BaseUIViewController {
         routeToController()
     }
 
+    override func loadView() {
+       self.view = contentView
+    }
 }
 
-extension SplashViewController {
-    private func routeToController() {
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-
-        let token = authStorage.get()?.token
-
-        if token == nil {
-            performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
-        } else {
-            window.rootViewController = tabBarViewController
+private extension SplashViewController {
+    func routeToController() {
+        guard let token = authStorage.get()?.token else {
+            authViewController.delegate = self
+            present(authViewController, animated: true)
+            return
         }
+        showTabBarViewController(token: token)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegueIdentifier {
-            guard let viewController = segue.destination as? AuthViewController else {
-                assertionFailure("unknown controller \(segue.destination)")
-                return
-            }
+    func showTabBarViewController(token: String) {
+        UIBlockingProgressHUD.show()
 
-            viewController.delegate = self
-        } else {
-            assertionFailure("unknown segue identifier \(segue.identifier ?? "")")
+        tabBarViewController.initData(token: token) { [weak self] error in
+            guard let self else { return }
+            if let error {
+                switch error {
+                case .authFaild:
+                    self.authStorage.reset()
+                default:
+                    break
+                }
+
+                DispatchQueue.main.async {
+                    UIBlockingProgressHUD.dismiss()
+                    self.alertPresenter.show(with: ErrorAlertDto(error: error))
+                }
+            } else {
+                DispatchQueue.main.async {
+                    UIBlockingProgressHUD.dismiss()
+                    self.window.rootViewController = self.tabBarViewController
+                }
+            }
         }
     }
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
-    func authComplite() {
+    func authComplite(_ viewController: AuthViewController) {
+        viewController.dismiss(animated: true)
+    }
+}
+
+extension SplashViewController: AlertPresenterDelegate {
+    func presentAlert(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+
+    func performAlertAction(action: AlertAction) {
         routeToController()
     }
 }

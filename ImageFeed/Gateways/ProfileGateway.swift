@@ -44,6 +44,6 @@ private extension ProfileGateway {
     }
 
     func request() -> URLRequest {
-        requestBuilder!.makeRequest(path: "/me")
+        requestBuilder!.makeRequest(path: "/me", params: [])
     }
 }

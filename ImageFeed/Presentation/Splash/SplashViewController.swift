@@ -18,7 +18,6 @@ final class SplashViewController: BaseUIViewController {
         controller.delegate = self
         return controller
     }()
-    6eq@rBp-9wYAxDR4
     init(
         window: UIWindow,
         authStorage: AuthStorage,

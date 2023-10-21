@@ -67,10 +67,10 @@ final class ImagesListCell: UITableViewCell {
         backgroundColor = UIColor.ypBlack
         selectedBackgroundView = bgColorView
         
-        addSubview(cellImage)
+        contentView.addSubview(cellImage)
         cellImage.addSubview(gradient)
-        addSubview(likeButton)
-        addSubview(dateLabel)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(likeButton)
         
         NSLayoutConstraint.activate([
             cellImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),

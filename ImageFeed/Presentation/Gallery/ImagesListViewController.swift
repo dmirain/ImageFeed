@@ -86,6 +86,7 @@ extension ImagesListViewController: UITableViewDelegate {
 
 extension ImagesListViewController: ImagesListCellDelegate {
     func likeButtonClicked(_ cell: ImagesListCell) {
-        print(cell)
+        guard let indexPath = contentView.tableView.indexPath(for: cell) else { return }
+        print(indexPath.row)
     }
 }

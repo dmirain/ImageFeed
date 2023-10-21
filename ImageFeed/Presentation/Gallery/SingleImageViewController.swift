@@ -1,64 +1,51 @@
 import UIKit
 
 final class SingleImageViewController: BaseUIViewController {
-    var imageModel: ImageCellModel? {
-        didSet {
-            onModelSet()
-        }
+    private let contentView: SingleImageView
+    private var imageCellModel: ImageCellModel?
+    
+    init() {
+        contentView = SingleImageView()
+        super.init(nibName: nil, bundle: nil)
+        contentView.delegate = self
+        
+        modalPresentationStyle = .fullScreen
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    @IBOutlet private weak var imageView: UIImageView?
-    @IBOutlet private weak var scrollView: UIScrollView!
-
-    override func viewDidLoad() {
-        scrollView.minimumZoomScale = 0.1
-        scrollView.maximumZoomScale = 1.25
-
-        onModelSet()
-        super.viewDidLoad()
+    override func loadView() {
+        super.loadView()
+        view = contentView
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        contentView.rescaleAndCenterImageInScrollView()
+    }
+    
+    func setModel(imageCellModel: ImageCellModel) {
+        self.imageCellModel = imageCellModel
+        contentView.setImage(image: imageCellModel.image)
+    }
+    
+}
 
-    @IBAction private func tapBack() {
+extension SingleImageViewController: SingleImageViewDelegate {
+    func backButtonClicked() {
         dismiss(animated: true, completion: nil)
     }
-    @IBAction private func tapShare() {
-        guard let image = imageModel?.image else { return }
+    
+    func shareButtonClicked() {
+        guard let image = imageCellModel?.image else { return }
 
-        let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        let activityViewController = UIActivityViewController(
+            activityItems: [image], applicationActivities: nil
+        )
         present(activityViewController, animated: true, completion: nil)
     }
-
-    private func onModelSet() {
-        imageView?.image = imageModel?.image
-        if let image = imageView?.image {
-            rescaleAndCenterImageInScrollView(image: image)
-        }
-    }
-
-    private func rescaleAndCenterImageInScrollView(image: UIImage) {
-        let minZoomScale = scrollView.minimumZoomScale
-        let maxZoomScale = scrollView.maximumZoomScale
-
-        view.layoutIfNeeded()
-
-        let visibleRectSize = scrollView.bounds.size
-        let imageSize = image.size
-        let hScale = visibleRectSize.width / imageSize.width
-        let vScale = visibleRectSize.height / imageSize.height
-        let scale = min(maxZoomScale, max(minZoomScale, max(hScale, vScale)))
-        scrollView.setZoomScale(scale, animated: false)
-
-        scrollView.layoutIfNeeded()
-
-        let newContentSize = scrollView.contentSize
-        let xCord = (newContentSize.width - visibleRectSize.width) / 2
-        let yCord = (newContentSize.height - visibleRectSize.height) / 2
-        scrollView.setContentOffset(CGPoint(x: xCord, y: yCord), animated: false)
-    }
 }
 
-extension SingleImageViewController: UIScrollViewDelegate {
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        imageView
-    }
-}
+

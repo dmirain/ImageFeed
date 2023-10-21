@@ -1,4 +1,5 @@
 import UIKit
+import Swinject
 
 // MARK: - ImagesListViewController
 
@@ -6,9 +7,11 @@ final class ImagesListViewController: BaseUIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private let imageFeedModel: ImageFeedModel
     private let contentView: ImagesListTableUIView
+    private let diResolver: Resolver
     
-    init(imageFeedModel: ImageFeedModel) {
+    init(diResolver: Resolver, imageFeedModel: ImageFeedModel) {
         self.imageFeedModel = imageFeedModel
+        self.diResolver = diResolver
         contentView = ImagesListTableUIView()
         
         super.init(nibName: nil, bundle: nil)
@@ -63,14 +66,12 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(
-            withIdentifier: "SingleImageViewController"
-        ) as? SingleImageViewController
+        let viewController = diResolver.resolve(SingleImageViewController.self)
         
         guard let viewController else { return }
         
         let imageModel = imageFeedModel.imageCellModel(byIndex: indexPath.row)
-        viewController.imageModel = imageModel
+        viewController.setModel(imageCellModel: imageModel)
         present(viewController, animated: true)
     }
 

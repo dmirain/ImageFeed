@@ -7,4 +7,6 @@ extension UIImage {
     static var profileTabImage = UIImage(named: "Profile Tab") ?? UIImage()
     static var mainLogoImage = UIImage(named: "Main Logo") ?? UIImage()
     static var redHeart = UIImage(named: "RedHeart") ?? UIImage()
+    static var share = UIImage(named: "Share") ?? UIImage()
+    static var back = UIImage(named: "Back") ?? UIImage()
 }

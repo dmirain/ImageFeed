@@ -27,8 +27,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             controller?.modalPresentationStyle = .fullScreen
             return controller!
         }
+        container.register(SingleImageViewController.self) { diResolver in
+            SingleImageViewController()
+        }
         container.register(ImagesListViewController.self) { diResolver in
-            ImagesListViewController(imageFeedModel: diResolver.resolve(ImageFeedModel.self)!)
+            ImagesListViewController(diResolver: diResolver, imageFeedModel: diResolver.resolve(ImageFeedModel.self)!)
         }
         container.register(ProfileViewController.self) { diResolver in
             ProfileViewController(

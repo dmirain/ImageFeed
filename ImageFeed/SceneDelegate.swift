@@ -9,10 +9,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(UIStoryboard.self) { _ in UIStoryboard(name: "Main", bundle: .main) }
         container.register(AuthStorage.self) { _ in AuthStorageImpl.shared }
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
-        
-        container.register(ProfileGateway.self) { diResolver in ProfileGateway(httpClient: diResolver.resolve(NetworkClient.self)!) }
-        container.register(ProfileImageGateway.self) { diResolver in ProfileImageGateway(httpClient: diResolver.resolve(NetworkClient.self)!) }
-        container.register(AlertPresenter.self) { diResolver in AlertPresenterImpl() }
+        container.register(AlertPresenter.self) { _ in AlertPresenterImpl() }
+
+        container.register(ProfileGateway.self) { diResolver in
+            ProfileGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
+            
+        }
+        container.register(ProfileImageGateway.self) { diResolver in
+            ProfileImageGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
+        }
+        container.register(ImageFeedModel.self) { _ in ImageFeedModel() }
 
         container.register(AuthViewController.self) { diResolver in
             let controller = diResolver.resolve(UIStoryboard.self)!.instantiateViewController(
@@ -22,11 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return controller!
         }
         container.register(ImagesListViewController.self) { diResolver in
-            let controller = diResolver.resolve(UIStoryboard.self)!.instantiateViewController(
-                withIdentifier: "ImagesListViewController"
-            ) as? ImagesListViewController
-            controller?.tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
-            return controller!
+            ImagesListViewController(imageFeedModel: diResolver.resolve(ImageFeedModel.self)!)
         }
         container.register(ProfileViewController.self) { diResolver in
             ProfileViewController(

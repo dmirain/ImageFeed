@@ -18,6 +18,7 @@
 		795835352AE041D700827680 /* ImageItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835342AE041D700827680 /* ImageItemResponse.swift */; };
 		795835372AE05DC700827680 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835362AE05DC700827680 /* String+Extensions.swift */; };
 		795835392AE0629300827680 /* ImageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835382AE0629300827680 /* ImageDto.swift */; };
+		7958353D2AE1231F00827680 /* ImagesListTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958353C2AE1231F00827680 /* ImagesListTable.swift */; };
 		79797FB92AC0BE0100666573 /* NetworkClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */; };
 		79797FC32AC0C00700666573 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC22AC0C00700666573 /* AuthDto.swift */; };
 		79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC42AC0C0AC00666573 /* AuthStorage.swift */; };
@@ -89,6 +90,7 @@
 		795835342AE041D700827680 /* ImageItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemResponse.swift; sourceTree = "<group>"; };
 		795835362AE05DC700827680 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		795835382AE0629300827680 /* ImageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDto.swift; sourceTree = "<group>"; };
+		7958353C2AE1231F00827680 /* ImagesListTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListTable.swift; sourceTree = "<group>"; };
 		79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientImpl.swift; sourceTree = "<group>"; };
 		79797FC22AC0C00700666573 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		79797FC42AC0C0AC00666573 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			children = (
 				79F5DD502A750172000224F2 /* ImagesListViewController.swift */,
 				797E19322A75A56700A3E18F /* ImagesListCell.swift */,
+				7958353C2AE1231F00827680 /* ImagesListTable.swift */,
 				792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */,
 			);
 			path = Gallery;
@@ -530,6 +533,7 @@
 				79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */,
 				795835372AE05DC700827680 /* String+Extensions.swift in Sources */,
 				79797FC92AC0C19F00666573 /* UnsplashOAuthData.swift in Sources */,
+				7958353D2AE1231F00827680 /* ImagesListTable.swift in Sources */,
 				79797FC32AC0C00700666573 /* AuthDto.swift in Sources */,
 				792B7B2C2A880730000AF75A /* ProfileViewController.swift in Sources */,
 				79797FC72AC0C11200666573 /* Data+Extensions.swift in Sources */,

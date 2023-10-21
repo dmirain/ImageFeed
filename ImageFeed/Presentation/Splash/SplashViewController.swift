@@ -11,7 +11,7 @@ final class SplashViewController: BaseUIViewController {
     private let authStorage: AuthStorage
     private var alertPresenter: AlertPresenter
     private lazy var tabBarViewController: TabBarController = {
-        diResolver.resolve(TabBarController.self)!
+        diResolver.resolve(TabBarController.self, argument: window)!
     }()
     private lazy var authViewController: AuthViewController = {
         let controller = diResolver.resolve(AuthViewController.self)!

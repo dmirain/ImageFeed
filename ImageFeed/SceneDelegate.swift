@@ -33,16 +33,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(ImagesListViewController.self) { diResolver in
             ImagesListViewController(diResolver: diResolver, imageFeedModel: diResolver.resolve(ImageFeedModel.self)!)
         }
-        container.register(ProfileViewController.self) { diResolver in
+        container.register(ProfileViewController.self) { diResolver, window in
             ProfileViewController(
+                window: window,
+                authStorage: diResolver.resolve(AuthStorage.self)!,
                 profileGateway: diResolver.resolve(ProfileGateway.self)!,
-                profileImageGateway: diResolver.resolve(ProfileImageGateway.self)!
+                profileImageGateway: diResolver.resolve(ProfileImageGateway.self)!,
+                diResolver: diResolver
             )
         }
-        container.register(TabBarController.self) { diResolver in
+        container.register(TabBarController.self) { (diResolver: Resolver, window: UIWindow) in
             TabBarController(
                 imagesListViewController: diResolver.resolve(ImagesListViewController.self)!,
-                profileViewController: diResolver.resolve(ProfileViewController.self)!
+                profileViewController: diResolver.resolve(ProfileViewController.self, argument: window)!
             )
         }
         container.register(SplashViewController.self) { diResolver, window in

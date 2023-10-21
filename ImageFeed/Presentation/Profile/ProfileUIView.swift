@@ -1,9 +1,14 @@
 import UIKit
 import Kingfisher
 
-final class ProfileUIView: UIView {
+protocol ProfileUIViewDelegat: AnyObject {
+    func exitButtonClicked()
+}
 
-    private var userpickImageView: UIImageView = {
+final class ProfileUIView: UIView {
+    weak var controller: ProfileUIViewDelegat?
+
+    private lazy var userpickImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage.userpicImage
@@ -16,7 +21,7 @@ final class ProfileUIView: UIView {
         return view
     }()
 
-    private var exitButton: UIButton = {
+    private lazy var exitButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setImage(UIImage.exitImage, for: .normal)
@@ -28,7 +33,7 @@ final class ProfileUIView: UIView {
         return view
     }()
 
-    private var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = "Имя"
@@ -38,7 +43,7 @@ final class ProfileUIView: UIView {
         return view
     }()
 
-    private var loginLabel: UILabel = {
+    private lazy var loginLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = "@login"
@@ -47,7 +52,7 @@ final class ProfileUIView: UIView {
         return view
     }()
 
-    private var userInfoLabel: UILabel = {
+    private lazy var userInfoLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = "Информация"
@@ -56,7 +61,7 @@ final class ProfileUIView: UIView {
         return view
     }()
 
-    private var userpickRow: UIStackView {
+    private lazy var userpickRow: UIStackView = {
         let view = UIStackView(arrangedSubviews: [userpickImageView, exitButton])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
@@ -65,9 +70,9 @@ final class ProfileUIView: UIView {
         view.contentMode = .scaleAspectFit
         view.distribution = .equalCentering
         return view
-    }
+    }()
 
-    private var allRows: UIStackView {
+    private lazy var allRows: UIStackView = {
         let userpickRow = userpickRow
 
         let view = UIStackView(arrangedSubviews: [userpickRow, nameLabel, loginLabel, userInfoLabel])
@@ -83,13 +88,16 @@ final class ProfileUIView: UIView {
         ])
 
         return view
-    }
+    }()
 
     init() {
         super.init(frame: .zero)
 
         let allRows = allRows
         addSubview(allRows)
+        
+        exitButton.addTarget(self, action: #selector(exitButtonClicked), for: .touchUpInside)
+
         NSLayoutConstraint.activate([
             allRows.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 32),
             allRows.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -109,5 +117,9 @@ final class ProfileUIView: UIView {
 
     func updateAvatar(_ photoUrl: URL) {
         userpickImageView.kf.setImage(with: photoUrl, placeholder: UIImage.userpicImage)
+    }
+    
+    @objc func exitButtonClicked() {
+        controller?.exitButtonClicked()
     }
 }

@@ -1,16 +1,32 @@
 import UIKit
+import WebKit
+import Swinject
 
 final class ProfileViewController: BaseUIViewController {
+    private let window: UIWindow
+    private let diResolver: Resolver
     private let contentView: ProfileUIView
+    private let authStorage: AuthStorage
     private let profileGateway: ProfileGateway
     private let profileImageGateway: ProfileImageGateway
     private var profileImageServiceObserver: NSObjectProtocol?
 
-    init(profileGateway: ProfileGateway, profileImageGateway: ProfileImageGateway) {
+    init(
+        window: UIWindow,
+        authStorage: AuthStorage,
+        profileGateway: ProfileGateway,
+        profileImageGateway: ProfileImageGateway,
+        diResolver: Resolver
+    ) {
         contentView = ProfileUIView()
+        self.window = window
+        self.diResolver = diResolver
+        self.authStorage = authStorage
         self.profileGateway = profileGateway
         self.profileImageGateway = profileImageGateway
         super.init(nibName: nil, bundle: nil)
+        
+        contentView.controller = self
         tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
         subscribeOnUpdateAvatar()
     }
@@ -55,5 +71,21 @@ final class ProfileViewController: BaseUIViewController {
                 self.contentView.updateAvatar(photoUrl)
             }
         }
+    }
+}
+
+extension ProfileViewController: ProfileUIViewDelegat {
+    func exitButtonClicked() {
+        authStorage.reset()
+
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        // Запрашиваем все данные из локального хранилища.
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            // Массив полученных записей удаляем из хранилища.
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
+        window.rootViewController = diResolver.resolve(SplashViewController.self, argument: window)
     }
 }

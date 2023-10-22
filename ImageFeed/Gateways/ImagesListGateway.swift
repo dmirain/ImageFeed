@@ -52,7 +52,8 @@ private extension ImagesListGateway {
     func request(page: Int) -> URLRequest {
         requestBuilder!.makeRequest(
             path: "/photos",
-            params: [URLQueryItem(name: "page", value: String(page))]
+            params: [URLQueryItem(name: "page", value: String(page))],
+            method: "GET"
         )
     }
 }

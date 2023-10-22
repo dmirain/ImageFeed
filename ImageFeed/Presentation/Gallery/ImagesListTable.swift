@@ -5,18 +5,18 @@ final class ImagesListTableUIView: UIView {
         let view = UITableView(frame: .zero, style: .plain)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
-
+        
         view.backgroundColor = .ypBlack
-                
+        
         return view
     }()
     
     init() {
         super.init(frame: .zero)
         backgroundColor = .ypBlack
-
+        
         addSubview(tableView)
-
+        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -24,7 +24,7 @@ final class ImagesListTableUIView: UIView {
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
         ])
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -41,5 +41,10 @@ final class ImagesListTableUIView: UIView {
             }
             tableView.insertRows(at: indexPaths, with: .automatic)
         } completion: { _ in }
+    }
+    
+    func reloadRow(at index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

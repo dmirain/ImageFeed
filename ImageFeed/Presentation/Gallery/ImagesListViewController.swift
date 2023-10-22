@@ -48,6 +48,10 @@ final class ImagesListViewController: BaseUIViewController {
     func updateTableViewAnimated(addedIndexes: Range<Int>) {
         contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
     }
+    
+    func reloadRow(at index: Int) {
+        contentView.reloadRow(at: index)
+    }
 }
 
 // MARK: - UITableViewDataSource

@@ -1,6 +1,6 @@
 import Foundation
 
-struct ImageDto {
+struct ImageDto: Hashable {
     let id: String
     let size: CGSize
     let createdAt: Date?
@@ -18,6 +18,26 @@ struct ImageDto {
             thumbImageURL: URL(string: data.urls.thumb),
             largeImageURL: URL(string: data.urls.full),
             isLiked: data.likedByUser
+        )
+    }
+    
+    static func ==(lhs: ImageDto, rhs: ImageDto) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    func copy(isLiked: Bool) -> Self {
+        Self(
+            id: self.id,
+            size: self.size,
+            createdAt: self.createdAt,
+            description: self.description,
+            thumbImageURL: self.thumbImageURL,
+            largeImageURL: self.largeImageURL,
+            isLiked: isLiked
         )
     }
 }

@@ -6,6 +6,11 @@ protocol NetworkClient {
         as dtoType: T.Type,
         handler: @escaping (Result<T, NetworkError>) -> Void
     ) -> URLSessionTask
+    
+    func fetch(
+        from request: URLRequest,
+        handler: @escaping (Result<Data, NetworkError>) -> Void
+    ) -> URLSessionTask
 }
 
 enum NetworkError: Error {
@@ -60,7 +65,7 @@ struct NetworkClientImpl: NetworkClient {
         }
     }
 
-    private func fetch(
+    func fetch(
         from request: URLRequest,
         handler: @escaping (Result<Data, NetworkError>) -> Void
     ) -> URLSessionTask {

@@ -24,8 +24,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(ImagesListGateway.self) { diResolver in
             ImagesListGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
         }
+        container.register(ImageLikeGateway.self) { diResolver in
+            ImageLikeGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
+        }
         container.register(ImagesListService.self) { diResolver in
-            ImagesListService(imageListGateway: diResolver.resolve(ImagesListGateway.self)!)
+            ImagesListService(
+                imageListGateway: diResolver.resolve(ImagesListGateway.self)!,
+                imageLikeGateway: diResolver.resolve(ImageLikeGateway.self)!
+            )
         }
 
         container.register(AuthViewController.self) { diResolver in

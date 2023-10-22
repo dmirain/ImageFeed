@@ -41,12 +41,12 @@ final class ImagesListViewController: BaseUIViewController {
         imagesListService.setRequestBuilder(requestBuilder)
     }
     
-    func loadNextPage() {
-        imagesListService.loadNextPage()
+    func fetchPhotosNextPage() {
+        imagesListService.fetchPhotosNextPage()
     }
     
-    func updateTable(addedIndexes: Range<Int>) {
-        contentView.updateTableRowsCount(addedIndexes: addedIndexes)
+    func updateTableViewAnimated(addedIndexes: Range<Int>) {
+        contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
     }
 }
 
@@ -95,7 +95,7 @@ extension ImagesListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row > imagesListService.imagesCount - 3 {
-            imagesListService.loadNextPage()
+            imagesListService.fetchPhotosNextPage()
         }
     }
 }

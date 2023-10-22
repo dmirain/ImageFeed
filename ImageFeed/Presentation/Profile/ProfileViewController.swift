@@ -7,6 +7,7 @@ final class ProfileViewController: BaseUIViewController {
     private let diResolver: Resolver
     private let contentView: ProfileUIView
     private let authStorage: AuthStorage
+    private var alertPresenter: AlertPresenter
     private let profileGateway: ProfileGateway
     private let profileImageGateway: ProfileImageGateway
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -14,6 +15,7 @@ final class ProfileViewController: BaseUIViewController {
     init(
         window: UIWindow,
         authStorage: AuthStorage,
+        alertPresenter: AlertPresenter,
         profileGateway: ProfileGateway,
         profileImageGateway: ProfileImageGateway,
         diResolver: Resolver
@@ -22,11 +24,13 @@ final class ProfileViewController: BaseUIViewController {
         self.window = window
         self.diResolver = diResolver
         self.authStorage = authStorage
+        self.alertPresenter = alertPresenter
         self.profileGateway = profileGateway
         self.profileImageGateway = profileImageGateway
         super.init(nibName: nil, bundle: nil)
         
         contentView.controller = self
+        self.alertPresenter.delegate = self
         tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
         subscribeOnUpdateAvatar()
     }
@@ -74,8 +78,27 @@ final class ProfileViewController: BaseUIViewController {
     }
 }
 
-extension ProfileViewController: ProfileUIViewDelegat {
+extension ProfileViewController: ProfileUIViewDelegat, AlertPresenterDelegate {
     func exitButtonClicked() {
+        alertPresenter.show(with: ExitAlertDto()) 
+    }
+
+    func presentAlert(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
+    func performAlertAction(action: AlertAction) {
+        switch action {
+        case .doNothing:
+            break
+        case .reset:
+            break
+        case .exit:
+            performExit()
+        }
+    }
+    
+    private func performExit() {
         authStorage.reset()
 
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)

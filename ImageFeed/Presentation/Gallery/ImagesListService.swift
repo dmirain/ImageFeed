@@ -16,7 +16,7 @@ final class ImagesListService {
         self.imageListGateway.requestBuilder = builder
     }
     
-    func loadNextPage() {
+    func fetchPhotosNextPage() {
         print("loadNextPage")
         self.imageListGateway.fetchImagesPage(page: nextPage) { [weak self] result in
             guard let self else { return }
@@ -40,7 +40,7 @@ final class ImagesListService {
         nextPage += 1
         let newCount = imagesCount
         
-        controller?.updateTable(addedIndexes: (oldCount..<newCount))
+        controller?.updateTableViewAnimated(addedIndexes: (oldCount..<newCount))
     }
     
     func imageHeight(byIndex index: Int, containerWidth: CGFloat) -> CGFloat {

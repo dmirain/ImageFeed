@@ -45,6 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ProfileViewController(
                 window: window,
                 authStorage: diResolver.resolve(AuthStorage.self)!,
+                alertPresenter: diResolver.resolve(AlertPresenter.self)!,
                 profileGateway: diResolver.resolve(ProfileGateway.self)!,
                 profileImageGateway: diResolver.resolve(ProfileImageGateway.self)!,
                 diResolver: diResolver

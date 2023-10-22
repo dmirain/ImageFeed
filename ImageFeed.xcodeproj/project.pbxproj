@@ -20,6 +20,7 @@
 		795835392AE0629300827680 /* ImageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835382AE0629300827680 /* ImageDto.swift */; };
 		7958353D2AE1231F00827680 /* ImagesListTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958353C2AE1231F00827680 /* ImagesListTable.swift */; };
 		7958353F2AE43A9900827680 /* SingleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958353E2AE43A9900827680 /* SingleImageView.swift */; };
+		795835412AE558A400827680 /* ExitAlertDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835402AE558A400827680 /* ExitAlertDto.swift */; };
 		79797FB92AC0BE0100666573 /* NetworkClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */; };
 		79797FC32AC0C00700666573 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC22AC0C00700666573 /* AuthDto.swift */; };
 		79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC42AC0C0AC00666573 /* AuthStorage.swift */; };
@@ -92,6 +93,7 @@
 		795835382AE0629300827680 /* ImageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDto.swift; sourceTree = "<group>"; };
 		7958353C2AE1231F00827680 /* ImagesListTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListTable.swift; sourceTree = "<group>"; };
 		7958353E2AE43A9900827680 /* SingleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageView.swift; sourceTree = "<group>"; };
+		795835402AE558A400827680 /* ExitAlertDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitAlertDto.swift; sourceTree = "<group>"; };
 		79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientImpl.swift; sourceTree = "<group>"; };
 		79797FC22AC0C00700666573 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		79797FC42AC0C0AC00666573 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				79797FD32AC0C9EC00666573 /* AlertPresenterImpl.swift */,
 				79797FD42AC0C9EC00666573 /* AlertPresenter.swift */,
 				79797FD72AC0C9EC00666573 /* ErrorAlertDto.swift */,
+				795835402AE558A400827680 /* ExitAlertDto.swift */,
 			);
 			path = AlertPresenter;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				79F5DD4F2A750172000224F2 /* SceneDelegate.swift in Sources */,
 				7986817E2A76B7E500EB471C /* Constants.swift in Sources */,
 				7922CC692AA4C93000627D98 /* WebViewViewController.swift in Sources */,
+				795835412AE558A400827680 /* ExitAlertDto.swift in Sources */,
 				79AECB172AC95F97009AA84B /* SplashUIView.swift in Sources */,
 				79797FCB2AC0C32200666573 /* AuthGateway.swift in Sources */,
 				795835332AE03DCF00827680 /* ImagesListGateway.swift in Sources */,

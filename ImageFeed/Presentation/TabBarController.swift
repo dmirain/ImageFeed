@@ -24,7 +24,7 @@ final class TabBarController: UITabBarController {
 
     func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
         imagesListViewController.setToken(token)
-        imagesListViewController.loadNextPage()
+        imagesListViewController.fetchPhotosNextPage()
         profileViewController.initData(token: token, handler: handler)
     }
 }

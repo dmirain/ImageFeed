@@ -42,7 +42,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return controller!
         }
         container.register(SingleImageViewController.self) { diResolver in
-            SingleImageViewController()
+            SingleImageViewController(
+                alertPresenter: diResolver.resolve(AlertPresenter.self)!
+            )
         }
         container.register(ImagesListViewController.self) { diResolver in
             ImagesListViewController(diResolver: diResolver, imagesListService: diResolver.resolve(ImagesListService.self)!)

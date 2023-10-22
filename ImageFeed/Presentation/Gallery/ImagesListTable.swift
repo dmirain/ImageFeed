@@ -35,6 +35,7 @@ final class ImagesListTableUIView: UIView {
     }
     
     func updateTableViewAnimated(addedIndexes: Range<Int>) {
+        if addedIndexes.isEmpty { return }
         tableView.performBatchUpdates {
             let indexPaths = addedIndexes.map { i in
                 IndexPath(row: i, section: 0)
@@ -45,6 +46,6 @@ final class ImagesListTableUIView: UIView {
     
     func reloadRow(at index: Int) {
         let indexPath = IndexPath(row: index, section: 0)
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

@@ -3,6 +3,7 @@ import UIKit
 protocol SingleImageViewDelegate: AnyObject {
     func backButtonClicked()
     func shareButtonClicked(image: UIImage)
+    func showRetryAlert()
 }
 
 final class SingleImageView: UIView {
@@ -92,10 +93,23 @@ final class SingleImageView: UIView {
     }
     
     func setImage(image: ImageDto) {
-        imageView.kf.setImage(with: image.largeImageURL, placeholder: UIImage.imageStub)
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: image.largeImageURL) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                switch result {
+                case .success:
+                    self.rescaleAndCenterImageInScrollView()
+                case .failure:
+                    self.delegate?.showRetryAlert()
+                }
+            }
+        }
     }
     
-    func rescaleAndCenterImageInScrollView() {
+    private func rescaleAndCenterImageInScrollView() {
         guard let image = imageView.image else { return }
 
         let minZoomScale = scrollView.minimumZoomScale

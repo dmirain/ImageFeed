@@ -22,6 +22,7 @@
 		7958353F2AE43A9900827680 /* SingleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958353E2AE43A9900827680 /* SingleImageView.swift */; };
 		795835412AE558A400827680 /* ExitAlertDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835402AE558A400827680 /* ExitAlertDto.swift */; };
 		795835432AE588C400827680 /* ImageLikeGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835422AE588C400827680 /* ImageLikeGateway.swift */; };
+		795835452AE5A67A00827680 /* OpenImageAlertDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835442AE5A67A00827680 /* OpenImageAlertDto.swift */; };
 		79797FB92AC0BE0100666573 /* NetworkClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */; };
 		79797FC32AC0C00700666573 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC22AC0C00700666573 /* AuthDto.swift */; };
 		79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC42AC0C0AC00666573 /* AuthStorage.swift */; };
@@ -96,6 +97,7 @@
 		7958353E2AE43A9900827680 /* SingleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageView.swift; sourceTree = "<group>"; };
 		795835402AE558A400827680 /* ExitAlertDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitAlertDto.swift; sourceTree = "<group>"; };
 		795835422AE588C400827680 /* ImageLikeGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLikeGateway.swift; sourceTree = "<group>"; };
+		795835442AE5A67A00827680 /* OpenImageAlertDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenImageAlertDto.swift; sourceTree = "<group>"; };
 		79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientImpl.swift; sourceTree = "<group>"; };
 		79797FC22AC0C00700666573 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		79797FC42AC0C0AC00666573 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				79797FD42AC0C9EC00666573 /* AlertPresenter.swift */,
 				79797FD72AC0C9EC00666573 /* ErrorAlertDto.swift */,
 				795835402AE558A400827680 /* ExitAlertDto.swift */,
+				795835442AE5A67A00827680 /* OpenImageAlertDto.swift */,
 			);
 			path = AlertPresenter;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				795835452AE5A67A00827680 /* OpenImageAlertDto.swift in Sources */,
 				7984D0C92ACAEC0B00A2E42D /* ProfileImageGateway.swift in Sources */,
 				79AECB0A2AC8AEE9009AA84B /* ProfileResponse.swift in Sources */,
 				79797FDE2AC0C9EC00666573 /* AlertAction.swift in Sources */,

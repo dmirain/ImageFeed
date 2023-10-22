@@ -3,12 +3,16 @@ import UIKit
 final class SingleImageViewController: BaseUIViewController {
     private let contentView: SingleImageView
     private var imageCellModel: ImageDto?
+    private var alertPresenter: AlertPresenter
     
-    init() {
+    init(alertPresenter: AlertPresenter) {
         contentView = SingleImageView()
+        self.alertPresenter = alertPresenter
+
         super.init(nibName: nil, bundle: nil)
+
         contentView.delegate = self
-        
+        self.alertPresenter.delegate = self
         modalPresentationStyle = .fullScreen
     }
     
@@ -20,12 +24,7 @@ final class SingleImageViewController: BaseUIViewController {
         super.loadView()
         view = contentView
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        contentView.rescaleAndCenterImageInScrollView()
-    }
-    
+        
     func setModel(imageCellModel: ImageDto) {
         self.imageCellModel = imageCellModel
         contentView.setImage(image: imageCellModel)
@@ -43,6 +42,29 @@ extension SingleImageViewController: SingleImageViewDelegate {
         )
         present(activityViewController, animated: true, completion: nil)
     }
+    
+    func showRetryAlert() {
+        self.alertPresenter.show(with: OpenImageAlertDto())
+    }
 }
 
-
+extension SingleImageViewController: AlertPresenterDelegate {
+    func presentAlert(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
+    func performAlertAction(action: AlertAction) {
+        switch action {
+        case .doNothing:
+            break
+        case .reset:
+            guard let imageDto = self.imageCellModel else {
+                self.backButtonClicked()
+                return
+            }
+            self.contentView.setImage(image: imageDto)
+        case .exit:
+            self.backButtonClicked()
+        }
+    }
+}

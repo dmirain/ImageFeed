@@ -99,11 +99,13 @@ final class ImagesListCell: UITableViewCell {
     func configureCell(with cellModel: ImageDto) {
         let image = cellModel.isLiked ? Const.likeImage : Const.unlikeImage
         likeButton.setImage(image, for: .normal)
+        likeButton.isEnabled = true
         dateLabel.text = cellModel.createdAt?.dateString ?? "дата не указана"
         cellImage.kf.setImage(with: cellModel.thumbImageURL, placeholder: UIImage.imageStub)
     }
     
     @objc func likeButtonClicked() {
+        likeButton.isEnabled = false
         controller?.likeButtonClicked(self)
     }
     

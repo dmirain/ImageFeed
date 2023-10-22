@@ -16,8 +16,7 @@ struct AuthStorageImpl: AuthStorage {
 
     func get() -> AuthDto? {
         guard let jsonData = KeychainWrapper.standard.string(forKey: storageKey) else { return nil }
-        guard let dto = jsonData.data(using: .utf8)?.fromJson(to: AuthDto.self) else { return nil }
-        return dto
+        return try? jsonData.data(using: .utf8)?.fromJson(to: AuthDto.self)
     }
 
     func set(_ newValue: AuthDto) -> Bool {

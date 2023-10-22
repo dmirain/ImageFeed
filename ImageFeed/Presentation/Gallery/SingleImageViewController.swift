@@ -2,7 +2,7 @@ import UIKit
 
 final class SingleImageViewController: BaseUIViewController {
     private let contentView: SingleImageView
-    private var imageCellModel: ImageCellModel?
+    private var imageCellModel: ImageDto?
     
     init() {
         contentView = SingleImageView()
@@ -26,11 +26,10 @@ final class SingleImageViewController: BaseUIViewController {
         contentView.rescaleAndCenterImageInScrollView()
     }
     
-    func setModel(imageCellModel: ImageCellModel) {
+    func setModel(imageCellModel: ImageDto) {
         self.imageCellModel = imageCellModel
-        contentView.setImage(image: imageCellModel.image)
+        contentView.setImage(image: imageCellModel)
     }
-    
 }
 
 extension SingleImageViewController: SingleImageViewDelegate {
@@ -38,9 +37,7 @@ extension SingleImageViewController: SingleImageViewDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func shareButtonClicked() {
-        guard let image = imageCellModel?.image else { return }
-
+    func shareButtonClicked(image: UIImage) {
         let activityViewController = UIActivityViewController(
             activityItems: [image], applicationActivities: nil
         )

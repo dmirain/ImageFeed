@@ -43,9 +43,15 @@ struct NetworkClientImpl: NetworkClient {
         fetch(from: request) { result in
             switch result {
             case let .success(data):
-                if let object = data.fromJson(to: dtoType) {
+                do {
+                    guard let object = try data.fromJson(to: dtoType) else {
+                        handler(.failure(NetworkError.emptyData))
+                        return
+                    }
                     handler(.success(object))
-                } else {
+                } catch let error {
+                    print(String(data: data, encoding: .utf8)!)
+                    print(error)
                     handler(.failure(NetworkError.parseError))
                 }
             case let .failure(error):

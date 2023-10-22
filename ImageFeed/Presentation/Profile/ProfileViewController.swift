@@ -40,7 +40,7 @@ final class ProfileViewController: BaseUIViewController {
     }
 
     func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
-        let requestBuilder = RequestBuilderImpl(token: token)
+        let requestBuilder = diResolver.resolve(RequestBuilder.self, argument: token)
 
         profileGateway.requestBuilder = requestBuilder
         profileGateway.fetchProfile { [weak self] result in

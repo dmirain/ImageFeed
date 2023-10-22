@@ -11,6 +11,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
         container.register(AlertPresenter.self) { _ in AlertPresenterImpl() }
 
+        container.register(RequestBuilder.self) { (_, token: String) in
+            RequestBuilderImpl(token: token)
+        }
         container.register(ProfileGateway.self) { diResolver in
             ProfileGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
             
@@ -18,7 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(ProfileImageGateway.self) { diResolver in
             ProfileImageGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
         }
-        container.register(ImageFeedModel.self) { _ in ImageFeedModel() }
+        container.register(ImagesListGateway.self) { diResolver in
+            ImagesListGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
+        }
+        container.register(ImageFeedModel.self) { diResolver in
+            ImageFeedModel(imageListGateway: diResolver.resolve(ImagesListGateway.self)!)
+        }
 
         container.register(AuthViewController.self) { diResolver in
             let controller = diResolver.resolve(UIStoryboard.self)!.instantiateViewController(

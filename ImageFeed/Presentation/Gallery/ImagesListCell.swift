@@ -96,14 +96,19 @@ final class ImagesListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(with cellModel: ImageCellModel) {
-        let image = cellModel.liked ? Const.likeImage : Const.unlikeImage
+    func configureCell(with cellModel: ImageDto) {
+        let image = cellModel.isLiked ? Const.likeImage : Const.unlikeImage
         likeButton.setImage(image, for: .normal)
-        dateLabel.text = cellModel.date.dateString
-        cellImage.image = cellModel.image
+        dateLabel.text = cellModel.createdAt?.dateString ?? "дата не указана"
+        cellImage.kf.setImage(with: cellModel.thumbImageURL, placeholder: UIImage.imageStub)
     }
     
     @objc func likeButtonClicked() {
         controller?.likeButtonClicked(self)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellImage.kf.cancelDownloadTask()
     }
 }

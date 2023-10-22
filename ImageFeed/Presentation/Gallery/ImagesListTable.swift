@@ -33,4 +33,13 @@ final class ImagesListTableUIView: UIView {
         tableView.dataSource = tableDataSource
         tableView.delegate = tableDelegate
     }
+    
+    func updateTableRowsCount(addedIndexes: Range<Int>) {
+        tableView.performBatchUpdates {
+            let indexPaths = addedIndexes.map { i in
+                IndexPath(row: i, section: 0)
+            }
+            tableView.insertRows(at: indexPaths, with: .automatic)
+        } completion: { _ in }
+    }
 }

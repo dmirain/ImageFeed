@@ -16,6 +16,7 @@ final class ImagesListViewController: BaseUIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
+        imageFeedModel.controller = self
         contentView.setDelegates(tableDataSource: self, tableDelegate: self)
         tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
     }
@@ -33,6 +34,19 @@ final class ImagesListViewController: BaseUIViewController {
         super.viewDidLoad()
         // Какой-то костыль, иначе цвет скидывался на белый
         contentView.tableView.backgroundColor = .clear
+    }
+    
+    func setToken(_ token: String) {
+        let requestBuilder = diResolver.resolve(RequestBuilder.self, argument: token)!
+        imageFeedModel.setRequestBuilder(requestBuilder)
+    }
+    
+    func loadNextPage() {
+        imageFeedModel.loadNextPage()
+    }
+    
+    func updateTable(addedIndexes: Range<Int>) {
+        contentView.updateTableRowsCount(addedIndexes: addedIndexes)
     }
 }
 
@@ -79,7 +93,11 @@ extension ImagesListViewController: UITableViewDelegate {
         imageFeedModel.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
     }
 
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) { }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row > imageFeedModel.imagesCount - 3 {
+            imageFeedModel.loadNextPage()
+        }
+    }
 }
 
 // MARK: - ImagesListCellDelegate
@@ -87,6 +105,6 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: ImagesListCellDelegate {
     func likeButtonClicked(_ cell: ImagesListCell) {
         guard let indexPath = contentView.tableView.indexPath(for: cell) else { return }
-        print(indexPath.row)
+        imageFeedModel.toggleLike(byIndex: indexPath.row)
     }
 }

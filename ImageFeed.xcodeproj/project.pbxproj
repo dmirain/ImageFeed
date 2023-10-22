@@ -37,7 +37,6 @@
 		7984D0C92ACAEC0B00A2E42D /* ProfileImageGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984D0C82ACAEC0B00A2E42D /* ProfileImageGateway.swift */; };
 		798681752A769B1400EB471C /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798681742A769B1400EB471C /* Date+Extensions.swift */; };
 		7986817A2A76B3A400EB471C /* ImageFeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798681792A76B3A400EB471C /* ImageFeedModel.swift */; };
-		7986817C2A76B79D00EB471C /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7986817B2A76B79D00EB471C /* ImageCellModel.swift */; };
 		7986817E2A76B7E500EB471C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7986817D2A76B7E500EB471C /* Constants.swift */; };
 		798A49DE2A9BCD5400725D9C /* ProfileUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798A49DD2A9BCD5400725D9C /* ProfileUIView.swift */; };
 		798A49E02A9BD0AD00725D9C /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798A49DF2A9BD0AD00725D9C /* UIImage+Extensions.swift */; };
@@ -110,7 +109,6 @@
 		7984D0C82ACAEC0B00A2E42D /* ProfileImageGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageGateway.swift; sourceTree = "<group>"; };
 		798681742A769B1400EB471C /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		798681792A76B3A400EB471C /* ImageFeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedModel.swift; sourceTree = "<group>"; };
-		7986817B2A76B79D00EB471C /* ImageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCellModel.swift; sourceTree = "<group>"; };
 		7986817D2A76B7E500EB471C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		798A49DD2A9BCD5400725D9C /* ProfileUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIView.swift; sourceTree = "<group>"; };
 		798A49DF2A9BD0AD00725D9C /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -187,6 +185,7 @@
 		79797FBC2AC0BEC800666573 /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				798681792A76B3A400EB471C /* ImageFeedModel.swift */,
 				79F5DD502A750172000224F2 /* ImagesListViewController.swift */,
 				797E19322A75A56700A3E18F /* ImagesListCell.swift */,
 				7958353C2AE1231F00827680 /* ImagesListTable.swift */,
@@ -220,7 +219,6 @@
 		79797FC12AC0BFCE00666573 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				7986817B2A76B79D00EB471C /* ImageCellModel.swift */,
 				79797FC22AC0C00700666573 /* AuthDto.swift */,
 				79797FC82AC0C19F00666573 /* UnsplashOAuthData.swift */,
 				79AECB092AC8AEE9009AA84B /* ProfileResponse.swift */,
@@ -293,14 +291,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		798681782A76B39100EB471C /* ImageFeedModel */ = {
-			isa = PBXGroup;
-			children = (
-				798681792A76B3A400EB471C /* ImageFeedModel.swift */,
-			);
-			path = ImageFeedModel;
-			sourceTree = "<group>";
-		};
 		79F5DD402A750172000224F2 = {
 			isa = PBXGroup;
 			children = (
@@ -327,7 +317,6 @@
 				79797FC12AC0BFCE00666573 /* Entities */,
 				79797FBE2AC0BF4000666573 /* Storages */,
 				79797FBD2AC0BF2B00666573 /* Gateways */,
-				798681782A76B39100EB471C /* ImageFeedModel */,
 				798681762A76B30900EB471C /* Presentation */,
 				798681732A769AF100EB471C /* Helpers */,
 				798681772A76B34500EB471C /* Resources */,
@@ -549,7 +538,6 @@
 				79AECB082AC8AC13009AA84B /* UIBlockingProgressHUD.swift in Sources */,
 				79F5DD4D2A750172000224F2 /* AppDelegate.swift in Sources */,
 				798681752A769B1400EB471C /* Date+Extensions.swift in Sources */,
-				7986817C2A76B79D00EB471C /* ImageCellModel.swift in Sources */,
 				79797FDF2AC0C9EC00666573 /* AlertPresenterImpl.swift in Sources */,
 				79F5DD4F2A750172000224F2 /* SceneDelegate.swift in Sources */,
 				7986817E2A76B7E500EB471C /* Constants.swift in Sources */,

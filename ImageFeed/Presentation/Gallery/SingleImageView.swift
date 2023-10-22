@@ -2,7 +2,7 @@ import UIKit
 
 protocol SingleImageViewDelegate: AnyObject {
     func backButtonClicked()
-    func shareButtonClicked()
+    func shareButtonClicked(image: UIImage)
 }
 
 final class SingleImageView: UIView {
@@ -83,14 +83,16 @@ final class SingleImageView: UIView {
     }
     
     @objc private func backButtonClicked() {
+        imageView.kf.cancelDownloadTask()
         delegate?.backButtonClicked()
     }
     @objc private func shareButtonClicked() {
-        delegate?.shareButtonClicked()
+        guard let delegate, let image = imageView.image else { return }
+        delegate.shareButtonClicked(image: image)
     }
     
-    func setImage(image: UIImage) {
-        imageView.image = image
+    func setImage(image: ImageDto) {
+        imageView.kf.setImage(with: image.largeImageURL, placeholder: UIImage.imageStub)
     }
     
     func rescaleAndCenterImageInScrollView() {

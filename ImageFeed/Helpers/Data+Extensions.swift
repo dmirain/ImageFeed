@@ -15,7 +15,7 @@ extension Data {
         try? encoder.encode(dto)
     }
 
-    func fromJson<T: Decodable>(to dtoType: T.Type) -> T? {
-        try? decoder.decode(dtoType, from: self)
+    func fromJson<T: Decodable>(to dtoType: T.Type) throws -> T? {
+        try decoder.decode(dtoType, from: self)
     }
 }

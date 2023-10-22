@@ -21,7 +21,7 @@ final class AlertPresenterImpl: AlertPresenter {
             case .doNothing(actionText: let actionText):
                 title = actionText
             }
-                        
+
             let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
                 guard let self else {
                     return

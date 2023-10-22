@@ -8,47 +8,46 @@ final class ImagesListViewController: BaseUIViewController {
     private let imagesListService: ImagesListService
     private let contentView: ImagesListTableUIView
     private let diResolver: Resolver
-    
+
     init(diResolver: Resolver, imagesListService: ImagesListService) {
         self.imagesListService = imagesListService
         self.diResolver = diResolver
         contentView = ImagesListTableUIView()
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         self.imagesListService.controller = self
         self.contentView.setDelegates(tableDataSource: self, tableDelegate: self)
         tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
-        super.loadView()
         view = contentView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Какой-то костыль, иначе цвет скидывался на белый
         contentView.tableView.backgroundColor = .clear
     }
-    
+
     func setToken(_ token: String) {
         let requestBuilder = diResolver.resolve(RequestBuilder.self, argument: token)!
         imagesListService.setRequestBuilder(requestBuilder)
     }
-    
+
     func fetchPhotosNextPage() {
         imagesListService.fetchPhotosNextPage()
     }
-    
+
     func updateTableViewAnimated(addedIndexes: Range<Int>) {
         contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
     }
-    
+
     func reloadRow(at index: Int) {
         contentView.reloadRow(at: index)
     }
@@ -85,9 +84,9 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController = diResolver.resolve(SingleImageViewController.self)
-        
+
         guard let viewController else { return }
-        
+
         let imageModel = imagesListService.imageCellModel(byIndex: indexPath.row)
         viewController.setModel(imageCellModel: imageModel)
         present(viewController, animated: true)

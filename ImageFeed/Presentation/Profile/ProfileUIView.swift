@@ -95,7 +95,7 @@ final class ProfileUIView: UIView {
 
         let allRows = allRows
         addSubview(allRows)
-        
+
         exitButton.addTarget(self, action: #selector(exitButtonClicked), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
@@ -118,8 +118,9 @@ final class ProfileUIView: UIView {
     func updateAvatar(_ photoUrl: URL) {
         userpickImageView.kf.setImage(with: photoUrl, placeholder: UIImage.userpicImage)
     }
-    
-    @objc func exitButtonClicked() {
+
+    @objc
+    func exitButtonClicked() {
         controller?.exitButtonClicked()
     }
 }

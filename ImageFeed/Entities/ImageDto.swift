@@ -8,7 +8,7 @@ struct ImageDto: Hashable {
     let thumbImageURL: URL?
     let largeImageURL: URL?
     let isLiked: Bool
-    
+
     static func fromImageItemResponse(_ data: ImageItemResponse) -> Self {
         Self(
             id: data.id,
@@ -20,15 +20,15 @@ struct ImageDto: Hashable {
             isLiked: data.likedByUser
         )
     }
-    
-    static func ==(lhs: ImageDto, rhs: ImageDto) -> Bool {
-        return lhs.id == rhs.id
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+
     func copy(isLiked: Bool) -> Self {
         Self(
             id: self.id,

@@ -6,7 +6,7 @@ protocol NetworkClient {
         as dtoType: T.Type,
         handler: @escaping (Result<T, NetworkError>) -> Void
     ) -> URLSessionTask
-    
+
     func fetch(
         from request: URLRequest,
         handler: @escaping (Result<Data, NetworkError>) -> Void

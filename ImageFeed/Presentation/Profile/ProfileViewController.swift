@@ -28,7 +28,7 @@ final class ProfileViewController: BaseUIViewController {
         self.profileGateway = profileGateway
         self.profileImageGateway = profileImageGateway
         super.init(nibName: nil, bundle: nil)
-        
+
         contentView.controller = self
         self.alertPresenter.delegate = self
         tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
@@ -80,13 +80,13 @@ final class ProfileViewController: BaseUIViewController {
 
 extension ProfileViewController: ProfileUIViewDelegat, AlertPresenterDelegate {
     func exitButtonClicked() {
-        alertPresenter.show(with: ExitAlertDto()) 
+        alertPresenter.show(with: ExitAlertDto())
     }
 
     func presentAlert(_ alert: UIAlertController) {
         present(alert, animated: true)
     }
-    
+
     func performAlertAction(action: AlertAction) {
         switch action {
         case .doNothing:
@@ -97,7 +97,7 @@ extension ProfileViewController: ProfileUIViewDelegat, AlertPresenterDelegate {
             performExit()
         }
     }
-    
+
     private func performExit() {
         authStorage.reset()
 

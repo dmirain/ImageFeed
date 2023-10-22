@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         container.register(ProfileGateway.self) { diResolver in
             ProfileGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
-            
+
         }
         container.register(ProfileImageGateway.self) { diResolver in
             ProfileImageGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
@@ -47,7 +47,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         }
         container.register(ImagesListViewController.self) { diResolver in
-            ImagesListViewController(diResolver: diResolver, imagesListService: diResolver.resolve(ImagesListService.self)!)
+            ImagesListViewController(
+                diResolver: diResolver,
+                imagesListService: diResolver.resolve(ImagesListService.self)!
+            )
         }
         container.register(ProfileViewController.self) { diResolver, window in
             ProfileViewController(
@@ -75,7 +78,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         return container
     }()
-    
+
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,

@@ -17,7 +17,7 @@ final class SingleImageView: UIView {
         view.maximumZoomScale = 1.25
         return view
     }()
-    
+
     private var imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +54,7 @@ final class SingleImageView: UIView {
     init() {
         super.init(frame: .zero)
         backgroundColor = .ypBlack
-        
+
         scrollView.addSubview(imageView)
         addSubview(scrollView)
         addSubview(backButton)
@@ -62,9 +62,9 @@ final class SingleImageView: UIView {
 
         backButton.addTarget(self, action: #selector(backButtonClicked), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(shareButtonClicked), for: .touchUpInside)
-        
+
         scrollView.delegate = self
-        
+
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -75,23 +75,25 @@ final class SingleImageView: UIView {
             shareButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 
             backButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            backButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            backButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
         ])
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @objc private func backButtonClicked() {
+
+    @objc
+    private func backButtonClicked() {
         imageView.kf.cancelDownloadTask()
         delegate?.backButtonClicked()
     }
-    @objc private func shareButtonClicked() {
+    @objc
+    private func shareButtonClicked() {
         guard let delegate, let image = imageView.image else { return }
         delegate.shareButtonClicked(image: image)
     }
-    
+
     func setImage(image: ImageDto) {
         UIBlockingProgressHUD.show()
         imageView.kf.setImage(with: image.largeImageURL) { [weak self] result in
@@ -108,7 +110,7 @@ final class SingleImageView: UIView {
             }
         }
     }
-    
+
     private func rescaleAndCenterImageInScrollView() {
         guard let image = imageView.image else { return }
 

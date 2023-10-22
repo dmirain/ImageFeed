@@ -16,7 +16,7 @@ final class ImagesListGateway {
         }
 
         guard isLockedForNext() else { return }
-        
+
         task = httpClient.fetchObject(
             from: request(page: page),
             as: [ImageItemResponse].self
@@ -28,7 +28,7 @@ final class ImagesListGateway {
                 let result = response
                     .map { ImageDto.fromImageItemResponse($0) }
                     .filter { $0.largeImageURL != nil && $0.thumbImageURL != nil }
-                
+
                 handler(.success(result))
             case let .failure(error):
                 handler(.failure(error))

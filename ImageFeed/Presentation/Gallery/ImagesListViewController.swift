@@ -5,19 +5,19 @@ import Swinject
 
 final class ImagesListViewController: BaseUIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    private let imageFeedModel: ImageFeedModel
+    private let imagesListService: ImagesListService
     private let contentView: ImagesListTableUIView
     private let diResolver: Resolver
     
-    init(diResolver: Resolver, imageFeedModel: ImageFeedModel) {
-        self.imageFeedModel = imageFeedModel
+    init(diResolver: Resolver, imagesListService: ImagesListService) {
+        self.imagesListService = imagesListService
         self.diResolver = diResolver
         contentView = ImagesListTableUIView()
         
         super.init(nibName: nil, bundle: nil)
         
-        imageFeedModel.controller = self
-        contentView.setDelegates(tableDataSource: self, tableDelegate: self)
+        self.imagesListService.controller = self
+        self.contentView.setDelegates(tableDataSource: self, tableDelegate: self)
         tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
     }
     
@@ -38,11 +38,11 @@ final class ImagesListViewController: BaseUIViewController {
     
     func setToken(_ token: String) {
         let requestBuilder = diResolver.resolve(RequestBuilder.self, argument: token)!
-        imageFeedModel.setRequestBuilder(requestBuilder)
+        imagesListService.setRequestBuilder(requestBuilder)
     }
     
     func loadNextPage() {
-        imageFeedModel.loadNextPage()
+        imagesListService.loadNextPage()
     }
     
     func updateTable(addedIndexes: Range<Int>) {
@@ -54,7 +54,7 @@ final class ImagesListViewController: BaseUIViewController {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        imageFeedModel.imagesCount
+        imagesListService.imagesCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,7 +71,7 @@ extension ImagesListViewController: UITableViewDataSource {
 
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         cell.controller = self
-        let cellModel = imageFeedModel.imageCellModel(byIndex: indexPath.row)
+        let cellModel = imagesListService.imageCellModel(byIndex: indexPath.row)
         cell.configureCell(with: cellModel)
     }
 }
@@ -84,18 +84,18 @@ extension ImagesListViewController: UITableViewDelegate {
         
         guard let viewController else { return }
         
-        let imageModel = imageFeedModel.imageCellModel(byIndex: indexPath.row)
+        let imageModel = imagesListService.imageCellModel(byIndex: indexPath.row)
         viewController.setModel(imageCellModel: imageModel)
         present(viewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        imageFeedModel.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
+        imagesListService.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row > imageFeedModel.imagesCount - 3 {
-            imageFeedModel.loadNextPage()
+        if indexPath.row > imagesListService.imagesCount - 3 {
+            imagesListService.loadNextPage()
         }
     }
 }
@@ -105,6 +105,6 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: ImagesListCellDelegate {
     func likeButtonClicked(_ cell: ImagesListCell) {
         guard let indexPath = contentView.tableView.indexPath(for: cell) else { return }
-        imageFeedModel.toggleLike(byIndex: indexPath.row)
+        imagesListService.toggleLike(byIndex: indexPath.row)
     }
 }

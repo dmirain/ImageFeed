@@ -24,8 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(ImagesListGateway.self) { diResolver in
             ImagesListGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
         }
-        container.register(ImageFeedModel.self) { diResolver in
-            ImageFeedModel(imageListGateway: diResolver.resolve(ImagesListGateway.self)!)
+        container.register(ImagesListService.self) { diResolver in
+            ImagesListService(imageListGateway: diResolver.resolve(ImagesListGateway.self)!)
         }
 
         container.register(AuthViewController.self) { diResolver in
@@ -39,7 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             SingleImageViewController()
         }
         container.register(ImagesListViewController.self) { diResolver in
-            ImagesListViewController(diResolver: diResolver, imageFeedModel: diResolver.resolve(ImageFeedModel.self)!)
+            ImagesListViewController(diResolver: diResolver, imagesListService: diResolver.resolve(ImagesListService.self)!)
         }
         container.register(ProfileViewController.self) { diResolver, window in
             ProfileViewController(

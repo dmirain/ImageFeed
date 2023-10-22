@@ -1,6 +1,6 @@
 import UIKit
 
-final class ImageFeedModel {
+final class ImagesListService {
     weak var controller: ImagesListViewController?
     private let imageListGateway: ImagesListGateway
     private var images: [ImageDto] = []

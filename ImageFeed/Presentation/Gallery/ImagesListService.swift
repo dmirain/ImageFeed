@@ -58,18 +58,10 @@ final class ImagesListService {
         let image = images[index]
         let newState = !image.isLiked
 
-        imageLikeGateway.toggleLike(image: image, to: newState) { [weak self] error in
-            guard let self else { return }
-
-            let setState: Bool
-            if error == nil {
-                setState = image.isLiked
-            } else {
-                setState = newState
-            }
-
-            DispatchQueue.main.async {
-                self.updateLiked(image: image, newState: setState)
+        imageLikeGateway.toggleLike(image: image, to: newState) { [weak self] isSuccess in
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.updateLiked(image: image, newState: isSuccess ? newState : image.isLiked)
             }
         }
     }

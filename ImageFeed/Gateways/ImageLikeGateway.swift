@@ -11,7 +11,7 @@ final class ImageLikeGateway {
         self.requestBuilder = requestBuilder
     }
 
-    func toggleLike(image: ImageDto, to createLike: Bool, handler: @escaping (NetworkError?) -> Void) {
+    func toggleLike(image: ImageDto, to createLike: Bool, handler: @escaping (Bool) -> Void) {
         guard getLock(image) else { return }
 
         let request = createLike ? requestSetLike(image: image) : requestDelLike(image: image)
@@ -21,9 +21,9 @@ final class ImageLikeGateway {
 
             switch result {
             case .success:
-                handler(nil)
-            case let .failure(error):
-                handler(error)
+                handler(true)
+            case .failure:
+                handler(false)
             }
 
             self.unlockForNext(image)

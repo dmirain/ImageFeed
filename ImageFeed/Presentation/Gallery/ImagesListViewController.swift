@@ -33,8 +33,7 @@ final class ImagesListViewController: BaseUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Какой-то костыль, иначе цвет скидывался на белый
-        contentView.tableView.backgroundColor = .clear
+        contentView.initOnDidLoad()
     }
 
     func setToken(_ token: String) {
@@ -119,7 +118,7 @@ extension ImagesListViewController: UITableViewDelegate {
 
 extension ImagesListViewController: ImagesListCellDelegate {
     func likeButtonClicked(_ cell: ImagesListCell) {
-        guard let indexPath = contentView.tableView.indexPath(for: cell) else { return }
-        imagesListService.toggleLike(byIndex: indexPath.row)
+        guard let index = contentView.rowIndex(for: cell) else { return }
+        imagesListService.toggleLike(byIndex: index)
     }
 }

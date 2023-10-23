@@ -1,7 +1,7 @@
 import UIKit
 
 final class ImagesListTableUIView: UIView {
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
@@ -34,6 +34,21 @@ final class ImagesListTableUIView: UIView {
         tableView.delegate = tableDelegate
     }
 
+    func initOnDidLoad() {
+        // Какой-то костыль, иначе цвет скидывался на белый
+        tableView.backgroundColor = .clear
+    }
+}
+
+// MARK: - Table methods
+
+extension ImagesListTableUIView {
+
+    func reloadRow(at index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+
     func updateTableViewAnimated(addedIndexes: Range<Int>) {
         if addedIndexes.isEmpty { return }
         tableView.performBatchUpdates {
@@ -45,8 +60,8 @@ final class ImagesListTableUIView: UIView {
         }
     }
 
-    func reloadRow(at index: Int) {
-        let indexPath = IndexPath(row: index, section: 0)
-        tableView.reloadRows(at: [indexPath], with: .none)
+    func rowIndex(for cell: ImagesListCell) -> Int? {
+        guard let indexPath = tableView.indexPath(for: cell) else { return nil }
+        return indexPath.row
     }
 }

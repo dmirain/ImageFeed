@@ -9,6 +9,7 @@ final class ImagesListViewController: BaseUIViewController {
     private let contentView: ImagesListTableUIView
     private let diResolver: Resolver
     private var imageTableObserver: NSObjectProtocol?
+    private var isTableInit = false
 
     init(diResolver: Resolver, imagesListService: ImagesListService) {
         self.imagesListService = imagesListService
@@ -33,6 +34,7 @@ final class ImagesListViewController: BaseUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad")
         contentView.initOnDidLoad()
     }
 
@@ -50,12 +52,14 @@ final class ImagesListViewController: BaseUIViewController {
     }
 
     private func subscribeOnTableUpdate() {
-
         imageTableObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification, object: nil, queue: .main
         ) { [weak self] data in
             print("Table update")
             guard let self else { return }
+
+            if !isTableInit { return }
+
             if let addedIndexes = data.userInfo?["addedIndexes"] as? Range<Int> {
                 print("Table update \(addedIndexes)")
                 self.contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
@@ -68,7 +72,9 @@ final class ImagesListViewController: BaseUIViewController {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        imagesListService.imagesCount
+        isTableInit = true
+        print("numberOfRowsInSection \(imagesListService.imagesCount)")
+        return imagesListService.imagesCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

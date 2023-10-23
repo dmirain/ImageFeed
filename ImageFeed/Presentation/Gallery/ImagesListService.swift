@@ -1,6 +1,8 @@
 import UIKit
 
 final class ImagesListService {
+    static let DidChangeNotification = Notification.Name(rawValue: "ImageListTableDidChange")
+
     weak var controller: ImagesListViewController?
     private let imageListGateway: ImagesListGateway
     private let imageLikeGateway: ImageLikeGateway
@@ -43,7 +45,12 @@ final class ImagesListService {
         nextPage += 1
         let newCount = imagesCount
 
-        controller?.updateTableViewAnimated(addedIndexes: (oldCount..<newCount))
+        print("send message \(oldCount) \(newCount)")
+        NotificationCenter.default.post(
+            name: Self.DidChangeNotification,
+            object: nil,
+            userInfo: ["addedIndexes": oldCount..<newCount]
+        )
     }
 
     func imageHeight(byIndex index: Int, containerWidth: CGFloat) -> CGFloat {

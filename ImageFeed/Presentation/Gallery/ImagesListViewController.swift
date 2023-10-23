@@ -8,6 +8,7 @@ final class ImagesListViewController: BaseUIViewController {
     private let imagesListService: ImagesListService
     private let contentView: ImagesListTableUIView
     private let diResolver: Resolver
+    private var imageTableObserver: NSObjectProtocol?
 
     init(diResolver: Resolver, imagesListService: ImagesListService) {
         self.imagesListService = imagesListService
@@ -19,6 +20,7 @@ final class ImagesListViewController: BaseUIViewController {
         self.imagesListService.controller = self
         self.contentView.setDelegates(tableDataSource: self, tableDelegate: self)
         tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
+        subscribeOnTableUpdate()
     }
 
     required init?(coder: NSCoder) {
@@ -44,12 +46,22 @@ final class ImagesListViewController: BaseUIViewController {
         imagesListService.fetchPhotosNextPage()
     }
 
-    func updateTableViewAnimated(addedIndexes: Range<Int>) {
-        contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
-    }
-
     func reloadRow(at index: Int) {
         contentView.reloadRow(at: index)
+    }
+
+    private func subscribeOnTableUpdate() {
+
+        imageTableObserver = NotificationCenter.default.addObserver(
+            forName: ImagesListService.DidChangeNotification, object: nil, queue: .main
+        ) { [weak self] data in
+            print("Table update")
+            guard let self else { return }
+            if let addedIndexes = data.userInfo?["addedIndexes"] as? Range<Int> {
+                print("Table update \(addedIndexes)")
+                self.contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
+            }
+        }
     }
 }
 

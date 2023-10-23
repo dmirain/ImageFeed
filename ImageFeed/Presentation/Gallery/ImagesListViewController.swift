@@ -47,7 +47,7 @@ final class ImagesListViewController: BaseUIViewController {
 
     private func subscribeOnTableUpdate() {
         imageTableObserver = NotificationCenter.default.addObserver(
-            forName: ImagesListService.DidChangeNotification, object: nil, queue: .main
+            forName: ImagesListService.didChangeNotification, object: nil, queue: .main
         ) { [weak self] data in
             guard let self else { return }
 

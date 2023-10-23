@@ -63,7 +63,7 @@ final class ProfileViewController: BaseUIViewController {
 
     private func subscribeOnUpdateAvatar() {
         profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageGateway.DidChangeNotification, object: nil, queue: .main
+            forName: ProfileImageGateway.didChangeNotification, object: nil, queue: .main
         ) { [weak self] data in
             guard let self else { return }
             if let photoUrl = data.userInfo?["URL"] as? String {

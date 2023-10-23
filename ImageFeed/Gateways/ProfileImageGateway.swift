@@ -1,7 +1,7 @@
 import Foundation
 
 final class ProfileImageGateway {
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
 
     private let httpClient: NetworkClient
     private let requestBuilder: RequestBuilder
@@ -23,7 +23,7 @@ final class ProfileImageGateway {
             switch result {
             case let .success(photoResponse):
                 NotificationCenter.default.post(
-                    name: Self.DidChangeNotification,
+                    name: Self.didChangeNotification,
                     object: nil,
                     userInfo: ["URL": photoResponse.profileImage.medium]
                 )

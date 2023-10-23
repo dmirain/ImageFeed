@@ -1,7 +1,7 @@
 import UIKit
 
 final class ImagesListService {
-    static let DidChangeNotification = Notification.Name(rawValue: "ImageListTableDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ImageListTableDidChange")
 
     weak var controller: ImagesListViewController?
     private let imageListGateway: ImagesListGateway
@@ -39,7 +39,7 @@ final class ImagesListService {
         let newCount = imagesCount
 
         NotificationCenter.default.post(
-            name: Self.DidChangeNotification,
+            name: Self.didChangeNotification,
             object: nil,
             userInfo: ["addedIndexes": oldCount..<newCount]
         )

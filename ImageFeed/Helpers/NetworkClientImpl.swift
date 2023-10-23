@@ -6,6 +6,11 @@ protocol NetworkClient {
         as dtoType: T.Type,
         handler: @escaping (Result<T, NetworkError>) -> Void
     ) -> URLSessionTask
+
+    func fetch(
+        from request: URLRequest,
+        handler: @escaping (Result<Data, NetworkError>) -> Void
+    ) -> URLSessionTask
 }
 
 enum NetworkError: Error {
@@ -43,9 +48,13 @@ struct NetworkClientImpl: NetworkClient {
         fetch(from: request) { result in
             switch result {
             case let .success(data):
-                if let object = data.fromJson(to: dtoType) {
+                do {
+                    guard let object = try data.fromJson(to: dtoType) else {
+                        handler(.failure(NetworkError.emptyData))
+                        return
+                    }
                     handler(.success(object))
-                } else {
+                } catch {
                     handler(.failure(NetworkError.parseError))
                 }
             case let .failure(error):
@@ -54,7 +63,7 @@ struct NetworkClientImpl: NetworkClient {
         }
     }
 
-    private func fetch(
+    func fetch(
         from request: URLRequest,
         handler: @escaping (Result<Data, NetworkError>) -> Void
     ) -> URLSessionTask {

@@ -1,4 +1,5 @@
 import UIKit
+import Swinject
 
 final class SplashViewController: BaseUIViewController {
     private let window: UIWindow
@@ -6,23 +7,27 @@ final class SplashViewController: BaseUIViewController {
 
     private let contentView: SplashUIView
 
+    private let diResolver: Resolver
     private let authStorage: AuthStorage
-    private let tabBarViewController: TabBarController
-    private let authViewController: AuthViewController
     private var alertPresenter: AlertPresenter
-
+    private lazy var tabBarViewController: TabBarController = {
+        diResolver.resolve(TabBarController.self, argument: window)!
+    }()
+    private lazy var authViewController: AuthViewController = {
+        let controller = diResolver.resolve(AuthViewController.self)!
+        controller.delegate = self
+        return controller
+    }()
     init(
         window: UIWindow,
         authStorage: AuthStorage,
-        authViewController: AuthViewController,
-        tabBarViewController: TabBarController,
-        alertPresenter: AlertPresenter
+        alertPresenter: AlertPresenter,
+        diResolver: Resolver
     ) {
         self.window = window
         self.authStorage = authStorage
-        self.authViewController = authViewController
-        self.tabBarViewController = tabBarViewController
         self.alertPresenter = alertPresenter
+        self.diResolver = diResolver
         self.contentView = SplashUIView()
 
         super.init(nibName: nil, bundle: nil)
@@ -47,7 +52,6 @@ final class SplashViewController: BaseUIViewController {
 private extension SplashViewController {
     func routeToController() {
         guard let token = authStorage.get()?.token else {
-            authViewController.delegate = self
             present(authViewController, animated: true)
             return
         }

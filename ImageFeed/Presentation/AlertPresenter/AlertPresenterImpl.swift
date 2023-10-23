@@ -11,14 +11,25 @@ final class AlertPresenterImpl: AlertPresenter {
         )
         alert.view.accessibilityIdentifier = "Alert"
 
-        let action = UIAlertAction(title: alertDto.actionTitle, style: .default) { [weak self] _ in
-            guard let self else {
-                return
+        alertDto.actions.forEach { actionType in
+            let title: String
+            switch actionType {
+            case .reset(actionText: let actionText):
+                title = actionText
+            case .exit(actionText: let actionText):
+                title = actionText
+            case .doNothing(actionText: let actionText):
+                title = actionText
             }
-            self.delegate?.performAlertAction(action: alertDto.action)
-        }
 
-        alert.addAction(action)
+            let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.delegate?.performAlertAction(action: actionType)
+            }
+            alert.addAction(action)
+        }
 
         delegate?.presentAlert(alert)
     }

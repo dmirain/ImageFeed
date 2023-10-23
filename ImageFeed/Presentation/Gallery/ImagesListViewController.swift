@@ -1,38 +1,61 @@
 import UIKit
+import Swinject
 
 // MARK: - ImagesListViewController
 
 final class ImagesListViewController: BaseUIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    private let model: ImageFeedModel
+    private let imagesListService: ImagesListService
+    private let contentView: ImagesListTableUIView
+    private let diResolver: Resolver
+    private var imageTableObserver: NSObjectProtocol?
+    private var isTableInit = false
 
-    @IBOutlet private weak var tableView: UITableView!
+    init(diResolver: Resolver, imagesListService: ImagesListService) {
+        self.imagesListService = imagesListService
+        self.diResolver = diResolver
+        contentView = ImagesListTableUIView()
+
+        super.init(nibName: nil, bundle: nil)
+
+        self.imagesListService.controller = self
+        self.contentView.setDelegates(tableDataSource: self, tableDelegate: self)
+        tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
+        subscribeOnTableUpdate()
+    }
 
     required init?(coder: NSCoder) {
-        model = ImageFeedModel()
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func loadView() {
+        view = contentView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsets(
-            top: Const.firsCellTopIndent,
-            left: 0,
-            bottom: Const.firsCellTopIndent,
-            right: 0
-        )
+        contentView.initOnDidLoad()
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showSingleImageSegueIdentifier {
-            guard let viewController = segue.destination as? SingleImageViewController,
-                    let indexPath = sender as? IndexPath else {
-                return
+    func fetchPhotosNextPage() {
+        imagesListService.fetchPhotosNextPage()
+    }
+
+    func reloadRow(at index: Int) {
+        contentView.reloadRow(at: index)
+    }
+
+    private func subscribeOnTableUpdate() {
+        imageTableObserver = NotificationCenter.default.addObserver(
+            forName: ImagesListService.didChangeNotification, object: nil, queue: .main
+        ) { [weak self] data in
+            guard let self else { return }
+
+            if !isTableInit { return }
+
+            if let addedIndexes = data.userInfo?["addedIndexes"] as? Range<Int> {
+                self.contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
             }
-            let imageModel = model.imageCellModel(byIndex: indexPath.row)
-            viewController.imageModel = imageModel
-        } else {
-            assertionFailure("unknown segue identifier \(segue.identifier ?? "")")
         }
     }
 }
@@ -41,7 +64,8 @@ final class ImagesListViewController: BaseUIViewController {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        model.imagesCount
+        isTableInit = true
+        return imagesListService.imagesCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,7 +81,8 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        let cellModel = model.imageCellModel(byIndex: indexPath.row)
+        cell.controller = self
+        let cellModel = imagesListService.imageCellModel(byIndex: indexPath.row)
         cell.configureCell(with: cellModel)
     }
 }
@@ -66,10 +91,31 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
+        let viewController = diResolver.resolve(SingleImageViewController.self)
+
+        guard let viewController else { return }
+
+        let imageModel = imagesListService.imageCellModel(byIndex: indexPath.row)
+        viewController.setModel(imageCellModel: imageModel)
+        present(viewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        model.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
+        imagesListService.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row > imagesListService.imagesCount - 3 {
+            imagesListService.fetchPhotosNextPage()
+        }
+    }
+}
+
+// MARK: - ImagesListCellDelegate
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func likeButtonClicked(_ cell: ImagesListCell) {
+        guard let index = contentView.rowIndex(for: cell) else { return }
+        imagesListService.toggleLike(byIndex: index)
     }
 }

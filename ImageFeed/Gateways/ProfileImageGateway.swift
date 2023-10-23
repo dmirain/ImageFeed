@@ -1,18 +1,18 @@
 import Foundation
 
 final class ProfileImageGateway {
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
 
     private let httpClient: NetworkClient
+    private let requestBuilder: RequestBuilder
     private var task: URLSessionTask?
-    var requestBuilder: RequestBuilder?
 
-    init(httpClient: NetworkClient) {
+    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
         self.httpClient = httpClient
+        self.requestBuilder = requestBuilder
     }
 
     func fetchProfilePhoto(username: String) {
-        guard requestBuilder != nil else { return }
         guard isLockedForNext() else { return }
         task = httpClient.fetchObject(
             from: request(username: username),
@@ -23,7 +23,7 @@ final class ProfileImageGateway {
             switch result {
             case let .success(photoResponse):
                 NotificationCenter.default.post(
-                    name: Self.DidChangeNotification,
+                    name: Self.didChangeNotification,
                     object: nil,
                     userInfo: ["URL": photoResponse.profileImage.medium]
                 )
@@ -47,6 +47,6 @@ private extension ProfileImageGateway {
     }
 
     func request(username: String) -> URLRequest {
-        requestBuilder!.makeRequest(path: "/users/\(username)")
+        requestBuilder.makeRequest(path: "/users/\(username)", params: [], method: "GET")
     }
 }

@@ -23,8 +23,6 @@ final class TabBarController: UITabBarController {
     }
 
     func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
-        print("initData")
-        imagesListViewController.setToken(token)
         imagesListViewController.fetchPhotosNextPage()
         profileViewController.initData(token: token, handler: handler)
     }

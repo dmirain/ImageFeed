@@ -11,21 +11,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
         container.register(AlertPresenter.self) { _ in AlertPresenterImpl() }
 
-        container.register(RequestBuilder.self) { (_, token: String) in
-            RequestBuilderImpl(token: token)
+        container.register(RequestBuilder.self) { diResolver in
+            RequestBuilderImpl(authStorage: diResolver.resolve(AuthStorage.self)!)
         }
         container.register(ProfileGateway.self) { diResolver in
-            ProfileGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
-
+            ProfileGateway(
+                httpClient: diResolver.resolve(NetworkClient.self)!,
+                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+            )
         }
         container.register(ProfileImageGateway.self) { diResolver in
-            ProfileImageGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
+            ProfileImageGateway(
+                httpClient: diResolver.resolve(NetworkClient.self)!,
+                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+            )
         }
         container.register(ImagesListGateway.self) { diResolver in
-            ImagesListGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
+            ImagesListGateway(
+                httpClient: diResolver.resolve(NetworkClient.self)!,
+                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+            )
         }
         container.register(ImageLikeGateway.self) { diResolver in
-            ImageLikeGateway(httpClient: diResolver.resolve(NetworkClient.self)!)
+            ImageLikeGateway(
+                httpClient: diResolver.resolve(NetworkClient.self)!,
+                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+            )
         }
         container.register(ImagesListService.self) { diResolver in
             ImagesListService(

@@ -34,13 +34,7 @@ final class ImagesListViewController: BaseUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
         contentView.initOnDidLoad()
-    }
-
-    func setToken(_ token: String) {
-        let requestBuilder = diResolver.resolve(RequestBuilder.self, argument: token)!
-        imagesListService.setRequestBuilder(requestBuilder)
     }
 
     func fetchPhotosNextPage() {
@@ -55,13 +49,11 @@ final class ImagesListViewController: BaseUIViewController {
         imageTableObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification, object: nil, queue: .main
         ) { [weak self] data in
-            print("Table update")
             guard let self else { return }
 
             if !isTableInit { return }
 
             if let addedIndexes = data.userInfo?["addedIndexes"] as? Range<Int> {
-                print("Table update \(addedIndexes)")
                 self.contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
             }
         }
@@ -73,7 +65,6 @@ final class ImagesListViewController: BaseUIViewController {
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isTableInit = true
-        print("numberOfRowsInSection \(imagesListService.imagesCount)")
         return imagesListService.imagesCount
     }
 

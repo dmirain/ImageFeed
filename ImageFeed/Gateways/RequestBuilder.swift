@@ -5,10 +5,12 @@ protocol RequestBuilder {
 }
 
 struct RequestBuilderImpl: RequestBuilder {
-    private let token: String
+    private let authStorage: AuthStorage
 
-    init(token: String) {
-        self.token = token
+    private var token: String { authStorage.get()?.token ?? "" }
+
+    init(authStorage: AuthStorage) {
+        self.authStorage = authStorage
     }
 
     func makeRequest(path: String, params: [URLQueryItem], method: String) -> URLRequest {

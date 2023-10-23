@@ -16,13 +16,7 @@ final class ImagesListService {
         self.imageLikeGateway = imageLikeGateway
     }
 
-    func setRequestBuilder(_ builder: RequestBuilder) {
-        self.imageListGateway.requestBuilder = builder
-        self.imageLikeGateway.requestBuilder = builder
-    }
-
     func fetchPhotosNextPage() {
-        print("loadNextPage")
         self.imageListGateway.fetchImagesPage(page: nextPage) { [weak self] result in
             guard let self else { return }
 
@@ -31,21 +25,19 @@ final class ImagesListService {
                 DispatchQueue.main.async {
                     self.addPageData(data: data)
                 }
-            case let .failure(error):
-                print(error)
+            case .failure:
+                break
                 // TODO обработать ошибку
             }
         }
     }
 
     private func addPageData(data: [ImageDto]) {
-        print("addPageData")
         let oldCount = imagesCount
         images.append(contentsOf: data)
         nextPage += 1
         let newCount = imagesCount
 
-        print("send message \(oldCount) \(newCount)")
         NotificationCenter.default.post(
             name: Self.DidChangeNotification,
             object: nil,
@@ -70,8 +62,7 @@ final class ImagesListService {
             guard let self else { return }
 
             let setState: Bool
-            if let error {
-                print(error)
+            if error == nil {
                 setState = image.isLiked
             } else {
                 setState = newState

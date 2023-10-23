@@ -44,9 +44,6 @@ final class ProfileViewController: BaseUIViewController {
     }
 
     func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
-        let requestBuilder = diResolver.resolve(RequestBuilder.self, argument: token)
-
-        profileGateway.requestBuilder = requestBuilder
         profileGateway.fetchProfile { [weak self] result in
             guard let self else { return }
             switch result {
@@ -55,7 +52,6 @@ final class ProfileViewController: BaseUIViewController {
                     self.contentView.set(profileData: data)
                 }
 
-                profileImageGateway.requestBuilder = requestBuilder
                 profileImageGateway.fetchProfilePhoto(username: data.username)
 
                 handler(nil)

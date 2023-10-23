@@ -4,18 +4,14 @@ final class ImageLikeGateway {
     private let httpClient: NetworkClient
     private var tasks: [ImageDto: URLSessionTask] = [:]
 
-    var requestBuilder: RequestBuilder?
+    private let requestBuilder: RequestBuilder
 
-    init(httpClient: NetworkClient) {
+    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
         self.httpClient = httpClient
+        self.requestBuilder = requestBuilder
     }
 
     func toggleLike(image: ImageDto, to createLike: Bool, handler: @escaping (NetworkError?) -> Void) {
-        guard requestBuilder != nil else {
-            handler(.authFaild)
-            return
-        }
-
         guard getLock(image) else { return }
 
         let request = createLike ? requestSetLike(image: image) : requestDelLike(image: image)
@@ -48,7 +44,7 @@ private extension ImageLikeGateway {
     }
 
     func requestSetLike(image: ImageDto) -> URLRequest {
-        requestBuilder!.makeRequest(
+        requestBuilder.makeRequest(
             path: "/photos/\(image.id)/like",
             params: [],
             method: "POST"
@@ -56,7 +52,7 @@ private extension ImageLikeGateway {
     }
 
     func requestDelLike(image: ImageDto) -> URLRequest {
-        requestBuilder!.makeRequest(
+        requestBuilder.makeRequest(
             path: "/photos/\(image.id)/like",
             params: [],
             method: "DELETE"

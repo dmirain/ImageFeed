@@ -54,9 +54,7 @@ struct NetworkClientImpl: NetworkClient {
                         return
                     }
                     handler(.success(object))
-                } catch let error {
-                    print(String(data: data, encoding: .utf8)!)
-                    print(error)
+                } catch {
                     handler(.failure(NetworkError.parseError))
                 }
             case let .failure(error):

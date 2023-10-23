@@ -53,19 +53,11 @@ final class ImagesListCell: UITableViewCell {
         return view
     }()
 
-    // Почему-то если просто менять цвет у selectedBackgroundView, то он не меняется :(
-    private lazy var bgColorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        return view
-    }()
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        selectionStyle = .none
         backgroundColor = UIColor.ypBlack
-        selectedBackgroundView = bgColorView
 
         contentView.addSubview(cellImage)
         cellImage.addSubview(gradient)

@@ -62,12 +62,16 @@ final class ImagesListViewController: BaseUIViewController {
 
 // MARK: - UITableViewDataSource
 
+// Методы, которые таблица вызывает, что бы получить данные
 extension ImagesListViewController: UITableViewDataSource {
+
+    // Обязательный метод, который узнаёт у нас сколько у нас строк в данных.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isTableInit = true
         return imagesListService.imagesCount
     }
 
+    // Метод в котором таблица понимает, какую ячейку использовать.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
 
@@ -80,6 +84,7 @@ extension ImagesListViewController: UITableViewDataSource {
         return imageListCell
     }
 
+    // Мой метод, который конфигурирует ячейку. Вызывается на 83 строке
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         cell.controller = self
         let cellModel = imagesListService.imageCellModel(byIndex: indexPath.row)
@@ -89,7 +94,9 @@ extension ImagesListViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
+// Методы обработчики событий от таблички
 extension ImagesListViewController: UITableViewDelegate {
+    // Дёргается при нажатии на строку. Тут мы переходим к контроллеру с большой фоткой
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController = diResolver.resolve(SingleImageViewController.self)
 
@@ -100,10 +107,13 @@ extension ImagesListViewController: UITableViewDelegate {
         present(viewController, animated: true)
     }
 
+    // Дёргается, когда табличка хочет понять высоту ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         imagesListService.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
     }
 
+    // Дёргается для каждой ячейки, когда она показывается пользователю.
+    // Тут мы понимаем, что пользователь почти долистал до конца и надо грузить ещё данныке
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row > imagesListService.imagesCount - 3 {
             imagesListService.fetchPhotosNextPage()

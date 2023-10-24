@@ -6,7 +6,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private let container: Container = {
         let container = Container()
-        container.register(UIStoryboard.self) { _ in UIStoryboard(name: "Main", bundle: .main) }
         container.register(AuthStorage.self) { _ in AuthStorageImpl.shared }
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
         container.register(AlertPresenter.self) { _ in AlertPresenterImpl() }
@@ -38,6 +37,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 requestBuilder: diResolver.resolve(RequestBuilder.self)!
             )
         }
+        container.register(UnsplashAuthGateway.self) { diResolver in
+            UnsplashAuthGateway(
+                httpClient: diResolver.resolve(NetworkClient.self)!
+            )
+        }
+
         container.register(ImagesListService.self) { diResolver in
             ImagesListService(
                 imageListGateway: diResolver.resolve(ImagesListGateway.self)!,
@@ -46,11 +51,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         container.register(AuthViewController.self) { diResolver in
-            let controller = diResolver.resolve(UIStoryboard.self)!.instantiateViewController(
-                withIdentifier: "AuthViewController"
-            ) as? AuthViewController
-            controller?.modalPresentationStyle = .fullScreen
-            return controller!
+            AuthViewController(
+                authStorage: diResolver.resolve(AuthStorage.self)!,
+                alertPresenter: diResolver.resolve(AlertPresenter.self)!,
+                webViewViewController: diResolver.resolve(WebViewViewController.self)!,
+                authGateway: diResolver.resolve(UnsplashAuthGateway.self)!
+            )
+        }
+        container.register(WebViewViewController.self) { _ in
+            WebViewViewController()
         }
         container.register(SingleImageViewController.self) { diResolver in
             SingleImageViewController(

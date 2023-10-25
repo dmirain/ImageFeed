@@ -2,8 +2,9 @@ import Foundation
 
 final class ImagesListGateway {
     private let httpClient: NetworkClient
-    private var task: URLSessionTask?
     private let requestBuilder: RequestBuilder
+
+    private var task: URLSessionTask?
 
     init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
         self.httpClient = httpClient

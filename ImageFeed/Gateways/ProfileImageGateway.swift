@@ -5,6 +5,7 @@ final class ProfileImageGateway {
 
     private let httpClient: NetworkClient
     private let requestBuilder: RequestBuilder
+
     private var task: URLSessionTask?
 
     init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {

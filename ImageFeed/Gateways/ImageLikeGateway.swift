@@ -2,9 +2,9 @@ import Foundation
 
 final class ImageLikeGateway {
     private let httpClient: NetworkClient
-    private var tasks: [ImageDto: URLSessionTask] = [:]
-
     private let requestBuilder: RequestBuilder
+
+    private var tasks: [ImageDto: URLSessionTask] = [:]
 
     init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
         self.httpClient = httpClient

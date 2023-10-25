@@ -15,7 +15,7 @@ final class AuthGateway {
     func fetchAuthToken(with code: String, handler: @escaping (Result<AuthDto, NetworkError>) -> Void) {
         guard isLockedForNext(with: code) else { return }
 
-        task = httpClient.fetchObject(from: request(code), as: UnsplashOAuthData.self) { [weak self] result in
+        task = httpClient.fetchObject(from: request(code), as: TokenResponse.self) { [weak self] result in
             guard let self else { return }
 
             switch result {
@@ -45,7 +45,7 @@ private extension AuthGateway {
         lastCode = nil
     }
 
-    func convertData(oauthData: UnsplashOAuthData) -> Result<AuthDto, NetworkError> {
+    func convertData(oauthData: TokenResponse) -> Result<AuthDto, NetworkError> {
         guard !oauthData.accessToken.isEmpty else { return .failure(NetworkError.emptyData) }
         return .success(AuthDto(token: oauthData.accessToken))
     }

@@ -18,7 +18,7 @@ final class AuthViewController: BaseUIViewController {
         authStorage: AuthStorage,
         alertPresenter: AlertPresenter,
         webViewViewController: WebViewViewController,
-        authGateway: UnsplashAuthGateway
+        authGateway: AuthGateway
     ) {
         self.authGateway = authGateway
         self.authStorage = authStorage

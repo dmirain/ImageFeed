@@ -31,8 +31,7 @@
 		79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC42AC0C0AC00666573 /* AuthStorage.swift */; };
 		79797FC72AC0C11200666573 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC62AC0C11200666573 /* Data+Extensions.swift */; };
 		79797FC92AC0C19F00666573 /* UnsplashOAuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC82AC0C19F00666573 /* UnsplashOAuthData.swift */; };
-		79797FCB2AC0C32200666573 /* AuthGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FCA2AC0C32200666573 /* AuthGateway.swift */; };
-		79797FCD2AC0C39900666573 /* UnsplashAuthGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FCC2AC0C39900666573 /* UnsplashAuthGateway.swift */; };
+		79797FCD2AC0C39900666573 /* AuthGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FCC2AC0C39900666573 /* AuthGateway.swift */; };
 		79797FDE2AC0C9EC00666573 /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FD22AC0C9EC00666573 /* AlertAction.swift */; };
 		79797FDF2AC0C9EC00666573 /* AlertPresenterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FD32AC0C9EC00666573 /* AlertPresenterImpl.swift */; };
 		79797FE02AC0C9EC00666573 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FD42AC0C9EC00666573 /* AlertPresenter.swift */; };
@@ -108,8 +107,7 @@
 		79797FC42AC0C0AC00666573 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
 		79797FC62AC0C11200666573 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		79797FC82AC0C19F00666573 /* UnsplashOAuthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashOAuthData.swift; sourceTree = "<group>"; };
-		79797FCA2AC0C32200666573 /* AuthGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthGateway.swift; sourceTree = "<group>"; };
-		79797FCC2AC0C39900666573 /* UnsplashAuthGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashAuthGateway.swift; sourceTree = "<group>"; };
+		79797FCC2AC0C39900666573 /* AuthGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthGateway.swift; sourceTree = "<group>"; };
 		79797FD22AC0C9EC00666573 /* AlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
 		79797FD32AC0C9EC00666573 /* AlertPresenterImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPresenterImpl.swift; sourceTree = "<group>"; };
 		79797FD42AC0C9EC00666573 /* AlertPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
@@ -218,8 +216,7 @@
 		79797FBD2AC0BF2B00666573 /* Gateways */ = {
 			isa = PBXGroup;
 			children = (
-				79797FCA2AC0C32200666573 /* AuthGateway.swift */,
-				79797FCC2AC0C39900666573 /* UnsplashAuthGateway.swift */,
+				79797FCC2AC0C39900666573 /* AuthGateway.swift */,
 				79AECB0B2AC8B247009AA84B /* ProfileGateway.swift */,
 				7984D0C82ACAEC0B00A2E42D /* ProfileImageGateway.swift */,
 				795835322AE03DCF00827680 /* ImagesListGateway.swift */,
@@ -546,7 +543,7 @@
 				79F745B02A7EE9E000AED431 /* UIView+Extensions.swift in Sources */,
 				7958353F2AE43A9900827680 /* SingleImageView.swift in Sources */,
 				792B7B2E2A88EE25000AF75A /* SingleImageViewController.swift in Sources */,
-				79797FCD2AC0C39900666573 /* UnsplashAuthGateway.swift in Sources */,
+				79797FCD2AC0C39900666573 /* AuthGateway.swift in Sources */,
 				79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */,
 				795835372AE05DC700827680 /* String+Extensions.swift in Sources */,
 				79797FC92AC0C19F00666573 /* UnsplashOAuthData.swift in Sources */,
@@ -571,7 +568,6 @@
 				795835412AE558A400827680 /* ExitAlertDto.swift in Sources */,
 				79AECB172AC95F97009AA84B /* SplashUIView.swift in Sources */,
 				795835432AE588C400827680 /* ImageLikeGateway.swift in Sources */,
-				79797FCB2AC0C32200666573 /* AuthGateway.swift in Sources */,
 				795835332AE03DCF00827680 /* ImagesListGateway.swift in Sources */,
 				798A49E02A9BD0AD00725D9C /* UIImage+Extensions.swift in Sources */,
 				79AECB0E2AC8B28B009AA84B /* ProfileDto.swift in Sources */,

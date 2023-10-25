@@ -41,8 +41,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 requestBuilder: diResolver.resolve(RequestBuilder.self)!
             )
         }
-        container.register(UnsplashAuthGateway.self) { diResolver in
-            UnsplashAuthGateway(
+        container.register(AuthGateway.self) { diResolver in
+            AuthGateway(
                 httpClient: diResolver.resolve(NetworkClient.self)!,
                 requestBuilder: diResolver.resolve(RequestBuilder.self)!
             )
@@ -60,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 authStorage: diResolver.resolve(AuthStorage.self)!,
                 alertPresenter: diResolver.resolve(AlertPresenter.self)!,
                 webViewViewController: diResolver.resolve(WebViewViewController.self)!,
-                authGateway: diResolver.resolve(UnsplashAuthGateway.self)!
+                authGateway: diResolver.resolve(AuthGateway.self)!
             )
         }
         container.register(WebViewViewController.self) { diResolver in

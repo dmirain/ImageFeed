@@ -3,7 +3,7 @@ import WebKit
 
 protocol WebViewViewDelegat: AnyObject {
     func backButtonClicked()
-    func authenticated(with code: String)
+    func extractCode(from url: URL) -> Bool
 }
 
 final class WebViewView: UIView {
@@ -97,25 +97,11 @@ extension WebViewView: WKNavigationDelegate {
             assertionFailure("Missed controller in WebViewView")
             return
         }
-        guard let code = code(from: navigationAction) else {
-            decisionHandler(.allow)
-            return
-        }
 
-        decisionHandler(.cancel)
-        controller.authenticated(with: code)
-    }
-
-    private func code(from navigationAction: WKNavigationAction) -> String? {
-        if
-            let url = navigationAction.request.url,
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" }) {
-            return codeItem.value
+        if let url = navigationAction.request.url, controller.extractCode(from: url) {
+            decisionHandler(.cancel)
         } else {
-            return nil
+            decisionHandler(.allow)
         }
     }
 }

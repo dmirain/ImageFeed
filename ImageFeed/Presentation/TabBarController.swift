@@ -14,6 +14,10 @@ final class TabBarController: UITabBarController {
         super.init(nibName: nil, bundle: nil)
 
         viewControllers = [imagesListViewController, profileViewController]
+
+        profileViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
+        imagesListViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
+
         tabBar.tintColor = UIColor.ypWhite
         tabBar.barTintColor = UIColor.ypBlack
     }

@@ -42,16 +42,13 @@ final class ImagesListTableUIView: UIView {
 
 // MARK: - Table methods
 
-// Это у меня методы в которых я манипулирую табличкой
 extension ImagesListTableUIView {
 
-    // Тут я перезагружаю ячейку, когда изменилось состояние лайка
     func reloadRow(at index: Int) {
         let indexPath = IndexPath(row: index, section: 0)
         tableView.reloadRows(at: [indexPath], with: .none)
     }
 
-    // Это я добавляею строки, когда мне пришла очередная порция данных
     func updateTableViewAnimated(addedIndexes: Range<Int>) {
         if addedIndexes.isEmpty { return }
         tableView.performBatchUpdates {
@@ -63,7 +60,6 @@ extension ImagesListTableUIView {
         }
     }
 
-    // Это я получаю индекс строки по объекту ячейки, что бы понять на какую фотку ставить лайк
     func rowIndex(for cell: ImagesListCell) -> Int? {
         guard let indexPath = tableView.indexPath(for: cell) else { return nil }
         return indexPath.row

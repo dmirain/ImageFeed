@@ -25,6 +25,7 @@
 		795835452AE5A67A00827680 /* OpenImageAlertDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835442AE5A67A00827680 /* OpenImageAlertDto.swift */; };
 		79734E832AE6E321002CD7FF /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79734E822AE6E321002CD7FF /* AuthView.swift */; };
 		79734E852AE82A2F002CD7FF /* WebViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79734E842AE82A2F002CD7FF /* WebViewView.swift */; };
+		79734E8B2AE8FAB3002CD7FF /* UnsplashApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79734E8A2AE8FAB3002CD7FF /* UnsplashApiConfig.swift */; };
 		79797FB92AC0BE0100666573 /* NetworkClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */; };
 		79797FC32AC0C00700666573 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC22AC0C00700666573 /* AuthDto.swift */; };
 		79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC42AC0C0AC00666573 /* AuthStorage.swift */; };
@@ -101,6 +102,7 @@
 		795835442AE5A67A00827680 /* OpenImageAlertDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenImageAlertDto.swift; sourceTree = "<group>"; };
 		79734E822AE6E321002CD7FF /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		79734E842AE82A2F002CD7FF /* WebViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewView.swift; sourceTree = "<group>"; };
+		79734E8A2AE8FAB3002CD7FF /* UnsplashApiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashApiConfig.swift; sourceTree = "<group>"; };
 		79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientImpl.swift; sourceTree = "<group>"; };
 		79797FC22AC0C00700666573 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		79797FC42AC0C0AC00666573 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
@@ -172,6 +174,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79734E872AE864AA002CD7FF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				79AECB112AC942C8009AA84B /* RequestBuilder.swift */,
+				798681792A76B3A400EB471C /* ImagesListService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		79797FBA2AC0BE5800666573 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,7 +206,6 @@
 		79797FBC2AC0BEC800666573 /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				798681792A76B3A400EB471C /* ImagesListService.swift */,
 				79F5DD502A750172000224F2 /* ImagesListViewController.swift */,
 				797E19322A75A56700A3E18F /* ImagesListCell.swift */,
 				7958353C2AE1231F00827680 /* ImagesListTable.swift */,
@@ -212,7 +222,6 @@
 				79797FCC2AC0C39900666573 /* UnsplashAuthGateway.swift */,
 				79AECB0B2AC8B247009AA84B /* ProfileGateway.swift */,
 				7984D0C82ACAEC0B00A2E42D /* ProfileImageGateway.swift */,
-				79AECB112AC942C8009AA84B /* RequestBuilder.swift */,
 				795835322AE03DCF00827680 /* ImagesListGateway.swift */,
 				795835422AE588C400827680 /* ImageLikeGateway.swift */,
 			);
@@ -299,6 +308,7 @@
 				79F5DD552A750173000224F2 /* Assets.xcassets */,
 				79F5DD572A750173000224F2 /* LaunchScreen.storyboard */,
 				7986817D2A76B7E500EB471C /* Constants.swift */,
+				79734E8A2AE8FAB3002CD7FF /* UnsplashApiConfig.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -326,6 +336,7 @@
 		79F5DD4B2A750172000224F2 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				79734E872AE864AA002CD7FF /* Services */,
 				79797FC12AC0BFCE00666573 /* Entities */,
 				79797FBE2AC0BF4000666573 /* Storages */,
 				79797FBD2AC0BF2B00666573 /* Gateways */,
@@ -520,6 +531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				795835452AE5A67A00827680 /* OpenImageAlertDto.swift in Sources */,
+				79734E8B2AE8FAB3002CD7FF /* UnsplashApiConfig.swift in Sources */,
 				7984D0C92ACAEC0B00A2E42D /* ProfileImageGateway.swift in Sources */,
 				79AECB0A2AC8AEE9009AA84B /* ProfileResponse.swift in Sources */,
 				79797FDE2AC0C9EC00666573 /* AlertAction.swift in Sources */,

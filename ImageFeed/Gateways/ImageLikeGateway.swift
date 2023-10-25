@@ -44,7 +44,7 @@ private extension ImageLikeGateway {
     }
 
     func requestSetLike(image: ImageDto) -> URLRequest {
-        requestBuilder.makeRequest(
+        requestBuilder.makeApiRequest(
             path: "/photos/\(image.id)/like",
             params: [],
             method: "POST"
@@ -52,7 +52,7 @@ private extension ImageLikeGateway {
     }
 
     func requestDelLike(image: ImageDto) -> URLRequest {
-        requestBuilder.makeRequest(
+        requestBuilder.makeApiRequest(
             path: "/photos/\(image.id)/like",
             params: [],
             method: "DELETE"

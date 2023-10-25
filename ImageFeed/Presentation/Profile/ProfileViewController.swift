@@ -31,7 +31,6 @@ final class ProfileViewController: BaseUIViewController {
 
         contentView.controller = self
         self.alertPresenter.delegate = self
-        tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
         subscribeOnUpdateAvatar()
     }
 

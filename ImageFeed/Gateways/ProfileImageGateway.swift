@@ -47,6 +47,6 @@ private extension ProfileImageGateway {
     }
 
     func request(username: String) -> URLRequest {
-        requestBuilder.makeRequest(path: "/users/\(username)", params: [], method: "GET")
+        requestBuilder.makeApiRequest(path: "/users/\(username)", params: [], method: "GET")
     }
 }

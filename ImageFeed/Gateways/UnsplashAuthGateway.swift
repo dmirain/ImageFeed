@@ -2,11 +2,14 @@ import Foundation
 
 final class UnsplashAuthGateway: AuthGateway {
     private let httpClient: NetworkClient
+    private let requestBuilder: RequestBuilder
+
     private var task: URLSessionTask?
     private var lastCode: String?
 
-    init(httpClient: NetworkClient) {
+    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
         self.httpClient = httpClient
+        self.requestBuilder = requestBuilder
     }
 
     func fetchAuthToken(with code: String, handler: @escaping (Result<AuthDto, NetworkError>) -> Void) {
@@ -48,17 +51,6 @@ private extension UnsplashAuthGateway {
     }
 
     func request(_ code: String) -> URLRequest {
-        var components = URLComponents(string: "https://unsplash.com/oauth/token")!
-        components.queryItems = [
-            URLQueryItem(name: "client_id", value: Const.accessKey),
-            URLQueryItem(name: "client_secret", value: Const.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Const.redirectURI),
-            URLQueryItem(name: "grant_type", value: "authorization_code"),
-            URLQueryItem(name: "code", value: code)
-        ]
-        var request = URLRequest(url: components.url!)
-        request.timeoutInterval = 2 // seconds
-        request.httpMethod = "POST"
-        return request
+        requestBuilder.makeToketRequest(code: code)
     }
 }

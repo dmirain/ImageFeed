@@ -10,20 +10,11 @@ class WebViewViewController: BaseUIViewController {
 
     weak var delegate: WebViewViewControllerDelegate?
     private let contentView: WebViewView
+    private let requestBuilder: RequestBuilder
 
-    private var authorizeRequest: URLRequest {
-        var urlComponents = URLComponents(string: Const.authorizeURLString)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Const.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Const.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Const.accessScope)
-        ]
-        let url = urlComponents.url!
-        return URLRequest(url: url)
-    }
+    init(requestBuilder: RequestBuilder) {
+        self.requestBuilder = requestBuilder
 
-    init() {
         contentView = WebViewView()
         super .init(nibName: nil, bundle: nil)
         contentView.controller = self
@@ -40,7 +31,7 @@ class WebViewViewController: BaseUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        contentView.load(authorizeRequest)
+        contentView.load(requestBuilder.makeAuthorizeRequest())
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,11 +41,27 @@ class WebViewViewController: BaseUIViewController {
 }
 
 extension WebViewViewController: WebViewViewDelegat {
+    func extractCode(from url: URL) -> Bool {
+        if let code = code(from: url) {
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+            return true
+        }
+        return false
+    }
+
     func backButtonClicked() {
         delegate?.webViewViewControllerDidCancel(self)
     }
 
-    func authenticated(with code: String) {
-        delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+    private func code(from url: URL) -> String? {
+        if
+            let urlComponents = URLComponents(string: url.absoluteString),
+            urlComponents.path == "/oauth/authorize/native",
+            let items = urlComponents.queryItems,
+            let codeItem = items.first(where: { $0.name == "code" }) {
+            return codeItem.value
+        } else {
+            return nil
+        }
     }
 }

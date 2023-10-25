@@ -7,11 +7,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private let container: Container = {
         let container = Container()
         container.register(AuthStorage.self) { _ in AuthStorageImpl.shared }
+        container.register(UnsplashApiConfig.self) { _ in UnsplashApiConfig.production }
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
         container.register(AlertPresenter.self) { _ in AlertPresenterImpl() }
 
         container.register(RequestBuilder.self) { diResolver in
-            RequestBuilderImpl(authStorage: diResolver.resolve(AuthStorage.self)!)
+            RequestBuilderImpl(
+                authStorage: diResolver.resolve(AuthStorage.self)!,
+                unsplashApiConfig: diResolver.resolve(UnsplashApiConfig.self)!
+            )
         }
         container.register(ProfileGateway.self) { diResolver in
             ProfileGateway(
@@ -39,7 +43,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         container.register(UnsplashAuthGateway.self) { diResolver in
             UnsplashAuthGateway(
-                httpClient: diResolver.resolve(NetworkClient.self)!
+                httpClient: diResolver.resolve(NetworkClient.self)!,
+                requestBuilder: diResolver.resolve(RequestBuilder.self)!
             )
         }
 
@@ -58,8 +63,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 authGateway: diResolver.resolve(UnsplashAuthGateway.self)!
             )
         }
-        container.register(WebViewViewController.self) { _ in
-            WebViewViewController()
+        container.register(WebViewViewController.self) { diResolver in
+            WebViewViewController(
+                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+            )
         }
         container.register(SingleImageViewController.self) { diResolver in
             SingleImageViewController(

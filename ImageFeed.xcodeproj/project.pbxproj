@@ -13,6 +13,7 @@
 		792B7B2C2A880730000AF75A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2B2A880730000AF75A /* ProfileViewController.swift */; };
 		792B7B2E2A88EE25000AF75A /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */; };
 		792B7B302A88FE7F000AF75A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B7B2F2A88FE7F000AF75A /* TabBarController.swift */; };
+		795111042AE94D5800DDD24D /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795111032AE94D5800DDD24D /* Progress.swift */; };
 		795835312AE0172B00827680 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 795835302AE0172B00827680 /* Swinject */; };
 		795835332AE03DCF00827680 /* ImagesListGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835322AE03DCF00827680 /* ImagesListGateway.swift */; };
 		795835352AE041D700827680 /* ImageItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795835342AE041D700827680 /* ImageItemResponse.swift */; };
@@ -26,6 +27,7 @@
 		79734E832AE6E321002CD7FF /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79734E822AE6E321002CD7FF /* AuthView.swift */; };
 		79734E852AE82A2F002CD7FF /* WebViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79734E842AE82A2F002CD7FF /* WebViewView.swift */; };
 		79734E8B2AE8FAB3002CD7FF /* UnsplashApiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79734E8A2AE8FAB3002CD7FF /* UnsplashApiConfig.swift */; };
+		79734E8D2AE8FF1F002CD7FF /* UrlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79734E8C2AE8FF1F002CD7FF /* UrlParser.swift */; };
 		79797FB92AC0BE0100666573 /* NetworkClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */; };
 		79797FC32AC0C00700666573 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC22AC0C00700666573 /* AuthDto.swift */; };
 		79797FC52AC0C0AC00666573 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79797FC42AC0C0AC00666573 /* AuthStorage.swift */; };
@@ -90,6 +92,7 @@
 		792B7B2B2A880730000AF75A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		792B7B2D2A88EE25000AF75A /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		792B7B2F2A88FE7F000AF75A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		795111032AE94D5800DDD24D /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		795835322AE03DCF00827680 /* ImagesListGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListGateway.swift; sourceTree = "<group>"; };
 		795835342AE041D700827680 /* ImageItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItemResponse.swift; sourceTree = "<group>"; };
 		795835362AE05DC700827680 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -102,6 +105,7 @@
 		79734E822AE6E321002CD7FF /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		79734E842AE82A2F002CD7FF /* WebViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewView.swift; sourceTree = "<group>"; };
 		79734E8A2AE8FAB3002CD7FF /* UnsplashApiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashApiConfig.swift; sourceTree = "<group>"; };
+		79734E8C2AE8FF1F002CD7FF /* UrlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlParser.swift; sourceTree = "<group>"; };
 		79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientImpl.swift; sourceTree = "<group>"; };
 		79797FC22AC0C00700666573 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		79797FC42AC0C0AC00666573 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 			children = (
 				79AECB112AC942C8009AA84B /* RequestBuilder.swift */,
 				798681792A76B3A400EB471C /* ImagesListService.swift */,
+				79734E8C2AE8FF1F002CD7FF /* UrlParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				79797FB82AC0BE0100666573 /* NetworkClientImpl.swift */,
 				79797FC62AC0C11200666573 /* Data+Extensions.swift */,
 				795835362AE05DC700827680 /* String+Extensions.swift */,
+				795111032AE94D5800DDD24D /* Progress.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -533,6 +539,7 @@
 				79AECB0A2AC8AEE9009AA84B /* ProfileResponse.swift in Sources */,
 				79797FDE2AC0C9EC00666573 /* AlertAction.swift in Sources */,
 				79F5DD512A750172000224F2 /* ImagesListViewController.swift in Sources */,
+				795111042AE94D5800DDD24D /* Progress.swift in Sources */,
 				79F745B22A7EEB1400AED431 /* UIColor+Extensions.swift in Sources */,
 				795835392AE0629300827680 /* ImageDto.swift in Sources */,
 				7986817A2A76B3A400EB471C /* ImagesListService.swift in Sources */,
@@ -563,6 +570,7 @@
 				79734E852AE82A2F002CD7FF /* WebViewView.swift in Sources */,
 				79797FDF2AC0C9EC00666573 /* AlertPresenterImpl.swift in Sources */,
 				79F5DD4F2A750172000224F2 /* SceneDelegate.swift in Sources */,
+				79734E8D2AE8FF1F002CD7FF /* UrlParser.swift in Sources */,
 				7986817E2A76B7E500EB471C /* Constants.swift in Sources */,
 				7922CC692AA4C93000627D98 /* WebViewViewController.swift in Sources */,
 				795835412AE558A400827680 /* ExitAlertDto.swift in Sources */,

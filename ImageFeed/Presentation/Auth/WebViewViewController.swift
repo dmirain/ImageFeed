@@ -11,13 +11,15 @@ class WebViewViewController: BaseUIViewController {
     weak var delegate: WebViewViewControllerDelegate?
     private let contentView: WebViewView
     private let requestBuilder: RequestBuilder
+    private let urlParser: UrlParser
 
-    init(requestBuilder: RequestBuilder) {
+    init(requestBuilder: RequestBuilder, urlParser: UrlParser) {
         self.requestBuilder = requestBuilder
+        self.urlParser = urlParser
 
         contentView = WebViewView()
         super .init(nibName: nil, bundle: nil)
-        contentView.controller = self
+        contentView.delegate = self
         modalPresentationStyle = .fullScreen
     }
 
@@ -41,8 +43,12 @@ class WebViewViewController: BaseUIViewController {
 }
 
 extension WebViewViewController: WebViewViewDelegat {
+    func calculateProgress(for currentValue: Double) -> Progress {
+        Progress(from: currentValue)
+    }
+
     func extractCode(from url: URL) -> Bool {
-        if let code = code(from: url) {
+        if let code = urlParser.extractCode(from: url) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             return true
         }
@@ -51,17 +57,5 @@ extension WebViewViewController: WebViewViewDelegat {
 
     func backButtonClicked() {
         delegate?.webViewViewControllerDidCancel(self)
-    }
-
-    private func code(from url: URL) -> String? {
-        if
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" }) {
-            return codeItem.value
-        } else {
-            return nil
-        }
     }
 }

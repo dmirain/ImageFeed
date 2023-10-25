@@ -4,11 +4,12 @@ import WebKit
 protocol WebViewViewDelegat: AnyObject {
     func backButtonClicked()
     func extractCode(from url: URL) -> Bool
+    func calculateProgress(for: Double) -> Progress
 }
 
 final class WebViewView: UIView {
-    weak var controller: WebViewViewDelegat?
-    var observation: NSKeyValueObservation?
+    weak var delegate: WebViewViewDelegat?
+    private var observation: NSKeyValueObservation?
 
     @objc private lazy var webView: WKWebView = {
         let view = WKWebView()
@@ -68,7 +69,7 @@ final class WebViewView: UIView {
 
     @objc
     func backButtonClicked() {
-        controller?.backButtonClicked()
+        delegate?.backButtonClicked()
     }
 
     func load(_ request: URLRequest) {
@@ -82,8 +83,11 @@ final class WebViewView: UIView {
     }
 
     private func updateProgress() {
-        progressView.progress = Float(webView.estimatedProgress)
-        progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
+        guard let delegate else { return }
+        let progress = delegate.calculateProgress(for: webView.estimatedProgress)
+
+        progressView.progress = progress.value
+        progressView.isHidden = progress.toHide
     }
 }
 
@@ -93,12 +97,12 @@ extension WebViewView: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-        guard let controller else {
+        guard let delegate else {
             assertionFailure("Missed controller in WebViewView")
             return
         }
 
-        if let url = navigationAction.request.url, controller.extractCode(from: url) {
+        if let url = navigationAction.request.url, delegate.extractCode(from: url) {
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)

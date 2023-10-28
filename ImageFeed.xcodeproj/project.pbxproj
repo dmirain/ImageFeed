@@ -46,6 +46,9 @@
 		79860B272AED525000B95344 /* ProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79860B262AED525000B95344 /* ProgressTests.swift */; };
 		79860B292AED545100B95344 /* RequestHelperImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79860B282AED545100B95344 /* RequestHelperImplTests.swift */; };
 		79860B2B2AED694800B95344 /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79860B2A2AED694800B95344 /* ProfileViewPresenter.swift */; };
+		79860B2E2AED6C9000B95344 /* WebViewViewMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79860B2D2AED6C9000B95344 /* WebViewViewMocks.swift */; };
+		79860B302AED6CEA00B95344 /* RequestHelperSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79860B2F2AED6CEA00B95344 /* RequestHelperSpy.swift */; };
+		79860B322AED6D5400B95344 /* AuthStorageSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79860B312AED6D5400B95344 /* AuthStorageSpy.swift */; };
 		798681752A769B1400EB471C /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798681742A769B1400EB471C /* Date+Extensions.swift */; };
 		7986817A2A76B3A400EB471C /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798681792A76B3A400EB471C /* ImagesListService.swift */; };
 		7986817E2A76B7E500EB471C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7986817D2A76B7E500EB471C /* Constants.swift */; };
@@ -129,6 +132,9 @@
 		79860B262AED525000B95344 /* ProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTests.swift; sourceTree = "<group>"; };
 		79860B282AED545100B95344 /* RequestHelperImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHelperImplTests.swift; sourceTree = "<group>"; };
 		79860B2A2AED694800B95344 /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
+		79860B2D2AED6C9000B95344 /* WebViewViewMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewMocks.swift; sourceTree = "<group>"; };
+		79860B2F2AED6CEA00B95344 /* RequestHelperSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHelperSpy.swift; sourceTree = "<group>"; };
+		79860B312AED6D5400B95344 /* AuthStorageSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorageSpy.swift; sourceTree = "<group>"; };
 		798681742A769B1400EB471C /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		798681792A76B3A400EB471C /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 		7986817D2A76B7E500EB471C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -286,6 +292,16 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		79860B2C2AED6C5000B95344 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				79860B2D2AED6C9000B95344 /* WebViewViewMocks.swift */,
+				79860B2F2AED6CEA00B95344 /* RequestHelperSpy.swift */,
+				79860B312AED6D5400B95344 /* AuthStorageSpy.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		798681732A769AF100EB471C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +383,7 @@
 		79F5DD622A750173000224F2 /* ImageFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				79860B2C2AED6C5000B95344 /* Mocks */,
 				79F5DD632A750173000224F2 /* WebViewViewControllerTests.swift */,
 				79860B242AED4F1200B95344 /* WebViewViewPresenterImplTests.swift */,
 				79860B262AED525000B95344 /* ProgressTests.swift */,
@@ -609,6 +626,9 @@
 			files = (
 				79860B272AED525000B95344 /* ProgressTests.swift in Sources */,
 				79860B292AED545100B95344 /* RequestHelperImplTests.swift in Sources */,
+				79860B302AED6CEA00B95344 /* RequestHelperSpy.swift in Sources */,
+				79860B2E2AED6C9000B95344 /* WebViewViewMocks.swift in Sources */,
+				79860B322AED6D5400B95344 /* AuthStorageSpy.swift in Sources */,
 				79F5DD642A750173000224F2 /* WebViewViewControllerTests.swift in Sources */,
 				79860B252AED4F1200B95344 /* WebViewViewPresenterImplTests.swift in Sources */,
 			);

@@ -7,7 +7,7 @@ final class RequestHelperImplTests: XCTestCase {
 
     override func setUpWithError() throws {
         self.helper = RequestHelperImpl(
-            authStorage: AuthStorageStub.shared,
+            authStorage: AuthStorageSpy.shared,
             unsplashApiConfig: UnsplashApiConfig.production
         )
     }
@@ -33,12 +33,4 @@ final class RequestHelperImplTests: XCTestCase {
         // then
         XCTAssertEqual(result, "testCode")
     }
-}
-
-final class AuthStorageStub: AuthStorage {
-    static var shared: AuthStorage = AuthStorageStub()
-    private init() {}
-    func get() -> AuthDto? { AuthDto(token: "token") }
-    func set(_ newValue: AuthDto) -> Bool { true }
-    func reset() {}
 }

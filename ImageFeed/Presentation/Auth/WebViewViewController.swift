@@ -6,18 +6,16 @@ protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewControllerDidCancel(_ viewController: WebViewViewController)
 }
 
-class WebViewViewController: BaseUIViewController {
+final class WebViewViewController: BaseUIViewController {
 
     weak var delegate: WebViewViewControllerDelegate?
     private let contentView: WebViewView
-    private let requestBuilder: RequestBuilder
-    private let urlParser: UrlParser
+    private let presenter: WebViewViewPresenter
 
-    init(requestBuilder: RequestBuilder, urlParser: UrlParser) {
-        self.requestBuilder = requestBuilder
-        self.urlParser = urlParser
+    init(presenter: WebViewViewPresenter, contentView: WebViewView) {
+        self.presenter = presenter
+        self.contentView = contentView
 
-        contentView = WebViewView()
         super .init(nibName: nil, bundle: nil)
         contentView.delegate = self
         modalPresentationStyle = .fullScreen
@@ -33,7 +31,7 @@ class WebViewViewController: BaseUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        contentView.load(requestBuilder.makeAuthorizeRequest())
+        contentView.load(presenter.makeWebViewRequest())
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -44,11 +42,11 @@ class WebViewViewController: BaseUIViewController {
 
 extension WebViewViewController: WebViewViewDelegat {
     func calculateProgress(for currentValue: Double) -> Progress {
-        Progress(from: currentValue)
+        presenter.calculateProgress(for: currentValue)
     }
 
     func extractCode(from url: URL) -> Bool {
-        if let code = urlParser.extractCode(from: url) {
+        if let code = presenter.extractCode(from: url) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             return true
         }

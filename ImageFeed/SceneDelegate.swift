@@ -10,7 +10,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(UnsplashApiConfig.self) { _ in UnsplashApiConfig.production }
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
         container.register(AlertPresenter.self) { _ in AlertPresenterImpl() }
-        container.register(UrlParser.self) { _ in UrlParser() }
 
         container.register(RequestBuilder.self) { diResolver in
             RequestBuilderImpl(
@@ -64,10 +63,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 authGateway: diResolver.resolve(AuthGateway.self)!
             )
         }
+        container.register(WebViewViewPresenter.self) { diResolver in
+            WebViewViewPresenterImpl(
+                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+            )
+        }
+        container.register(WebViewView.self) { _ in
+            WebViewView()
+        }
         container.register(WebViewViewController.self) { diResolver in
             WebViewViewController(
-                requestBuilder: diResolver.resolve(RequestBuilder.self)!,
-                urlParser: diResolver.resolve(UrlParser.self)!
+                presenter: diResolver.resolve(WebViewViewPresenter.self)!,
+                contentView: diResolver.resolve(WebViewView.self)!
             )
         }
         container.register(SingleImageViewController.self) { diResolver in

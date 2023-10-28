@@ -9,8 +9,7 @@ struct UnsplashApiConfig {
 
         scheme: "https",
         apiHost: "api.unsplash.com",
-        serviceHost: "unsplash.com",
-        authorizePath: "/oauth/authorize"
+        serviceHost: "unsplash.com"
     )
 
     let accessKey: String
@@ -23,5 +22,4 @@ struct UnsplashApiConfig {
     let scheme: String
     let apiHost: String
     let serviceHost: String
-    let authorizePath: String
 }

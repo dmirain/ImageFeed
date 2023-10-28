@@ -28,6 +28,7 @@ final class SingleImageView: UIView {
     private var backButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "backButton"
         view.setImage(UIImage.back, for: .normal)
         view.setTitle("", for: .normal)
 

@@ -36,6 +36,7 @@ final class ImagesListCell: UITableViewCell {
     private lazy var likeButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "likeButton"
         view.setImage(UIImage.redHeart, for: .normal)
         view.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
         NSLayoutConstraint.activate([

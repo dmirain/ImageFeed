@@ -21,6 +21,7 @@ final class AuthView: UIView {
     private lazy var enterButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "enterButton"
         view.setTitle("Войти", for: .normal)
         view.setTitleColor(.ypBlack, for: .normal)
         view.backgroundColor = .ypWhite

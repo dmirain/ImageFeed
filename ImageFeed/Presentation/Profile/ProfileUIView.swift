@@ -30,6 +30,7 @@ final class ProfileUIViewImpl: UIView, ProfileUIView {
     private lazy var exitButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "exitButton"
         view.setImage(UIImage.exitImage, for: .normal)
         view.setTitle("", for: .normal)
         NSLayoutConstraint.activate([

@@ -21,6 +21,7 @@ final class WebViewViewImpl: UIView, WebViewView {
     @objc private lazy var webView: WKWebView = {
         let view = WKWebView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "webView"
         view.backgroundColor = .ypWhite
         return view
     }()

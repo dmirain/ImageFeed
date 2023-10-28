@@ -2,9 +2,9 @@ import XCTest
 
 final class ImageFeedUITests: XCTestCase {
     var app: XCUIApplication!
-    
-    let login = "dmirain@gmail.com"
-    let password = "6eq@rBp-9wYAxDR4"
+
+    let login = ""
+    let password = ""
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -31,25 +31,24 @@ final class ImageFeedUITests: XCTestCase {
 
         loginTextField.tap()
         loginTextField.typeText(login)
-        webView.swipeUp()
+        app.buttons["Done"].tap()
+        XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
 
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
 
         passwordTextField.tap()
         passwordTextField.typeText(password)
-        webView.swipeUp()
+        XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
 
         webView.webViews.buttons["Login"].tap()
-        sleep(4)
-        
+
         let tablesQuery = app.tables
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
 
         XCTAssertTrue(cell.waitForExistence(timeout: 5))
     }
-    
-    
+
     func testFeed() throws {
         let tablesQuery = app.tables
 
@@ -78,7 +77,6 @@ final class ImageFeedUITests: XCTestCase {
 
         app.buttons["backButton"].tap()
     }
-    
 
     func testProfile() throws {
         sleep(3)

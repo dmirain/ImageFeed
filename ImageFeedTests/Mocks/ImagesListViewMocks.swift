@@ -12,6 +12,7 @@ final class ImagesListViewPresenterSpy: ImagesListViewPresenter {
     var fetchPhotosNextPageCalled = false
     var imageByIndexCalled = false
     var imageHeightCalled = false
+    var updateTableViewAnimatedCalled = false
 
     let count = 100_500
     let height = CGFloat(50)
@@ -54,6 +55,10 @@ final class ImagesListViewPresenterSpy: ImagesListViewPresenter {
     func imageHeight(byIndex index: Int, containerWidth: CGFloat) -> CGFloat {
         imageHeightCalled = true
         return height
+    }
+
+    func updateTableViewAnimated(addedIndexes: Range<Int>) {
+        updateTableViewAnimatedCalled = true
     }
 }
 

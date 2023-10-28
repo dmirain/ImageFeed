@@ -48,12 +48,21 @@ final class ImagesListViewControllerTests: XCTestCase {
         XCTAssertTrue(view.reloadRowCalled)
     }
 
-    func testUpdateTableViewAnimated() throws {
+    func testUpdateTableViewAnimatedBeforeTableInit() throws {
         // when
         controller.updateTableViewAnimated(addedIndexes: 10..<20)
 
         // then
         XCTAssertFalse(view.updateTableViewAnimatedCalled)
+    }
+
+    func testUpdateTableViewAnimatedAfterTableInit() throws {
+        // when
+        _ = controller.tableView(UITableView(), numberOfRowsInSection: 0)
+        controller.updateTableViewAnimated(addedIndexes: 10..<20)
+
+        // then
+        XCTAssertTrue(view.updateTableViewAnimatedCalled)
     }
 
     func testNumberOfRowsInSection() throws {
@@ -81,5 +90,4 @@ final class ImagesListViewControllerTests: XCTestCase {
         // then
         XCTAssertTrue(presenter.rowWillDisplayCalled)
     }
-
 }

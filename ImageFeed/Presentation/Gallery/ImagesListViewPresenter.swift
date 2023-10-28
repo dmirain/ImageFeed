@@ -10,12 +10,12 @@ protocol ImagesListViewPresenter: ImagesListServiceDelegate {
     func fetchPhotosNextPage()
     func image(byIndex index: Int) -> ImageDto
     func imageHeight(byIndex index: Int, containerWidth: CGFloat) -> CGFloat
+    func updateTableViewAnimated(addedIndexes: Range<Int>)
 }
 
 final class ImagesListViewPresenterImpl: ImagesListViewPresenter {
 
     private let imagesListService: ImagesListService
-    private var imageTableObserver: NSObjectProtocol?
     weak var delegate: ImagesListViewControllerDelegate?
 
     var imagesCount: Int { imagesListService.imagesCount }
@@ -24,7 +24,6 @@ final class ImagesListViewPresenterImpl: ImagesListViewPresenter {
         self.imagesListService = imagesListService
 
         self.imagesListService.delegate = self
-        subscribeOnTableUpdate()
     }
 
     func reloadRow(at index: Int) {
@@ -53,15 +52,7 @@ final class ImagesListViewPresenterImpl: ImagesListViewPresenter {
         imagesListService.imageHeight(byIndex: index, containerWidth: containerWidth)
     }
 
-    private func subscribeOnTableUpdate() {
-        imageTableObserver = NotificationCenter.default.addObserver(
-            forName: ImagesListService.didChangeNotification, object: nil, queue: .main
-        ) { [weak delegate] data in
-            guard let delegate else { return }
-
-            if let addedIndexes = data.userInfo?["addedIndexes"] as? Range<Int> {
-                delegate.updateTableViewAnimated(addedIndexes: addedIndexes)
-            }
-        }
+    func updateTableViewAnimated(addedIndexes: Range<Int>) {
+        delegate?.updateTableViewAnimated(addedIndexes: addedIndexes)
     }
 }

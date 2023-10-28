@@ -2,11 +2,10 @@ import UIKit
 
 protocol ImagesListServiceDelegate: AnyObject {
     func reloadRow(at index: Int)
+    func updateTableViewAnimated(addedIndexes: Range<Int>)
 }
 
 final class ImagesListService {
-    static let didChangeNotification = Notification.Name(rawValue: "ImageListTableDidChange")
-
     weak var delegate: ImagesListServiceDelegate?
     private let imageListGateway: ImagesListGateway
     private let imageLikeGateway: ImageLikeGateway
@@ -41,11 +40,7 @@ final class ImagesListService {
         nextPage += 1
         let newCount = imagesCount
 
-        NotificationCenter.default.post(
-            name: Self.didChangeNotification,
-            object: nil,
-            userInfo: ["addedIndexes": oldCount..<newCount]
-        )
+        delegate?.updateTableViewAnimated(addedIndexes: oldCount..<newCount)
     }
 
     func imageHeight(byIndex index: Int, containerWidth: CGFloat) -> CGFloat {

@@ -97,12 +97,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         container.register(SingleImageViewController.self) { diResolver in
-            SingleImageViewController(
+            SingleImageViewControllerImpl(
                 alertPresenter: diResolver.resolve(AlertPresenter.self)!
             )
         }
         container.register(ImagesListTableUIView.self) { _ in
-            ImagesListTableUIView()
+            ImagesListTableUIViewImpl()
         }
         container.register(ImagesListViewPresenter.self) { diResolver in
             ImagesListViewPresenterImpl(
@@ -111,7 +111,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         container.register(ImagesListViewController.self) { diResolver in
             ImagesListViewController(
-                diResolver: diResolver,
+                singleImageViewController: diResolver.resolve(SingleImageViewController.self)!,
                 presenter: diResolver.resolve(ImagesListViewPresenter.self)!,
                 contentView: diResolver.resolve(ImagesListTableUIView.self)!
             )

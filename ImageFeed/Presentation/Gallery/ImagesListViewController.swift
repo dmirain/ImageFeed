@@ -9,13 +9,17 @@ protocol ImagesListViewControllerDelegate: AnyObject {
 }
 
 final class ImagesListViewController: BaseUIViewController {
-    private let diResolver: Resolver
+    private let singleImageViewController: SingleImageViewController
     private let presenter: ImagesListViewPresenter
     private let contentView: ImagesListTableUIView
     private var isTableInit = false
 
-    init(diResolver: Resolver, presenter: ImagesListViewPresenter, contentView: ImagesListTableUIView) {
-        self.diResolver = diResolver
+    init(
+        singleImageViewController: SingleImageViewController,
+        presenter: ImagesListViewPresenter,
+        contentView: ImagesListTableUIView
+    ) {
+        self.singleImageViewController = singleImageViewController
         self.presenter = presenter
         self.contentView = contentView
 
@@ -89,13 +93,9 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = diResolver.resolve(SingleImageViewController.self)
-
-        guard let viewController else { return }
-
         let image = presenter.image(byIndex: indexPath.row)
-        viewController.setImage(image: image)
-        present(viewController, animated: true)
+        singleImageViewController.setImage(image: image)
+        present(singleImageViewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -1,6 +1,14 @@
 import UIKit
 
-final class ImagesListTableUIView: UIView {
+protocol ImagesListTableUIView: UIView {
+    func setDelegates(tableDataSource: UITableViewDataSource, tableDelegate: UITableViewDelegate)
+    func initOnDidLoad()
+    func reloadRow(at index: Int)
+    func updateTableViewAnimated(addedIndexes: Range<Int>)
+    func rowIndex(for cell: ImagesListCell) -> Int?
+}
+
+final class ImagesListTableUIViewImpl: UIView, ImagesListTableUIView {
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +50,7 @@ final class ImagesListTableUIView: UIView {
 
 // MARK: - Table methods
 
-extension ImagesListTableUIView {
+extension ImagesListTableUIViewImpl {
 
     func reloadRow(at index: Int) {
         let indexPath = IndexPath(row: index, section: 0)

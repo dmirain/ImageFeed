@@ -1,6 +1,10 @@
 import UIKit
 
-final class SingleImageViewController: BaseUIViewController {
+protocol SingleImageViewController: UIViewController {
+    func setImage(image: ImageDto)
+}
+
+final class SingleImageViewControllerImpl: BaseUIViewController, SingleImageViewController {
     private let contentView: SingleImageView
     private var image: ImageDto?
     private var alertPresenter: AlertPresenter
@@ -30,7 +34,7 @@ final class SingleImageViewController: BaseUIViewController {
     }
 }
 
-extension SingleImageViewController: SingleImageViewDelegate {
+extension SingleImageViewControllerImpl: SingleImageViewDelegate {
     func backButtonClicked() {
         dismiss(animated: true, completion: nil)
     }
@@ -47,7 +51,7 @@ extension SingleImageViewController: SingleImageViewDelegate {
     }
 }
 
-extension SingleImageViewController: AlertPresenterDelegate {
+extension SingleImageViewControllerImpl: AlertPresenterDelegate {
     func presentAlert(_ alert: UIAlertController) {
         present(alert, animated: true)
     }

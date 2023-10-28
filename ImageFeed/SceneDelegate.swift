@@ -119,16 +119,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func registerProfile() {
-        container.register(ProfileViewController.self) { diResolver in
-            ProfileViewController(
-                delegate: self,
+        container.register(ProfileUIView.self) { _ in
+            ProfileUIViewImpl()
+        }
+        container.register(ProfileViewPresenter.self) { diResolver in
+            ProfileViewPresenterImpl(
                 authStorage: diResolver.resolve(AuthStorage.self)!,
-                alertPresenter: diResolver.resolve(AlertPresenter.self)!,
                 profileGateway: diResolver.resolve(ProfileGateway.self)!,
                 profileImageGateway: diResolver.resolve(ProfileImageGateway.self)!
             )
         }
-
+        container.register(ProfileViewController.self) { diResolver in
+            ProfileViewController(
+                delegate: self,
+                presenter: diResolver.resolve(ProfileViewPresenter.self)!,
+                alertPresenter: diResolver.resolve(AlertPresenter.self)!,
+                contentView: diResolver.resolve(ProfileUIView.self)!
+            )
+        }
     }
 
     private func registerMainControllers() {

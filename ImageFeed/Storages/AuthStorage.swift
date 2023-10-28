@@ -33,7 +33,7 @@ class AuthStorageImpl: AuthStorage {
 
     func reset() {
         cache = nil
-                
+
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
         // Запрашиваем все данные из локального хранилища.
         WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in

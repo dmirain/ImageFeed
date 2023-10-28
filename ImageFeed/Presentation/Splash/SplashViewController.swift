@@ -54,17 +54,17 @@ final class SplashViewController: BaseUIViewController {
 
 private extension SplashViewController {
     func routeToController() {
-        guard let token = authStorage.get()?.token else {
+        guard authStorage.get() != nil else {
             present(authViewController, animated: true)
             return
         }
-        showTabBarViewController(token: token)
+        showTabBarViewController()
     }
 
-    func showTabBarViewController(token: String) {
+    func showTabBarViewController() {
         UIBlockingProgressHUD.show()
 
-        tabBarViewController.initData(token: token) { [weak self] error in
+        tabBarViewController.initData { [weak self] error in
             guard let self else { return }
             if let error {
                 switch error {

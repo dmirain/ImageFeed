@@ -5,8 +5,14 @@ protocol ProfileUIViewDelegat: AnyObject {
     func exitButtonClicked()
 }
 
-final class ProfileUIView: UIView {
-    weak var controller: ProfileUIViewDelegat?
+protocol ProfileUIView: UIView {
+    var delegate: ProfileUIViewDelegat? { get set }
+    func set(profileData data: ProfileDto)
+    func updateAvatar(_ photoUrl: URL)
+}
+
+final class ProfileUIViewImpl: UIView, ProfileUIView {
+    weak var delegate: ProfileUIViewDelegat?
 
     private lazy var userpickImageView: UIImageView = {
         let view = UIImageView()
@@ -120,7 +126,7 @@ final class ProfileUIView: UIView {
     }
 
     @objc
-    func exitButtonClicked() {
-        controller?.exitButtonClicked()
+    private func exitButtonClicked() {
+        delegate?.exitButtonClicked()
     }
 }

@@ -26,8 +26,8 @@ final class TabBarController: UITabBarController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
+    func initData(handler: @escaping (NetworkError?) -> Void) {
         imagesListViewController.fetchPhotosNextPage()
-        profileViewController.initData(token: token, handler: handler)
+        profileViewController.initData(handler: handler)
     }
 }

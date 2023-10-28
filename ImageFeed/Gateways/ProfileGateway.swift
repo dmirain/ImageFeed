@@ -2,13 +2,13 @@ import Foundation
 
 final class ProfileGateway {
     private let httpClient: NetworkClient
-    private let requestBuilder: RequestBuilder
+    private let requestHelper: RequestHelper
 
     private var task: URLSessionTask?
 
-    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
+    init(httpClient: NetworkClient, requestHelper: RequestHelper) {
         self.httpClient = httpClient
-        self.requestBuilder = requestBuilder
+        self.requestHelper = requestHelper
     }
 
     func fetchProfile(handler: @escaping (Result<ProfileDto, NetworkError>) -> Void) {
@@ -41,6 +41,6 @@ private extension ProfileGateway {
     }
 
     func request() -> URLRequest {
-        requestBuilder.makeApiRequest(path: "/me", params: [], method: "GET")
+        requestHelper.makeApiRequest(path: "/me", params: [], method: "GET")
     }
 }

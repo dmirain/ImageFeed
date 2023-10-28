@@ -11,8 +11,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
         container.register(AlertPresenter.self) { _ in AlertPresenterImpl() }
 
-        container.register(RequestBuilder.self) { diResolver in
-            RequestBuilderImpl(
+        container.register(RequestHelper.self) { diResolver in
+            RequestHelperImpl(
                 authStorage: diResolver.resolve(AuthStorage.self)!,
                 unsplashApiConfig: diResolver.resolve(UnsplashApiConfig.self)!
             )
@@ -20,31 +20,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         container.register(ProfileGateway.self) { diResolver in
             ProfileGateway(
                 httpClient: diResolver.resolve(NetworkClient.self)!,
-                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+                requestHelper: diResolver.resolve(RequestHelper.self)!
             )
         }
         container.register(ProfileImageGateway.self) { diResolver in
             ProfileImageGateway(
                 httpClient: diResolver.resolve(NetworkClient.self)!,
-                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+                requestHelper: diResolver.resolve(RequestHelper.self)!
             )
         }
         container.register(ImagesListGateway.self) { diResolver in
             ImagesListGateway(
                 httpClient: diResolver.resolve(NetworkClient.self)!,
-                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+                requestHelper: diResolver.resolve(RequestHelper.self)!
             )
         }
         container.register(ImageLikeGateway.self) { diResolver in
             ImageLikeGateway(
                 httpClient: diResolver.resolve(NetworkClient.self)!,
-                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+                requestHelper: diResolver.resolve(RequestHelper.self)!
             )
         }
         container.register(AuthGateway.self) { diResolver in
             AuthGateway(
                 httpClient: diResolver.resolve(NetworkClient.self)!,
-                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+                requestHelper: diResolver.resolve(RequestHelper.self)!
             )
         }
 
@@ -65,7 +65,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         container.register(WebViewViewPresenter.self) { diResolver in
             WebViewViewPresenterImpl(
-                requestBuilder: diResolver.resolve(RequestBuilder.self)!
+                requestHelper: diResolver.resolve(RequestHelper.self)!
             )
         }
         container.register(WebViewView.self) { _ in

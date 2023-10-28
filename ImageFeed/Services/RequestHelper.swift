@@ -1,12 +1,13 @@
 import Foundation
 
-protocol RequestBuilder {
+protocol RequestHelper {
     func makeAuthorizeRequest() -> URLRequest
     func makeToketRequest(code: String) -> URLRequest
     func makeApiRequest(path: String, params: [URLQueryItem], method: String) -> URLRequest
+    func extractCode(from url: URL) -> String?
 }
 
-struct RequestBuilderImpl: RequestBuilder {
+struct RequestHelperImpl: RequestHelper {
     private let authStorage: AuthStorage
     private let apiConf: UnsplashApiConfig
 
@@ -62,5 +63,17 @@ struct RequestBuilderImpl: RequestBuilder {
         request.timeoutInterval = 2 // seconds
         request.httpMethod = "POST"
         return request
+    }
+
+    func extractCode(from url: URL) -> String? {
+        if
+            let urlComponents = URLComponents(string: url.absoluteString),
+            urlComponents.path == "/oauth/authorize/native",
+            let items = urlComponents.queryItems,
+            let codeItem = items.first(where: { $0.name == "code" }) {
+            return codeItem.value
+        } else {
+            return nil
+        }
     }
 }

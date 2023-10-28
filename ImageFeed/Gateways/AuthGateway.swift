@@ -2,14 +2,14 @@ import Foundation
 
 final class AuthGateway {
     private let httpClient: NetworkClient
-    private let requestBuilder: RequestBuilder
+    private let requestHelper: RequestHelper
 
     private var task: URLSessionTask?
     private var lastCode: String?
 
-    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
+    init(httpClient: NetworkClient, requestHelper: RequestHelper) {
         self.httpClient = httpClient
-        self.requestBuilder = requestBuilder
+        self.requestHelper = requestHelper
     }
 
     func fetchAuthToken(with code: String, handler: @escaping (Result<AuthDto, NetworkError>) -> Void) {
@@ -51,6 +51,6 @@ private extension AuthGateway {
     }
 
     func request(_ code: String) -> URLRequest {
-        requestBuilder.makeToketRequest(code: code)
+        requestHelper.makeToketRequest(code: code)
     }
 }

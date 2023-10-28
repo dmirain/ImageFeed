@@ -7,14 +7,14 @@ protocol WebViewViewPresenter {
 }
 
 final class WebViewViewPresenterImpl: WebViewViewPresenter {
-    private let requestBuilder: RequestBuilder
+    private let requestHelper: RequestHelper
 
-    init(requestBuilder: RequestBuilder) {
-        self.requestBuilder = requestBuilder
+    init(requestHelper: RequestHelper) {
+        self.requestHelper = requestHelper
     }
 
     func makeWebViewRequest() -> URLRequest {
-        requestBuilder.makeAuthorizeRequest()
+        requestHelper.makeAuthorizeRequest()
     }
 
     func calculateProgress(for currentValue: Double) -> Progress {
@@ -22,14 +22,6 @@ final class WebViewViewPresenterImpl: WebViewViewPresenter {
     }
 
     func extractCode(from url: URL) -> String? {
-        if
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" }) {
-            return codeItem.value
-        } else {
-            return nil
-        }
+        requestHelper.extractCode(from: url)
     }
 }

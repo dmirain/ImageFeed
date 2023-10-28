@@ -52,7 +52,7 @@
 		79AECB0A2AC8AEE9009AA84B /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB092AC8AEE9009AA84B /* ProfileResponse.swift */; };
 		79AECB0C2AC8B247009AA84B /* ProfileGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB0B2AC8B247009AA84B /* ProfileGateway.swift */; };
 		79AECB0E2AC8B28B009AA84B /* ProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB0D2AC8B28B009AA84B /* ProfileDto.swift */; };
-		79AECB122AC942C8009AA84B /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB112AC942C8009AA84B /* RequestBuilder.swift */; };
+		79AECB122AC942C8009AA84B /* RequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB112AC942C8009AA84B /* RequestHelper.swift */; };
 		79AECB152AC94903009AA84B /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 79AECB142AC94903009AA84B /* SwiftKeychainWrapper */; };
 		79AECB172AC95F97009AA84B /* SplashUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AECB162AC95F97009AA84B /* SplashUIView.swift */; };
 		79AECB1A2AC9C261009AA84B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 79AECB192AC9C261009AA84B /* Kingfisher */; };
@@ -129,7 +129,7 @@
 		79AECB092AC8AEE9009AA84B /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		79AECB0B2AC8B247009AA84B /* ProfileGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGateway.swift; sourceTree = "<group>"; };
 		79AECB0D2AC8B28B009AA84B /* ProfileDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDto.swift; sourceTree = "<group>"; };
-		79AECB112AC942C8009AA84B /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
+		79AECB112AC942C8009AA84B /* RequestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHelper.swift; sourceTree = "<group>"; };
 		79AECB162AC95F97009AA84B /* SplashUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUIView.swift; sourceTree = "<group>"; };
 		79F5DD492A750172000224F2 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F5DD4C2A750172000224F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 		79734E872AE864AA002CD7FF /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				79AECB112AC942C8009AA84B /* RequestBuilder.swift */,
+				79AECB112AC942C8009AA84B /* RequestHelper.swift */,
 				798681792A76B3A400EB471C /* ImagesListService.swift */,
 			);
 			path = Services;
@@ -559,7 +559,7 @@
 				792B7B2C2A880730000AF75A /* ProfileViewController.swift in Sources */,
 				79797FC72AC0C11200666573 /* Data+Extensions.swift in Sources */,
 				7922CC672AA4C8C100627D98 /* AuthViewController.swift in Sources */,
-				79AECB122AC942C8009AA84B /* RequestBuilder.swift in Sources */,
+				79AECB122AC942C8009AA84B /* RequestHelper.swift in Sources */,
 				79734E832AE6E321002CD7FF /* AuthView.swift in Sources */,
 				795835352AE041D700827680 /* ImageItemResponse.swift in Sources */,
 				799353DB2AED086100EB0CAD /* WebViewViewPresenter.swift in Sources */,

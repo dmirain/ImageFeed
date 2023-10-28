@@ -2,7 +2,7 @@ import UIKit
 
 final class SingleImageViewController: BaseUIViewController {
     private let contentView: SingleImageView
-    private var imageCellModel: ImageDto?
+    private var image: ImageDto?
     private var alertPresenter: AlertPresenter
 
     init(alertPresenter: AlertPresenter) {
@@ -24,9 +24,9 @@ final class SingleImageViewController: BaseUIViewController {
         view = contentView
     }
 
-    func setModel(imageCellModel: ImageDto) {
-        self.imageCellModel = imageCellModel
-        contentView.setImage(image: imageCellModel)
+    func setModel(image: ImageDto) {
+        self.image = image
+        contentView.setImage(image: image)
     }
 }
 
@@ -57,11 +57,11 @@ extension SingleImageViewController: AlertPresenterDelegate {
         case .doNothing:
             break
         case .reset:
-            guard let imageDto = self.imageCellModel else {
+            guard let image = self.image else {
                 self.backButtonClicked()
                 return
             }
-            self.contentView.setImage(image: imageDto)
+            self.contentView.setImage(image: image)
         case .exit:
             self.backButtonClicked()
         }

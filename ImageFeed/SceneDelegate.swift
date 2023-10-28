@@ -82,10 +82,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 alertPresenter: diResolver.resolve(AlertPresenter.self)!
             )
         }
+        container.register(ImagesListTableUIView.self) { _ in
+            ImagesListTableUIView()
+        }
+        container.register(ImagesListViewPresenter.self) { diResolver in
+            ImagesListViewPresenterImpl(
+                imagesListService: diResolver.resolve(ImagesListService.self)!
+            )
+        }
         container.register(ImagesListViewController.self) { diResolver in
             ImagesListViewController(
                 diResolver: diResolver,
-                imagesListService: diResolver.resolve(ImagesListService.self)!
+                presenter: diResolver.resolve(ImagesListViewPresenter.self)!,
+                contentView: diResolver.resolve(ImagesListTableUIView.self)!
             )
         }
         container.register(ProfileViewController.self) { diResolver, window in

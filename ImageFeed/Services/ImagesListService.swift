@@ -1,9 +1,13 @@
 import UIKit
 
+protocol ImagesListServiceDelegate: AnyObject {
+    func reloadRow(at index: Int)
+}
+
 final class ImagesListService {
     static let didChangeNotification = Notification.Name(rawValue: "ImageListTableDidChange")
 
-    weak var controller: ImagesListViewController?
+    weak var delegate: ImagesListServiceDelegate?
     private let imageListGateway: ImagesListGateway
     private let imageLikeGateway: ImageLikeGateway
     private var images: [ImageDto] = []
@@ -27,7 +31,6 @@ final class ImagesListService {
                 }
             case .failure:
                 break
-                // TODO обработать ошибку
             }
         }
     }
@@ -46,11 +49,11 @@ final class ImagesListService {
     }
 
     func imageHeight(byIndex index: Int, containerWidth: CGFloat) -> CGFloat {
-        let image = imageCellModel(byIndex: index)
+        let image = image(byIndex: index)
         return image.size.height * containerWidth / image.size.width
     }
 
-    func imageCellModel(byIndex index: Int) -> ImageDto {
+    func image(byIndex index: Int) -> ImageDto {
         images[index]
     }
 
@@ -70,6 +73,6 @@ final class ImagesListService {
         let newImage = image.copy(isLiked: newState)
         guard let index = images.firstIndex(of: image) else { return }
         images[index] = newImage
-        controller?.reloadRow(at: index)
+        delegate?.reloadRow(at: index)
     }
 }

@@ -7,7 +7,7 @@ final class RequestHelperImplTests: XCTestCase {
 
     override func setUpWithError() throws {
         self.helper = RequestHelperImpl(
-            authStorage: AuthStorageSpy.shared,
+            authStorage: AuthStorageSpy(),
             unsplashApiConfig: UnsplashApiConfig.production
         )
     }

@@ -7,8 +7,6 @@ final class AuthStorageSpy: AuthStorage {
 
     var resetCalled = false
 
-    private init() {}
-
     func get() -> AuthDto? { AuthDto(token: "token") }
     func set(_ newValue: AuthDto) -> Bool { true }
     func reset() { resetCalled = true }

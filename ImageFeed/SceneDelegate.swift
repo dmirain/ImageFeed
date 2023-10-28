@@ -3,9 +3,20 @@ import Swinject
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    private var container = Container()
 
-    private let container: Container = {
-        let container = Container()
+    override init() {
+        super.init()
+
+        registerHelpers()
+        registerGateways()
+        registerAuth()
+        registerGallery()
+        registerProfile()
+        registerMainControllers()
+    }
+
+    private func registerHelpers() {
         container.register(AuthStorage.self) { _ in AuthStorageImpl.shared }
         container.register(UnsplashApiConfig.self) { _ in UnsplashApiConfig.production }
         container.register(NetworkClient.self) { _ in NetworkClientImpl() }
@@ -17,6 +28,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 unsplashApiConfig: diResolver.resolve(UnsplashApiConfig.self)!
             )
         }
+    }
+
+    private func registerGateways() {
         container.register(ProfileGateway.self) { diResolver in
             ProfileGateway(
                 httpClient: diResolver.resolve(NetworkClient.self)!,
@@ -47,14 +61,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 requestHelper: diResolver.resolve(RequestHelper.self)!
             )
         }
+    }
 
-        container.register(ImagesListService.self) { diResolver in
-            ImagesListService(
-                imageListGateway: diResolver.resolve(ImagesListGateway.self)!,
-                imageLikeGateway: diResolver.resolve(ImageLikeGateway.self)!
-            )
-        }
-
+    private func registerAuth() {
         container.register(AuthViewController.self) { diResolver in
             AuthViewController(
                 authStorage: diResolver.resolve(AuthStorage.self)!,
@@ -77,6 +86,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 contentView: diResolver.resolve(WebViewView.self)!
             )
         }
+    }
+
+    private func registerGallery() {
+        container.register(ImagesListService.self) { diResolver in
+            ImagesListService(
+                imageListGateway: diResolver.resolve(ImagesListGateway.self)!,
+                imageLikeGateway: diResolver.resolve(ImageLikeGateway.self)!
+            )
+        }
+
         container.register(SingleImageViewController.self) { diResolver in
             SingleImageViewController(
                 alertPresenter: diResolver.resolve(AlertPresenter.self)!
@@ -97,32 +116,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 contentView: diResolver.resolve(ImagesListTableUIView.self)!
             )
         }
-        container.register(ProfileViewController.self) { diResolver, window in
+    }
+
+    private func registerProfile() {
+        container.register(ProfileViewController.self) { diResolver in
             ProfileViewController(
-                window: window,
+                delegate: self,
                 authStorage: diResolver.resolve(AuthStorage.self)!,
                 alertPresenter: diResolver.resolve(AlertPresenter.self)!,
                 profileGateway: diResolver.resolve(ProfileGateway.self)!,
-                profileImageGateway: diResolver.resolve(ProfileImageGateway.self)!,
-                diResolver: diResolver
+                profileImageGateway: diResolver.resolve(ProfileImageGateway.self)!
             )
         }
-        container.register(TabBarController.self) { (diResolver: Resolver, window: UIWindow) in
+
+    }
+
+    private func registerMainControllers() {
+        container.register(TabBarController.self) { diResolver in
             TabBarController(
                 imagesListViewController: diResolver.resolve(ImagesListViewController.self)!,
-                profileViewController: diResolver.resolve(ProfileViewController.self, argument: window)!
+                profileViewController: diResolver.resolve(ProfileViewController.self)!
             )
         }
-        container.register(SplashViewController.self) { diResolver, window in
+        container.register(SplashViewController.self) { diResolver in
             SplashViewController(
-                window: window,
+                delegate: self,
                 authStorage: diResolver.resolve(AuthStorage.self)!,
                 alertPresenter: diResolver.resolve(AlertPresenter.self)!,
                 diResolver: diResolver
             )
         }
-        return container
-    }()
+    }
 
     func scene(
         _ scene: UIScene,
@@ -141,4 +165,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillResignActive(_ scene: UIScene) {}
     func sceneWillEnterForeground(_ scene: UIScene) {}
     func sceneDidEnterBackground(_ scene: UIScene) {}
+}
+
+extension SceneDelegate: ProfileViewControllerDelegate {
+    func roteToRoot() {
+        window?.rootViewController = container.resolve(SplashViewController.self)
+    }
+}
+
+extension SceneDelegate: SplashViewControllerDelegate {
+    func routeToController(controller: UIViewController) {
+        window?.rootViewController = controller
+    }
 }

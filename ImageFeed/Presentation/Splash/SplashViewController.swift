@@ -1,9 +1,12 @@
 import UIKit
 import Swinject
 
+protocol SplashViewControllerDelegate: AnyObject {
+    func routeToController(controller: UIViewController)
+}
+
 final class SplashViewController: BaseUIViewController {
-    private let window: UIWindow
-    private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
+    private weak var delegate: SplashViewControllerDelegate?
 
     private let contentView: SplashUIView
 
@@ -11,7 +14,7 @@ final class SplashViewController: BaseUIViewController {
     private let authStorage: AuthStorage
     private var alertPresenter: AlertPresenter
     private lazy var tabBarViewController: TabBarController = {
-        diResolver.resolve(TabBarController.self, argument: window)!
+        diResolver.resolve(TabBarController.self)!
     }()
     private lazy var authViewController: AuthViewController = {
         let controller = diResolver.resolve(AuthViewController.self)!
@@ -19,12 +22,12 @@ final class SplashViewController: BaseUIViewController {
         return controller
     }()
     init(
-        window: UIWindow,
+        delegate: SplashViewControllerDelegate,
         authStorage: AuthStorage,
         alertPresenter: AlertPresenter,
         diResolver: Resolver
     ) {
-        self.window = window
+        self.delegate = delegate
         self.authStorage = authStorage
         self.alertPresenter = alertPresenter
         self.diResolver = diResolver
@@ -71,14 +74,15 @@ private extension SplashViewController {
                     break
                 }
 
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     UIBlockingProgressHUD.dismiss()
-                    self.alertPresenter.show(with: ErrorAlertDto(error: error))
+                    self?.alertPresenter.show(with: ErrorAlertDto(error: error))
                 }
             } else {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     UIBlockingProgressHUD.dismiss()
-                    self.window.rootViewController = self.tabBarViewController
+                    guard let self else { return }
+                    self.delegate?.routeToController(controller: self.tabBarViewController)
                 }
             }
         }

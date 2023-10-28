@@ -1,10 +1,11 @@
 import UIKit
-import WebKit
 import Swinject
 
+protocol ProfileViewControllerDelegate: AnyObject {
+    func roteToRoot()
+}
+
 final class ProfileViewController: BaseUIViewController {
-    private let window: UIWindow
-    private let diResolver: Resolver
     private let contentView: ProfileUIView
     private let authStorage: AuthStorage
     private var alertPresenter: AlertPresenter
@@ -12,17 +13,17 @@ final class ProfileViewController: BaseUIViewController {
     private let profileImageGateway: ProfileImageGateway
     private var profileImageServiceObserver: NSObjectProtocol?
 
+    weak var delegate: ProfileViewControllerDelegate?
+
     init(
-        window: UIWindow,
+        delegate: ProfileViewControllerDelegate,
         authStorage: AuthStorage,
         alertPresenter: AlertPresenter,
         profileGateway: ProfileGateway,
-        profileImageGateway: ProfileImageGateway,
-        diResolver: Resolver
+        profileImageGateway: ProfileImageGateway
     ) {
         contentView = ProfileUIView()
-        self.window = window
-        self.diResolver = diResolver
+        self.delegate = delegate
         self.authStorage = authStorage
         self.alertPresenter = alertPresenter
         self.profileGateway = profileGateway
@@ -95,15 +96,6 @@ extension ProfileViewController: ProfileUIViewDelegat, AlertPresenterDelegate {
 
     private func performExit() {
         authStorage.reset()
-
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        // Запрашиваем все данные из локального хранилища.
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            // Массив полученных записей удаляем из хранилища.
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-            }
-        }
-        window.rootViewController = diResolver.resolve(SplashViewController.self, argument: window)
+        delegate?.roteToRoot()
     }
 }

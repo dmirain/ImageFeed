@@ -24,7 +24,7 @@ final class SingleImageViewController: BaseUIViewController {
         view = contentView
     }
 
-    func setModel(image: ImageDto) {
+    func setImage(image: ImageDto) {
         self.image = image
         contentView.setImage(image: image)
     }

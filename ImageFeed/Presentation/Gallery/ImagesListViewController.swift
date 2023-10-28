@@ -94,7 +94,7 @@ extension ImagesListViewController: UITableViewDelegate {
         guard let viewController else { return }
 
         let image = presenter.image(byIndex: indexPath.row)
-        viewController.setModel(image: image)
+        viewController.setImage(image: image)
         present(viewController, animated: true)
     }
 

@@ -69,7 +69,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         }
         container.register(WebViewView.self) { _ in
-            WebViewView()
+            WebViewViewImpl()
         }
         container.register(WebViewViewController.self) { diResolver in
             WebViewViewController(

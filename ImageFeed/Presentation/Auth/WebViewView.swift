@@ -7,7 +7,14 @@ protocol WebViewViewDelegat: AnyObject {
     func calculateProgress(for: Double) -> Progress
 }
 
-final class WebViewView: UIView {
+protocol WebViewView: UIView {
+    var delegate: WebViewViewDelegat? { get set }
+    func load(_ request: URLRequest)
+    func willAppear()
+}
+
+final class WebViewViewImpl: UIView, WebViewView {
+
     weak var delegate: WebViewViewDelegat?
     private var observation: NSKeyValueObservation?
 
@@ -37,7 +44,7 @@ final class WebViewView: UIView {
         return view
     }()
 
-    init() {
+     init() {
         super.init(frame: .zero)
         backgroundColor = .ypBlack
 
@@ -67,11 +74,6 @@ final class WebViewView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc
-    func backButtonClicked() {
-        delegate?.backButtonClicked()
-    }
-
     func load(_ request: URLRequest) {
         webView.load(request)
     }
@@ -80,6 +82,11 @@ final class WebViewView: UIView {
         observation = observe(\.webView.estimatedProgress) { [weak self] _, _ in
             self?.updateProgress()
         }
+    }
+
+    @objc
+    private func backButtonClicked() {
+        delegate?.backButtonClicked()
     }
 
     private func updateProgress() {
@@ -91,7 +98,7 @@ final class WebViewView: UIView {
     }
 }
 
-extension WebViewView: WKNavigationDelegate {
+extension WebViewViewImpl: WKNavigationDelegate {
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,

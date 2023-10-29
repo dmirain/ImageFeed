@@ -5,9 +5,16 @@ struct ProfileDto {
     let bio: String
 
     static func fromProfileResponse(_ data: ProfileResponse) -> Self {
-        Self(
+        let name: String
+        if let lastName = data.lastName {
+            name = "\(data.firstName) \(lastName)"
+        } else {
+            name = data.firstName
+        }
+
+        return Self(
             username: data.username,
-            name: "\(data.firstName) \(data.lastName)",
+            name: name,
             loginName: "@\(data.username)",
             bio: data.bio ?? ""
         )

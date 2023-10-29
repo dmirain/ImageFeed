@@ -83,7 +83,13 @@ final class ImageFeedUITests: XCTestCase {
         app.tabBars.buttons.element(boundBy: 1).tap()
         sleep(2)
 
-        app.buttons["exitButton"].tap()
+        let exitButton = app.buttons["exitButton"]
+
+        XCTAssertTrue(exitButton.exists)
+        XCTAssertTrue(app.staticTexts["nameLabel"].exists)
+        XCTAssertTrue(app.staticTexts["loginLabel"].exists)
+
+        exitButton.tap()
 
         app.alerts["Alert"].scrollViews.otherElements.buttons["Да"].tap()
     }

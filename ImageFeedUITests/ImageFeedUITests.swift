@@ -39,7 +39,9 @@ final class ImageFeedUITests: XCTestCase {
 
         passwordTextField.tap()
         passwordTextField.typeText(password)
+        app.buttons["Done"].tap()
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
+        sleep(1)
 
         webView.webViews.buttons["Login"].tap()
 
@@ -81,7 +83,7 @@ final class ImageFeedUITests: XCTestCase {
     func testProfile() throws {
         sleep(3)
         app.tabBars.buttons.element(boundBy: 1).tap()
-        sleep(2)
+        sleep(1)
 
         let exitButton = app.buttons["exitButton"]
 
@@ -92,5 +94,8 @@ final class ImageFeedUITests: XCTestCase {
         exitButton.tap()
 
         app.alerts["Alert"].scrollViews.otherElements.buttons["Да"].tap()
+
+        sleep(2)
+        XCTAssertTrue(app.buttons["enterButton"].exists)
     }
 }

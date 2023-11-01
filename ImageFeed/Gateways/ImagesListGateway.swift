@@ -2,12 +2,13 @@ import Foundation
 
 final class ImagesListGateway {
     private let httpClient: NetworkClient
-    private var task: URLSessionTask?
-    private let requestBuilder: RequestBuilder
+    private let requestHelper: RequestHelper
 
-    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
+    private var task: URLSessionTask?
+
+    init(httpClient: NetworkClient, requestHelper: RequestHelper) {
         self.httpClient = httpClient
-        self.requestBuilder = requestBuilder
+        self.requestHelper = requestHelper
     }
 
     func fetchImagesPage(page: Int, handler: @escaping (Result<[ImageDto], NetworkError>) -> Void) {
@@ -46,7 +47,7 @@ private extension ImagesListGateway {
     }
 
     func request(page: Int) -> URLRequest {
-        requestBuilder.makeRequest(
+        requestHelper.makeApiRequest(
             path: "/photos",
             params: [URLQueryItem(name: "page", value: String(page))],
             method: "GET"

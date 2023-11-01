@@ -1,4 +1,4 @@
-struct UnsplashOAuthData: Decodable {
+struct TokenResponse: Decodable {
     let accessToken: String
     let tokenType: String
     let scope: String

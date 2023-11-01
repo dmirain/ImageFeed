@@ -5,8 +5,14 @@ protocol ProfileUIViewDelegat: AnyObject {
     func exitButtonClicked()
 }
 
-final class ProfileUIView: UIView {
-    weak var controller: ProfileUIViewDelegat?
+protocol ProfileUIView: UIView {
+    var delegate: ProfileUIViewDelegat? { get set }
+    func set(profileData data: ProfileDto)
+    func updateAvatar(_ photoUrl: URL)
+}
+
+final class ProfileUIViewImpl: UIView, ProfileUIView {
+    weak var delegate: ProfileUIViewDelegat?
 
     private lazy var userpickImageView: UIImageView = {
         let view = UIImageView()
@@ -24,6 +30,7 @@ final class ProfileUIView: UIView {
     private lazy var exitButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "exitButton"
         view.setImage(UIImage.exitImage, for: .normal)
         view.setTitle("", for: .normal)
         NSLayoutConstraint.activate([
@@ -36,6 +43,7 @@ final class ProfileUIView: UIView {
     private lazy var nameLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "nameLabel"
         view.text = "Имя"
         let desc = UIFontDescriptor().withSymbolicTraits(UIFontDescriptor.SymbolicTraits([.traitBold]))!
         view.font = UIFont(descriptor: desc, size: 23)
@@ -46,6 +54,7 @@ final class ProfileUIView: UIView {
     private lazy var loginLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = "loginLabel"
         view.text = "@login"
         view.font = view.font.withSize(13)
         view.textColor = UIColor.ypGray
@@ -120,7 +129,7 @@ final class ProfileUIView: UIView {
     }
 
     @objc
-    func exitButtonClicked() {
-        controller?.exitButtonClicked()
+    private func exitButtonClicked() {
+        delegate?.exitButtonClicked()
     }
 }

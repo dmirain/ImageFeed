@@ -3,25 +3,30 @@ import Swinject
 
 // MARK: - ImagesListViewController
 
+protocol ImagesListViewControllerDelegate: AnyObject {
+    func reloadRow(at index: Int)
+    func updateTableViewAnimated(addedIndexes: Range<Int>)
+}
+
 final class ImagesListViewController: BaseUIViewController {
-    private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    private let imagesListService: ImagesListService
+    private let singleImageViewController: SingleImageViewController
+    private let presenter: ImagesListViewPresenter
     private let contentView: ImagesListTableUIView
-    private let diResolver: Resolver
-    private var imageTableObserver: NSObjectProtocol?
     private var isTableInit = false
 
-    init(diResolver: Resolver, imagesListService: ImagesListService) {
-        self.imagesListService = imagesListService
-        self.diResolver = diResolver
-        contentView = ImagesListTableUIView()
+    init(
+        singleImageViewController: SingleImageViewController,
+        presenter: ImagesListViewPresenter,
+        contentView: ImagesListTableUIView
+    ) {
+        self.singleImageViewController = singleImageViewController
+        self.presenter = presenter
+        self.contentView = contentView
 
         super.init(nibName: nil, bundle: nil)
 
-        self.imagesListService.controller = self
+        self.presenter.delegate = self
         self.contentView.setDelegates(tableDataSource: self, tableDelegate: self)
-        tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
-        subscribeOnTableUpdate()
     }
 
     required init?(coder: NSCoder) {
@@ -36,36 +41,32 @@ final class ImagesListViewController: BaseUIViewController {
         super.viewDidLoad()
         contentView.initOnDidLoad()
     }
+}
 
+// MARK: - ImagesListViewControllerDelegate
+
+extension ImagesListViewController: ImagesListViewControllerDelegate {
     func fetchPhotosNextPage() {
-        imagesListService.fetchPhotosNextPage()
+        presenter.fetchPhotosNextPage()
     }
 
     func reloadRow(at index: Int) {
         contentView.reloadRow(at: index)
     }
 
-    private func subscribeOnTableUpdate() {
-        imageTableObserver = NotificationCenter.default.addObserver(
-            forName: ImagesListService.didChangeNotification, object: nil, queue: .main
-        ) { [weak self] data in
-            guard let self else { return }
-
-            if !isTableInit { return }
-
-            if let addedIndexes = data.userInfo?["addedIndexes"] as? Range<Int> {
-                self.contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
-            }
-        }
+    func updateTableViewAnimated(addedIndexes: Range<Int>) {
+        if !isTableInit { return }
+        contentView.updateTableViewAnimated(addedIndexes: addedIndexes)
     }
 }
 
 // MARK: - UITableViewDataSource
 
 extension ImagesListViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isTableInit = true
-        return imagesListService.imagesCount
+        return presenter.imagesCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -82,32 +83,27 @@ extension ImagesListViewController: UITableViewDataSource {
 
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         cell.controller = self
-        let cellModel = imagesListService.imageCellModel(byIndex: indexPath.row)
-        cell.configureCell(with: cellModel)
+        let image = presenter.image(byIndex: indexPath.row)
+        cell.configureCell(with: image)
     }
 }
 
 // MARK: - UITableViewDelegate
 
 extension ImagesListViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = diResolver.resolve(SingleImageViewController.self)
-
-        guard let viewController else { return }
-
-        let imageModel = imagesListService.imageCellModel(byIndex: indexPath.row)
-        viewController.setModel(imageCellModel: imageModel)
-        present(viewController, animated: true)
+        let image = presenter.image(byIndex: indexPath.row)
+        singleImageViewController.setImage(image: image)
+        present(singleImageViewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        imagesListService.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
+        presenter.imageHeight(byIndex: indexPath.row, containerWidth: tableView.bounds.width) + Const.cellIndent
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row > imagesListService.imagesCount - 3 {
-            imagesListService.fetchPhotosNextPage()
-        }
+        presenter.rowWillDisplay(index: indexPath.row)
     }
 }
 
@@ -116,6 +112,6 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: ImagesListCellDelegate {
     func likeButtonClicked(_ cell: ImagesListCell) {
         guard let index = contentView.rowIndex(for: cell) else { return }
-        imagesListService.toggleLike(byIndex: index)
+        presenter.toggleLike(byIndex: index)
     }
 }

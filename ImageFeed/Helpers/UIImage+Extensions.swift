@@ -10,4 +10,6 @@ extension UIImage {
     static var share = UIImage(named: "Share") ?? UIImage()
     static var back = UIImage(named: "Back") ?? UIImage()
     static var imageStub = UIImage(named: "Image Stub") ?? UIImage()
+    static var logo = UIImage(named: "Logo") ?? UIImage()
+    static var backBlack = UIImage(named: "BackBlack") ?? UIImage()
 }

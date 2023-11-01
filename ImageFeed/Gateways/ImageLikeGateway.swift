@@ -2,13 +2,13 @@ import Foundation
 
 final class ImageLikeGateway {
     private let httpClient: NetworkClient
+    private let requestHelper: RequestHelper
+
     private var tasks: [ImageDto: URLSessionTask] = [:]
 
-    private let requestBuilder: RequestBuilder
-
-    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
+    init(httpClient: NetworkClient, requestHelper: RequestHelper) {
         self.httpClient = httpClient
-        self.requestBuilder = requestBuilder
+        self.requestHelper = requestHelper
     }
 
     func toggleLike(image: ImageDto, to createLike: Bool, handler: @escaping (Bool) -> Void) {
@@ -44,7 +44,7 @@ private extension ImageLikeGateway {
     }
 
     func requestSetLike(image: ImageDto) -> URLRequest {
-        requestBuilder.makeRequest(
+        requestHelper.makeApiRequest(
             path: "/photos/\(image.id)/like",
             params: [],
             method: "POST"
@@ -52,7 +52,7 @@ private extension ImageLikeGateway {
     }
 
     func requestDelLike(image: ImageDto) -> URLRequest {
-        requestBuilder.makeRequest(
+        requestHelper.makeApiRequest(
             path: "/photos/\(image.id)/like",
             params: [],
             method: "DELETE"

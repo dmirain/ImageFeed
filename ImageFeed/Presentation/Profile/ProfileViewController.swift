@@ -1,38 +1,31 @@
 import UIKit
-import WebKit
 import Swinject
 
+protocol ProfileViewControllerDelegate: AnyObject {
+    func roteToRoot()
+}
+
 final class ProfileViewController: BaseUIViewController {
-    private let window: UIWindow
-    private let diResolver: Resolver
     private let contentView: ProfileUIView
-    private let authStorage: AuthStorage
     private var alertPresenter: AlertPresenter
-    private let profileGateway: ProfileGateway
-    private let profileImageGateway: ProfileImageGateway
-    private var profileImageServiceObserver: NSObjectProtocol?
+    private var presenter: ProfileViewPresenter
+    private weak var delegate: ProfileViewControllerDelegate?
 
     init(
-        window: UIWindow,
-        authStorage: AuthStorage,
+        delegate: ProfileViewControllerDelegate,
+        presenter: ProfileViewPresenter,
         alertPresenter: AlertPresenter,
-        profileGateway: ProfileGateway,
-        profileImageGateway: ProfileImageGateway,
-        diResolver: Resolver
+        contentView: ProfileUIView
     ) {
-        contentView = ProfileUIView()
-        self.window = window
-        self.diResolver = diResolver
-        self.authStorage = authStorage
+        self.contentView = contentView
+        self.delegate = delegate
+        self.presenter = presenter
         self.alertPresenter = alertPresenter
-        self.profileGateway = profileGateway
-        self.profileImageGateway = profileImageGateway
         super.init(nibName: nil, bundle: nil)
 
-        contentView.controller = self
+        self.contentView.delegate = self
+        self.presenter.delegate = self
         self.alertPresenter.delegate = self
-        tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
-        subscribeOnUpdateAvatar()
     }
 
     required init?(coder: NSCoder) {
@@ -43,34 +36,19 @@ final class ProfileViewController: BaseUIViewController {
        self.view = contentView
     }
 
-    func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
-        profileGateway.fetchProfile { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case let .success(data):
-                DispatchQueue.main.async {
-                    self.contentView.set(profileData: data)
-                }
-
-                profileImageGateway.fetchProfilePhoto(username: data.username)
-
-                handler(nil)
-            case let .failure(error):
-                handler(error)
-            }
-        }
+    func initData(handler: @escaping (NetworkError?) -> Void) {
+        presenter.initData(handler: handler)
     }
 
-    private func subscribeOnUpdateAvatar() {
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageGateway.didChangeNotification, object: nil, queue: .main
-        ) { [weak self] data in
-            guard let self else { return }
-            if let photoUrl = data.userInfo?["URL"] as? String {
-                guard let photoUrl = URL(string: photoUrl) else { return }
-                self.contentView.updateAvatar(photoUrl)
-            }
-        }
+}
+
+extension ProfileViewController: ProfileViewPresenterDelegate {
+    func updateAvatar(_ photoUrl: URL) {
+        contentView.updateAvatar(photoUrl)
+    }
+
+    func set(profileData data: ProfileDto) {
+        contentView.set(profileData: data)
     }
 }
 
@@ -95,16 +73,7 @@ extension ProfileViewController: ProfileUIViewDelegat, AlertPresenterDelegate {
     }
 
     private func performExit() {
-        authStorage.reset()
-
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        // Запрашиваем все данные из локального хранилища.
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            // Массив полученных записей удаляем из хранилища.
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-            }
-        }
-        window.rootViewController = diResolver.resolve(SplashViewController.self, argument: window)
+        presenter.performExit()
+        delegate?.roteToRoot()
     }
 }

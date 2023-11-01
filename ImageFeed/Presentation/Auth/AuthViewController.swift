@@ -6,33 +6,46 @@ protocol AuthViewControllerDelegate: AnyObject {
 
 final class AuthViewController: BaseUIViewController {
     weak var delegate: AuthViewControllerDelegate?
+    private let contentView: AuthView
 
     private let showAuthWebViewIdentifier = "ShowAuthWebView"
     private let authGateway: AuthGateway
     private let authStorage: AuthStorage
     private var alertPresenter: AlertPresenter
+    private let webViewViewController: WebViewViewController
 
-    required init?(coder: NSCoder) {
-        let httpClient = NetworkClientImpl()
-        authGateway = UnsplashAuthGateway(httpClient: httpClient)
-        authStorage = AuthStorageImpl.shared
-        alertPresenter = AlertPresenterImpl()
+    init(
+        authStorage: AuthStorage,
+        alertPresenter: AlertPresenter,
+        webViewViewController: WebViewViewController,
+        authGateway: AuthGateway
+    ) {
+        self.authGateway = authGateway
+        self.authStorage = authStorage
+        self.alertPresenter = alertPresenter
+        self.webViewViewController = webViewViewController
 
-        super.init(coder: coder)
+        contentView = AuthView()
+        super.init(nibName: nil, bundle: nil)
 
-        alertPresenter.delegate = self
+        contentView.controller = self
+        self.alertPresenter.delegate = self
+        self.webViewViewController.delegate = self
+        modalPresentationStyle = .fullScreen
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthWebViewIdentifier {
-            guard let viewController = segue.destination as? WebViewViewController else {
-                assertionFailure("unknown controller \(segue.destination)")
-                return
-            }
-            viewController.delegate = self
-        } else {
-            assertionFailure("unknown segue identifier \(segue.identifier ?? "")")
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func loadView() {
+       self.view = contentView
+    }
+}
+
+extension AuthViewController: AuthViewDelegat {
+    func enterButtonClicked() {
+        present(webViewViewController, animated: true)
     }
 }
 

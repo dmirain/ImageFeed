@@ -14,6 +14,10 @@ final class TabBarController: UITabBarController {
         super.init(nibName: nil, bundle: nil)
 
         viewControllers = [imagesListViewController, profileViewController]
+
+        profileViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage.profileTabImage, selectedImage: nil)
+        imagesListViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage.mainTabImage, selectedImage: nil)
+
         tabBar.tintColor = UIColor.ypWhite
         tabBar.barTintColor = UIColor.ypBlack
     }
@@ -22,8 +26,8 @@ final class TabBarController: UITabBarController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initData(token: String, handler: @escaping (NetworkError?) -> Void) {
+    func initData(handler: @escaping (NetworkError?) -> Void) {
         imagesListViewController.fetchPhotosNextPage()
-        profileViewController.initData(token: token, handler: handler)
+        profileViewController.initData(handler: handler)
     }
 }

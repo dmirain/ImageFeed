@@ -4,12 +4,13 @@ final class ProfileImageGateway {
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
 
     private let httpClient: NetworkClient
-    private let requestBuilder: RequestBuilder
+    private let requestHelper: RequestHelper
+
     private var task: URLSessionTask?
 
-    init(httpClient: NetworkClient, requestBuilder: RequestBuilder) {
+    init(httpClient: NetworkClient, requestHelper: RequestHelper) {
         self.httpClient = httpClient
-        self.requestBuilder = requestBuilder
+        self.requestHelper = requestHelper
     }
 
     func fetchProfilePhoto(username: String) {
@@ -47,6 +48,6 @@ private extension ProfileImageGateway {
     }
 
     func request(username: String) -> URLRequest {
-        requestBuilder.makeRequest(path: "/users/\(username)", params: [], method: "GET")
+        requestHelper.makeApiRequest(path: "/users/\(username)", params: [], method: "GET")
     }
 }
